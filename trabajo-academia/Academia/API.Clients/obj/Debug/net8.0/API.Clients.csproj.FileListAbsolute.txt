@@ -1,0 +1,16 @@
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\bin\Debug\net8.0\API.Clients.deps.json
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\bin\Debug\net8.0\API.Clients.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\bin\Debug\net8.0\API.Clients.pdb
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\bin\Debug\net8.0\DTOs.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\bin\Debug\net8.0\DTOs.pdb
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.csproj.AssemblyReference.cache
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.GeneratedMSBuildEditorConfig.editorconfig
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.AssemblyInfoInputs.cache
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.AssemblyInfo.cs
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.csproj.CoreCompileInputs.cache
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.sourcelink.json
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clie.1FF10D41.Up2Date
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\refint\API.Clients.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\API.Clients.pdb
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\API.Cursos\obj\Debug\net8.0\ref\API.Clients.dll

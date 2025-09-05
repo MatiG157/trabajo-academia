@@ -1,0 +1,12 @@
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\bin\Debug\net8.0\DTOs.deps.json
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\bin\Debug\net8.0\DTOs.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\bin\Debug\net8.0\DTOs.pdb
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\DTOs.GeneratedMSBuildEditorConfig.editorconfig
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\DTOs.AssemblyInfoInputs.cache
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\DTOs.AssemblyInfo.cs
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\DTOs.csproj.CoreCompileInputs.cache
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\DTOs.sourcelink.json
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\DTOs.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\refint\DTOs.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\DTOs.pdb
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\DTOs\obj\Debug\net8.0\ref\DTOs.dll

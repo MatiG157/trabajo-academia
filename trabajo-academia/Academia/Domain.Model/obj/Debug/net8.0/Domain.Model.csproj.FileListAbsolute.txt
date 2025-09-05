@@ -1,0 +1,12 @@
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\bin\Debug\net8.0\Domain.Model.deps.json
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\bin\Debug\net8.0\Domain.Model.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\bin\Debug\net8.0\Domain.Model.pdb
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\Domain.Model.GeneratedMSBuildEditorConfig.editorconfig
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\Domain.Model.AssemblyInfoInputs.cache
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\Domain.Model.AssemblyInfo.cs
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\Domain.Model.csproj.CoreCompileInputs.cache
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\Domain.Model.sourcelink.json
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\Domain.Model.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\refint\Domain.Model.dll
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\Domain.Model.pdb
+R:\3er Año Ing en Sistemas\Tecnologias de Desarrollo de Software IDE\Repositorio\tp-academia\Academia\Domain.Model\obj\Debug\net8.0\ref\Domain.Model.dll
