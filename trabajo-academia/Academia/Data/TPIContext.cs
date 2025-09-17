@@ -10,18 +10,27 @@ using Microsoft.Extensions.Configuration;
 
 namespace Data
 {
-    internal class TPIContext : DbContext
+    public class TPIContext : DbContext
     {
+        public TPIContext(DbContextOptions<TPIContext> options): base(options)
+        {
+        }
+
+        // Constructor sin parámetros para que EF pueda instanciar en tiempo de diseño
+        
+
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Comision> Comisiones { get; set; }
         public DbSet<Materia> Materias { get; set; }
         public DbSet<Persona> Personas { get; set; }
 
-        internal TPIContext()
+        public TPIContext()
         {
             this.Database.EnsureCreated();
         }
+
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -127,22 +136,159 @@ namespace Data
                     .HasField("_personaId");
 
                 entity.Navigation(e => e.Persona)
-                    .HasField("_idPersona");
+                    .HasField("_persona");
 
                 entity.HasOne(e => e.Persona)
                     .WithMany()
                     .HasForeignKey(e => e.IdPersona);
 
                 // Datos iniciales
-                entity.HasData(
-                    new Usuario(1, "jperez", "clave123", true, "Juan", "Pérez", "juan.perez@email.com", false, 101),
-                    new Usuario(2, "mgomez", "maria456", true, "María", "Gómez", "maria.gomez@email.com", true, 102),
-                    new Usuario(3, "clopez", "carlos789", false, "Carlos", "López", "carlos.lopez@email.com", false, 103),
-                    new Usuario(4, "amartinez", "ana321", true, "Ana", "Martínez", "ana.martinez@email.com", true, 104),
-                    new Usuario(5, "lfernandez", "lucia654", true, "Lucía", "Fernández", "lucia.fernandez@email.com", false, 105),
-                    new Usuario(6, "dramirez", "diego987", false, "Diego", "Ramírez", "diego.ramirez@email.com", true, 106)
-                );
+                
             });
+
+            modelBuilder.Entity<Materia>(entity =>
+            {
+                entity.HasKey(e => e.IdMateria);
+
+                entity.Property(e => e.IdMateria)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdMateria)
+                   .IsUnique();
+
+                entity.Property(e => e.Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.HsSemanales)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.HsTotales)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.IdPlan)
+                   .IsRequired()
+                   .HasMaxLength(50);
+
+                //Relacion con Plan
+
+                /*entity.Property(e => e.IdPersona)
+                    .IsRequired()
+                    .HasField("_personaId");
+
+                entity.Navigation(e => e.Persona)
+                    .HasField("_persona");
+
+                entity.HasOne(e => e.Persona)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdPersona);*/
+
+            });
+
+
+            //Comisión
+
+            modelBuilder.Entity<Comision>(entity =>
+            {
+                entity.HasKey(e => e.IdComision);
+
+                entity.Property(e => e.IdComision)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdComision)
+                   .IsUnique();
+
+                entity.Property(e => e.AnioEspecialidad)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Descripcion)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.IdPlan)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+
+                //Relacion con Plan
+
+                /*entity.Property(e => e.IdPersona)
+                    .IsRequired()
+                    .HasField("_personaId");
+
+                entity.Navigation(e => e.Persona)
+                    .HasField("_persona");
+
+                entity.HasOne(e => e.Persona)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdPersona);*/
+
+                
+            });
+
+            modelBuilder.Entity<Persona>(entity =>
+            {
+                entity.HasKey(e => e.IdPersona);
+
+                entity.Property(e => e.IdPersona)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdPersona)
+                   .IsUnique();
+
+                entity.Property(e => e.Apellido)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Direccion)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.Email)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.FechaNacimiento)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.IdPlan)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.Legajo)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.Telefono)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.TipoPersona)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+
+
+                //Relacion con Plan
+
+                /*entity.Property(e => e.IdPersona)
+                    .IsRequired()
+                    .HasField("_personaId");
+
+                entity.Navigation(e => e.Persona)
+                    .HasField("_persona");
+
+                entity.HasOne(e => e.Persona)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdPersona);*/
+
+
+            });
+
         }
     }
 }

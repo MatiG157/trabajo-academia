@@ -108,9 +108,6 @@ namespace WindowsForms
             return curso;
         }
 
-        private void cursosDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
-        }
     }
 }

@@ -58,7 +58,7 @@ namespace Data
                 existingUsuario.Email = usuario.Email;
                 existingUsuario.Habilitado = usuario.Habilitado;
                 existingUsuario.NombreUsuario = usuario.NombreUsuario;
-                existingUsuario.IdPersona = usuario.IdPersona;
+                existingUsuario.SetPersonaId(usuario.IdPersona);
 
 
                 context.SaveChanges();

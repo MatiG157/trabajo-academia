@@ -55,8 +55,8 @@ namespace Data
             var existingCurso = context.Cursos.Find(curso.IdCurso);
             if (existingCurso != null)
             {
-                existingCurso.IdMateria = curso.IdMateria;
-                existingCurso.IdComision = curso.IdComision;
+                existingCurso.SetMateriaId(curso.IdMateria);
+                existingCurso.SetComisionId(curso.IdComision);
                 existingCurso.AnioCalendario = curso.AnioCalendario;
                 existingCurso.Cupo = curso.Cupo;
 

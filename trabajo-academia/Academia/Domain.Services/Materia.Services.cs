@@ -2,7 +2,7 @@
 using DTOs;
 
 
-namespace Application.Services
+namespace Domain.Services
 {
     public class MateriaService
     {

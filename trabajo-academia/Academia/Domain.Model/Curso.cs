@@ -3,8 +3,6 @@
     public class Curso {
     
         public int IdCurso { get; set; }
-        public int IdMateria { get; set; }
-        public int IdComision { get; set; }
         public int AnioCalendario { get; set; }
         public int Cupo { get; set; }
 
@@ -13,7 +11,7 @@
         private int _materiaId;
         private Materia? _materia;
 
-        public int MateriaId
+        public int IdMateria
         {
             get => _materia?.IdMateria ?? _materiaId;
             private set => _materiaId = value;
@@ -38,7 +36,7 @@
         private int _comisionId;
         private Comision? _comision;
 
-        public int ComisionId
+        public int IdComision
         {
             get => _comision?.IdComision ?? _comisionId;
             private set => _comisionId = value;
@@ -56,8 +54,6 @@
                 }
             }
         }
-
-
 
         public Curso(int idCurso, int idMateria, int idComision, int anioCalendario, int cupo)
         {

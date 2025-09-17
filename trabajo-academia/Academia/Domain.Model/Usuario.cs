@@ -17,12 +17,11 @@ namespace Domain.Model
         public string Apellido { get; set; }
         public string Email { get; set; }
         public bool CambiaClave { get; set; }
-        public int IdPersona { get; set; }
 
         private int _personaId;
         private Persona? _persona;
 
-        public int PersonaId
+        public int IdPersona
         {
             get => _persona?.IdPersona ?? _personaId;
             private set => _personaId = value;

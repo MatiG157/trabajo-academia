@@ -49,7 +49,6 @@
             cursosDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             cursosDataGridView.Size = new Size(858, 360);
             cursosDataGridView.TabIndex = 0;
-            cursosDataGridView.CellContentClick += cursosDataGridView_CellContentClick;
             // 
             // agregarButton
             // 
