@@ -73,6 +73,8 @@ namespace Domain.Services
                 Email = usuario.Email,
                 CambiaClave = usuario.CambiaClave,
                 IdPersona = usuario.IdPersona
+
+
             }).ToList();
         }
 

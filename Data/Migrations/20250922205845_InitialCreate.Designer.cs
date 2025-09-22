@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(TPIContext))]
-    [Migration("20250917201200_InitialCreate")]
+    [Migration("20250922205845_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -78,7 +78,7 @@ namespace Data.Migrations
 
                     b.HasIndex("IdMateria");
 
-                    b.ToTable("Cursos");
+                    b.ToTable("Cursos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Model.Materia", b =>

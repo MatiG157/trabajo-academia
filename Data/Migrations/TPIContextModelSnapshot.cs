@@ -75,7 +75,7 @@ namespace Data.Migrations
 
                     b.HasIndex("IdMateria");
 
-                    b.ToTable("Cursos");
+                    b.ToTable("Cursos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Model.Materia", b =>

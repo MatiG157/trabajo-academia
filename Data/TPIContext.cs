@@ -52,6 +52,8 @@ namespace Data
 
             modelBuilder.Entity<Curso>(entity =>
             {
+                entity.ToTable("Cursos");
+
                 entity.HasKey(e => e.IdCurso);
 
                 entity.Property(e => e.IdCurso)

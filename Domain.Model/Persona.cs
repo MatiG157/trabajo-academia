@@ -27,5 +27,6 @@ namespace Domain.Model
             Telefono=telefono;
             TipoPersona = tipoPersona;
         }
+
     }
 }

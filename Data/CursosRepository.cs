@@ -1,6 +1,8 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
+//using Microsoft.Data.SqlClient;
+
 
 namespace Data
 {
@@ -81,8 +83,8 @@ namespace Data
         {
             const string sql = @"
                 SELECT c.IdCurso, c.IdMateria, c.IdComision, c.AnioCalendario, c.Cupo, 
-                       com.anioEspecialidad, com.Descripcion, com.idPlan,
-                       m.descripcion, m.hsSemanales, m.hsTotales, m.idPlan
+                       com.AnioEspecialidad, com.Descripcion, com.IdPlan,
+                       m.Descripcion, m.HsSemanales, m.HsTotales, m.IdPlan
                 FROM Cursos c
                 INNER JOIN Materias m ON c.IdMateria = m.IdMateria
                 INNER JOIN Comisiones com ON c.IdComision = com.IdComision
@@ -117,8 +119,10 @@ namespace Data
                 var comision = new Comision(
                     reader.GetInt32(2), // idComision
                     reader.GetInt32(5), // anioEspecialidad
-                    reader.GetString(6), // descripcion
-                    reader.GetInt32(7)); // idPlan
+                    reader.GetString(6) // Descripcion
+                    );
+                comision.SetPlanId(reader.GetInt32(7));
+                
                 curso.SetComision(comision);
 
                 // Crear y asignar la materia
@@ -126,8 +130,9 @@ namespace Data
                     reader.GetInt32(1), // idMateria
                     reader.GetString(8), // descripcion
                     reader.GetInt32(9), // hsSemanales
-                    reader.GetInt32(10), // hsTotales
-                    reader.GetInt32(11)); // idPlan
+                    reader.GetInt32(10) // hsTotales
+                    );
+                materia.SetPlanId(reader.GetInt32(11));
                 curso.SetMateria(materia);
 
                 cursos.Add(curso);

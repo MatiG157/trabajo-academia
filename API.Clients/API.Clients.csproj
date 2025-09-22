@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Class2.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="MateriaApiClient" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
   </ItemGroup>
 
