@@ -59,20 +59,20 @@ namespace Domain.Services
 
         public IEnumerable<PersonaDTO> GetAll()
         {
-            var personaRepository = new PersonaoRepository();
+            var personaRepository = new PersonaRepository();
             var persona = personaRepository.GetAll();
 
             return personas.Select(persona => new PersonaDTO
             {
-                IdPersona = persona.IdPersona;
-                Apellido = persona.Apellido;
-                Direccion = persona.Direccion;
-                Email = persona.Email;
-                FechaNacimiento = persona.FechaNacimiento;
-                IdPlan = persona.IdPlan;
-                Legajo = persona.Legajo;
-                Telefono = persona.Telefono;
-                TipoPersona = persona.TipoPersona;
+                IdPersona = persona.IdPersona,
+                Apellido = persona.Apellido,
+                Direccion = persona.Direccion,
+                Email = persona.Email,
+                FechaNacimiento = persona.FechaNacimiento,
+                IdPlan = persona.IdPlan,
+                Legajo = persona.Legajo,
+                Telefono = persona.Telefono,
+                TipoPersona = persona.TipoPersona,
             }).ToList();
         }
 
