@@ -125,11 +125,11 @@ namespace Data
                     reader.GetString(11),  // Direccion
                     reader.GetString(12),  // Email
                     reader.GetDateTime(13),// FechaNacimiento
-                    reader.GetInt32(14),   // IdPlan
                     reader.GetInt32(15),   // Legajo
                     reader.GetString(16),  // Telefono
                     reader.GetString(17)   // TipoPersona
                    );
+                persona.SetPlanId(reader.GetInt32(14));
 
                 usuario.SetPersona(persona);
                 usuarios.Add(usuario);

@@ -32,6 +32,28 @@ namespace WindowsFormsCurso
             form.MdiParent = this;   // Se abre dentro del contenedor MDI
             form.Show();
         }
+
+        private void comisionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ComisionesLista form = new ComisionesLista();
+            form.MdiParent = this;   // Se abre dentro del contenedor MDI
+            form.Show();
+        }
+
+        private void materiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MateriasLista form = new MateriasLista();
+            form.MdiParent = this;   // Se abre dentro del contenedor MDI
+            form.Show();
+        }
+
+        /*private void IniciarLogin(object sender, EventArgs e)
+        {
+            InicioSesion form = new InicioSesion();
+            form.MdiParent = this;   // Se abre dentro del contenedor MDI
+            form.ShowDialog();
+
+        }*/
     }
 }
 

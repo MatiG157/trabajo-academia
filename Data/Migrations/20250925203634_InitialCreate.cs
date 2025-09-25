@@ -12,6 +12,39 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Especialidades",
+                columns: table => new
+                {
+                    IdEspecialidad = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descripcion = table.Column<string>(type: "nvarchar(360)", maxLength: 360, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Especialidades", x => x.IdEspecialidad);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Planes",
+                columns: table => new
+                {
+                    IdPlan = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descripcion = table.Column<string>(type: "nvarchar(360)", maxLength: 360, nullable: false),
+                    IdEspecialidad = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Planes", x => x.IdPlan);
+                    table.ForeignKey(
+                        name: "FK_Planes_Especialidades_IdEspecialidad",
+                        column: x => x.IdEspecialidad,
+                        principalTable: "Especialidades",
+                        principalColumn: "IdEspecialidad",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comisiones",
                 columns: table => new
                 {
@@ -19,11 +52,17 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AnioEspecialidad = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    IdPlan = table.Column<int>(type: "int", maxLength: 30, nullable: false)
+                    IdPlan = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comisiones", x => x.IdComision);
+                    table.ForeignKey(
+                        name: "FK_Comisiones_Planes_IdPlan",
+                        column: x => x.IdPlan,
+                        principalTable: "Planes",
+                        principalColumn: "IdPlan",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,11 +74,17 @@ namespace Data.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     HsSemanales = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     HsTotales = table.Column<int>(type: "int", maxLength: 30, nullable: false),
-                    IdPlan = table.Column<int>(type: "int", maxLength: 50, nullable: false)
+                    IdPlan = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Materias", x => x.IdMateria);
+                    table.ForeignKey(
+                        name: "FK_Materias_Planes_IdPlan",
+                        column: x => x.IdPlan,
+                        principalTable: "Planes",
+                        principalColumn: "IdPlan",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,14 +97,20 @@ namespace Data.Migrations
                     Direccion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime2", maxLength: 30, nullable: false),
-                    IdPlan = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     Legajo = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    TipoPersona = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    TipoPersona = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    IdPlan = table.Column<int>(type: "int", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Personas", x => x.IdPersona);
+                    table.ForeignKey(
+                        name: "FK_Personas_Planes_IdPlan",
+                        column: x => x.IdPlan,
+                        principalTable: "Planes",
+                        principalColumn: "IdPlan",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,17 +128,15 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Cursos", x => x.IdCurso);
                     table.ForeignKey(
-                        name: "FK_Cursos_Comisiones_IdMateria",
-                        column: x => x.IdMateria,
+                        name: "FK_Cursos_Comisiones_IdComision",
+                        column: x => x.IdComision,
                         principalTable: "Comisiones",
-                        principalColumn: "IdComision",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdComision");
                     table.ForeignKey(
                         name: "FK_Cursos_Materias_IdMateria",
                         column: x => x.IdMateria,
                         principalTable: "Materias",
-                        principalColumn: "IdMateria",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdMateria");
                 });
 
             migrationBuilder.CreateTable(
@@ -123,9 +172,25 @@ namespace Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comisiones_IdPlan",
+                table: "Comisiones",
+                column: "IdPlan");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cursos_IdComision",
+                table: "Cursos",
+                column: "IdComision");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cursos_IdMateria",
                 table: "Cursos",
                 column: "IdMateria");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Especialidades_IdEspecialidad",
+                table: "Especialidades",
+                column: "IdEspecialidad",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Materias_IdMateria",
@@ -134,9 +199,30 @@ namespace Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Materias_IdPlan",
+                table: "Materias",
+                column: "IdPlan");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Personas_IdPersona",
                 table: "Personas",
                 column: "IdPersona",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Personas_IdPlan",
+                table: "Personas",
+                column: "IdPlan");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Planes_IdEspecialidad",
+                table: "Planes",
+                column: "IdEspecialidad");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Planes_IdPlan",
+                table: "Planes",
+                column: "IdPlan",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -168,6 +254,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Personas");
+
+            migrationBuilder.DropTable(
+                name: "Planes");
+
+            migrationBuilder.DropTable(
+                name: "Especialidades");
         }
     }
 }

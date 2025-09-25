@@ -32,6 +32,8 @@
             listasToolStripMenuItem = new ToolStripMenuItem();
             cursoToolStripMenuItem = new ToolStripMenuItem();
             usuarioToolStripMenuItem = new ToolStripMenuItem();
+            comisionToolStripMenuItem = new ToolStripMenuItem();
+            materiaToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -46,7 +48,7 @@
             // 
             // listasToolStripMenuItem
             // 
-            listasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cursoToolStripMenuItem, usuarioToolStripMenuItem });
+            listasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cursoToolStripMenuItem, usuarioToolStripMenuItem, comisionToolStripMenuItem, materiaToolStripMenuItem });
             listasToolStripMenuItem.Name = "listasToolStripMenuItem";
             listasToolStripMenuItem.Size = new Size(48, 20);
             listasToolStripMenuItem.Text = "&Listas";
@@ -64,6 +66,20 @@
             usuarioToolStripMenuItem.Size = new Size(180, 22);
             usuarioToolStripMenuItem.Text = "&Usuario";
             usuarioToolStripMenuItem.Click += usuarioToolStripMenuItem_Click;
+            // 
+            // comisionToolStripMenuItem
+            // 
+            comisionToolStripMenuItem.Name = "comisionToolStripMenuItem";
+            comisionToolStripMenuItem.Size = new Size(180, 22);
+            comisionToolStripMenuItem.Text = "C&omision";
+            comisionToolStripMenuItem.Click += comisionToolStripMenuItem_Click;
+            // 
+            // materiaToolStripMenuItem
+            // 
+            materiaToolStripMenuItem.Name = "materiaToolStripMenuItem";
+            materiaToolStripMenuItem.Size = new Size(180, 22);
+            materiaToolStripMenuItem.Text = "&Materia";
+            materiaToolStripMenuItem.Click += materiaToolStripMenuItem_Click;
             // 
             // MenuPrincipal
             // 
@@ -86,5 +102,7 @@
         private ToolStripMenuItem listasToolStripMenuItem;
         private ToolStripMenuItem cursoToolStripMenuItem;
         private ToolStripMenuItem usuarioToolStripMenuItem;
+        private ToolStripMenuItem comisionToolStripMenuItem;
+        private ToolStripMenuItem materiaToolStripMenuItem;
     }
 }

@@ -11,6 +11,8 @@ namespace Domain.Model
         public string Descripcion { get; set; }
         public int IdEspecialidad { get; set; }
 
+        public Especialidad() { }
+
         public Especialidad(int idEspecialidad,string descripcion)
         {
             IdEspecialidad = idEspecialidad;

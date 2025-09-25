@@ -40,13 +40,14 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("IdPlan")
-                        .HasMaxLength(30)
                         .HasColumnType("int");
 
                     b.HasKey("IdComision");
 
                     b.HasIndex("IdComision")
                         .IsUnique();
+
+                    b.HasIndex("IdPlan");
 
                     b.ToTable("Comisiones");
                 });
@@ -73,9 +74,32 @@ namespace Data.Migrations
 
                     b.HasKey("IdCurso");
 
+                    b.HasIndex("IdComision");
+
                     b.HasIndex("IdMateria");
 
                     b.ToTable("Cursos", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Model.Especialidad", b =>
+                {
+                    b.Property<int>("IdEspecialidad")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEspecialidad"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(360)
+                        .HasColumnType("nvarchar(360)");
+
+                    b.HasKey("IdEspecialidad");
+
+                    b.HasIndex("IdEspecialidad")
+                        .IsUnique();
+
+                    b.ToTable("Especialidades");
                 });
 
             modelBuilder.Entity("Domain.Model.Materia", b =>
@@ -100,13 +124,14 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("IdPlan")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.HasKey("IdMateria");
 
                     b.HasIndex("IdMateria")
                         .IsUnique();
+
+                    b.HasIndex("IdPlan");
 
                     b.ToTable("Materias");
                 });
@@ -161,7 +186,35 @@ namespace Data.Migrations
                     b.HasIndex("IdPersona")
                         .IsUnique();
 
+                    b.HasIndex("IdPlan");
+
                     b.ToTable("Personas");
+                });
+
+            modelBuilder.Entity("Domain.Model.Plan", b =>
+                {
+                    b.Property<int>("IdPlan")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPlan"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(360)
+                        .HasColumnType("nvarchar(360)");
+
+                    b.Property<int>("IdEspecialidad")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdPlan");
+
+                    b.HasIndex("IdEspecialidad");
+
+                    b.HasIndex("IdPlan")
+                        .IsUnique();
+
+                    b.ToTable("Planes");
                 });
 
             modelBuilder.Entity("Domain.Model.Usuario", b =>
@@ -216,23 +269,67 @@ namespace Data.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("Domain.Model.Comision", b =>
+                {
+                    b.HasOne("Domain.Model.Plan", "Plan")
+                        .WithMany()
+                        .HasForeignKey("IdPlan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+                });
+
             modelBuilder.Entity("Domain.Model.Curso", b =>
                 {
                     b.HasOne("Domain.Model.Comision", "Comision")
                         .WithMany()
-                        .HasForeignKey("IdMateria")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdComision")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Model.Materia", "Materia")
                         .WithMany()
                         .HasForeignKey("IdMateria")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Comision");
 
                     b.Navigation("Materia");
+                });
+
+            modelBuilder.Entity("Domain.Model.Materia", b =>
+                {
+                    b.HasOne("Domain.Model.Plan", "Plan")
+                        .WithMany()
+                        .HasForeignKey("IdPlan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("Domain.Model.Persona", b =>
+                {
+                    b.HasOne("Domain.Model.Plan", "Plan")
+                        .WithMany()
+                        .HasForeignKey("IdPlan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("Domain.Model.Plan", b =>
+                {
+                    b.HasOne("Domain.Model.Especialidad", "Especialidad")
+                        .WithMany()
+                        .HasForeignKey("IdEspecialidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Especialidad");
                 });
 
             modelBuilder.Entity("Domain.Model.Usuario", b =>

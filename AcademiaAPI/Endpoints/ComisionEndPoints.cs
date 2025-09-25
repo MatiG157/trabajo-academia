@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 namespace AcademiaAPI.Endpoints;
 public static class ComisionEndpoints
 {
-    public static void MapCursoEndpoints(this IEndpointRouteBuilder app)
+    public static void MapComisionEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapGet("/comisiones/{id}", (int id) =>
         {

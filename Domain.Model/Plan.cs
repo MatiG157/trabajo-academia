@@ -13,10 +13,12 @@ namespace Domain.Model
 
         // Atributos para la relacion con especialidad
 
+        public Plan() { }
+
         private int _especialidadId;
         private Especialidad? _especialidad;
 
-        public int IdEspecilidad
+        public int IdEspecialidad
         {
             get => _especialidad?.IdEspecialidad ?? _especialidadId;
             private set => _especialidadId = value;

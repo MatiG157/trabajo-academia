@@ -70,12 +70,21 @@ namespace Data
             return false;
         }
 
-
+        public bool EmailExists(string email, int? excludeId = null)
+        {
+            using var context = CreateContext();
+            var query = context.Personas.Where(u => u.Email.ToLower() == email.ToLower());
+            if (excludeId.HasValue)
+            {
+                query = query.Where(u => u.IdPersona != excludeId.Value);
+            }
+            return query.Any();
+        }
 
         public IEnumerable<Persona> GetByCriteria(PersonaCriteria criteria)
         {
             const string sql = @"
-                SELECT  p.IdPersona, p.Apellido, p.Direccion, p.Email, p.FechaNacimiento, p.IdPlan, p.Legajo, plan.descripcion, plan.IdEspecialidad
+                SELECT  p.IdPersona, p.Apellido, p.Direccion, p.Email, p.FechaNacimiento, p.IdPlan, p.Legajo, p.Telefono, p.TipoPersona, plan.descripcion, plan.IdEspecialidad
                 FROM Personas p
                 INNER JOIN Planes p ON m.IdPlan = p.IdPlan
                 WHERE p.Apellido LIKE @SearchTerm 
@@ -101,19 +110,21 @@ namespace Data
                 var persona = new Persona(
                     reader.GetInt32(0),    // IdPersona
                     reader.GetString(1),   // Apellido
-                    reader.GetInt32(2),   // Direccion
-                    reader.GetInt32(3),  // Email
-                    reader.GetInt32(4),    // FechaNacimiento
-                    reader.GetInt32(6)   // Legajo
+                    reader.GetString(2),   // Direccion
+                    reader.GetString(3),   // Email
+                    reader.GetDateTime(4),   // FechaNacimiento
+                    reader.GetInt32(6),    // Legajo
+                    reader.GetString(7),    // Telefono
+                    reader.GetString(8)    // TipoPErsonas
                 );
-
+                
 
                 // Crear y asignar el Plan
                 var plan = new Plan(
                     reader.GetInt32(5),    //IdPlan 
-                    reader.GetString(6)  // Descripcion
+                    reader.GetString(9)  // Descripcion
                    );
-                plan.SetEspecialidadId(reader.GetInt32(7));
+                plan.SetEspecialidadId(reader.GetInt32(10));
 
                 //materia.SetMateria(materia);
                 personas.Add(persona);

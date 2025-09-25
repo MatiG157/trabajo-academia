@@ -19,12 +19,14 @@ namespace Domain.Model
         public bool CambiaClave { get; set; }
 
         private int _personaId;
+        //public int IdPersona { get; private set; }
         private Persona? _persona;
+        public Usuario() { }
 
         public int IdPersona
         {
             get => _persona?.IdPersona ?? _personaId;
-            private set => _personaId = value;
+            set => _personaId = value;
         }
 
         public Persona? Persona

@@ -24,6 +24,8 @@ namespace Data
         public DbSet<Comision> Comisiones { get; set; }
         public DbSet<Materia> Materias { get; set; }
         public DbSet<Persona> Personas { get; set; }
+        public DbSet<Especialidad> Especialidades { get; set; }
+        public DbSet<Plan> Planes { get; set; }
 
         public TPIContext()
         {
@@ -59,12 +61,6 @@ namespace Data
                 entity.Property(e => e.IdCurso)
                     .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.IdMateria)
-                    .IsRequired();
-
-                entity.Property(e => e.IdComision)
-                    .IsRequired();
-
                 entity.Property(e => e.AnioCalendario)
                     .IsRequired();
 
@@ -82,7 +78,8 @@ namespace Data
 
                 entity.HasOne(e => e.Materia)
                     .WithMany()
-                    .HasForeignKey(e => e.IdMateria);
+                    .HasForeignKey(e => e.IdMateria)
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 //relacion con comision
 
@@ -95,10 +92,11 @@ namespace Data
 
                 entity.HasOne(e => e.Comision)
                     .WithMany()
-                    .HasForeignKey(e => e.IdMateria);
+                    .HasForeignKey(e => e.IdComision)
+                    .OnDelete(DeleteBehavior.NoAction); 
             });
 
-            modelBuilder.Entity<Usuario>(entity =>
+            modelBuilder.Entity<Usuario>(static entity =>
             {
                 entity.HasKey(e => e.IdUsuario);
 
@@ -145,9 +143,24 @@ namespace Data
                     .HasForeignKey(e => e.IdPersona);
 
                 // Datos iniciales
-                
+
+                entity.HasData(new Usuario
+                {
+                    IdUsuario = 1,
+                    Apellido = "Admin",
+                    Nombre = "Admin",
+                    Clave = "1234",
+                    Email = "admin@gmail.com",
+                    Habilitado = true,
+                    NombreUsuario = "admin",
+                    IdPersona = 1
+}
+                );
+
+
             });
 
+            //Materia
             modelBuilder.Entity<Materia>(entity =>
             {
                 entity.HasKey(e => e.IdMateria);
@@ -170,22 +183,18 @@ namespace Data
                    .IsRequired()
                    .HasMaxLength(30);
 
-                entity.Property(e => e.IdPlan)
-                   .IsRequired()
-                   .HasMaxLength(50);
-
                 //Relacion con Plan
 
-                /*entity.Property(e => e.IdPersona)
+                entity.Property(e => e.IdPlan)
                     .IsRequired()
-                    .HasField("_personaId");
+                    .HasField("_planId");
 
-                entity.Navigation(e => e.Persona)
-                    .HasField("_persona");
+                entity.Navigation(e => e.Plan)
+                    .HasField("_plan");
 
-                entity.HasOne(e => e.Persona)
+                entity.HasOne(e => e.Plan)
                     .WithMany()
-                    .HasForeignKey(e => e.IdPersona);*/
+                    .HasForeignKey(e => e.IdPlan);
 
             });
 
@@ -210,23 +219,19 @@ namespace Data
                    .IsRequired()
                    .HasMaxLength(30);
 
-                entity.Property(e => e.IdPlan)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
 
                 //Relacion con Plan
 
-                /*entity.Property(e => e.IdPersona)
+                entity.Property(e => e.IdPlan)
                     .IsRequired()
-                    .HasField("_personaId");
+                    .HasField("_planId");
 
-                entity.Navigation(e => e.Persona)
-                    .HasField("_persona");
+                entity.Navigation(e => e.Plan)
+                    .HasField("_plan");
 
-                entity.HasOne(e => e.Persona)
+                entity.HasOne(e => e.Plan)
                     .WithMany()
-                    .HasForeignKey(e => e.IdPersona);*/
+                    .HasForeignKey(e => e.IdPlan);
 
                 
             });
@@ -277,16 +282,63 @@ namespace Data
 
                 //Relacion con Plan
 
-                /*entity.Property(e => e.IdPersona)
+                entity.Property(e => e.IdPlan)
                     .IsRequired()
-                    .HasField("_personaId");
+                    .HasField("_planId");
 
-                entity.Navigation(e => e.Persona)
-                    .HasField("_persona");
+                entity.Navigation(e => e.Plan)
+                    .HasField("_plan");
 
-                entity.HasOne(e => e.Persona)
+                entity.HasOne(e => e.Plan)
                     .WithMany()
-                    .HasForeignKey(e => e.IdPersona);*/
+                    .HasForeignKey(e => e.IdPlan);
+
+
+            });
+
+            modelBuilder.Entity<Especialidad>(entity =>
+            {
+                entity.HasKey(e => e.IdEspecialidad);
+
+                entity.Property(e => e.IdEspecialidad)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdEspecialidad)
+                   .IsUnique();
+
+                entity.Property(e => e.Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(360);
+                    
+
+            });
+
+            modelBuilder.Entity<Plan>(entity =>
+            {
+                entity.HasKey(e => e.IdPlan);
+
+                entity.Property(e => e.IdPlan)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdPlan)
+                   .IsUnique();
+
+                entity.Property(e => e.Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(360);
+
+                //relacion con Especialidad
+
+                entity.Property(e => e.IdEspecialidad)
+                    .IsRequired()
+                    .HasField("_especialidadId");
+
+                entity.Navigation(e => e.Especialidad)
+                    .HasField("_especialidad");
+
+                entity.HasOne(e => e.Especialidad)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdEspecialidad);
 
 
             });

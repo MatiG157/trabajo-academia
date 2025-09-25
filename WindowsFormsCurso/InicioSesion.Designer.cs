@@ -62,6 +62,7 @@
             iniciarSesionButton.TabIndex = 2;
             iniciarSesionButton.Text = "Iniciar Sesion";
             iniciarSesionButton.UseVisualStyleBackColor = true;
+            iniciarSesionButton.Click += iniciarSesionButton_Click;
             // 
             // usuarioTextBox
             // 

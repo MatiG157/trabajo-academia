@@ -25,7 +25,7 @@ namespace API.Comisiones
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync("comision/" + id);
+                HttpResponseMessage response = await client.GetAsync("comisiones/" + id);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -65,11 +65,11 @@ namespace API.Comisiones
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception($"Error de conexión al obtener lista de cursos: {ex.Message}", ex);
+                throw new Exception($"Error de conexión al obtener lista de comisiones: {ex.Message}", ex);
             }
             catch (TaskCanceledException ex)
             {
-                throw new Exception($"Timeout al obtener lista de cursos: {ex.Message}", ex);
+                throw new Exception($"Timeout al obtener lista de comisiones: {ex.Message}", ex);
             }
         }
 
