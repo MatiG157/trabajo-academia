@@ -104,6 +104,7 @@
             iniciarSesionLinkLabel.TabIndex = 7;
             iniciarSesionLinkLabel.TabStop = true;
             iniciarSesionLinkLabel.Text = "Ya tengo una cuenta";
+            iniciarSesionLinkLabel.LinkClicked += iniciarSesionLinkLabel_LinkClicked;
             // 
             // Registrarse
             // 

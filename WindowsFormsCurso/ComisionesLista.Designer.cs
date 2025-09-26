@@ -93,7 +93,7 @@
             Controls.Add(agregarButton);
             Controls.Add(comisionesDataGridView);
             Name = "ComisionesLista";
-            Text = "Lista de comisiones";
+            Text = "Comisiones";
             Load += Comisiones_Load;
             ((System.ComponentModel.ISupportInitialize)comisionesDataGridView).EndInit();
             ResumeLayout(false);

@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
-using API.Cursos;
 using API.Usuarios;
 using DTOs;
 
@@ -25,30 +24,28 @@ namespace WindowsFormsCurso
 
         private void registroLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            Registrarse form = new Registrarse();
+            form.Show();
+            
         }
 
-        private void iniciarSesionButton_Click(object sender, EventArgs e)
+        private async void iniciarSesionButton_Click(object sender, EventArgs e)
         {
-            usuario = new UsuarioDTO();
+            
 
-            this.usuario.Email = (string)usuarioTextBox.Text;
-            this.usuario.Clave = (string)contraseñaTextBox.Text;
+            string email = usuarioTextBox.Text;
+            string clave = contraseñaTextBox.Text;
 
+            usuarioBD = await UsuarioApiClient.Login(email, clave);
 
-            // usuarioBD = await UsuarioApiClient.GetAsync(this.usuario.Email);
-
-            if (this.usuario.Email == "admin@gmail.com" && this.usuario.Clave == "1234")
+            if (usuarioBD != null)
             {
                 MenuPrincipal form = new MenuPrincipal();
-                // Se abre dentro del contenedor MDI
                 form.Show();
-
             }
             else
             {
-                MessageBox.Show("Error");
-
+                MessageBox.Show("Usuario o contraseña incorrectos");
             }
 
         }

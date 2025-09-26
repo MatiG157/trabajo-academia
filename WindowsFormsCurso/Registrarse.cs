@@ -16,5 +16,12 @@ namespace WindowsFormsCurso
         {
             InitializeComponent();
         }
+
+        private void iniciarSesionLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            InicioSesion form = new InicioSesion();
+            form.Show();
+            this.Close();
+        }
     }
 }

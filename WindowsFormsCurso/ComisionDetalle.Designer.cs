@@ -49,13 +49,13 @@
             // 
             // añoEspecialidadLabel
             // 
-            this.añoEspecialidadLabel.AutoSize = true;
-            this.añoEspecialidadLabel.Location = new Point(22, 96);
-            this.añoEspecialidadLabel.Margin = new Padding(2, 0, 2, 0);
-            this.añoEspecialidadLabel.Name = "añoEspecialidadLabel";
-            this.añoEspecialidadLabel.Size = new Size(97, 15);
-            this.añoEspecialidadLabel.TabIndex = 29;
-            this.añoEspecialidadLabel.Text = "Año especialidad";
+            añoEspecialidadLabel.AutoSize = true;
+            añoEspecialidadLabel.Location = new Point(22, 96);
+            añoEspecialidadLabel.Margin = new Padding(2, 0, 2, 0);
+            añoEspecialidadLabel.Name = "añoEspecialidadLabel";
+            añoEspecialidadLabel.Size = new Size(97, 15);
+            añoEspecialidadLabel.TabIndex = 29;
+            añoEspecialidadLabel.Text = "Año especialidad";
             // 
             // añoEspecialidadNumericUpDown
             // 
@@ -86,6 +86,7 @@
             cancelarButton.TabIndex = 26;
             cancelarButton.Text = "Cancelar";
             cancelarButton.UseVisualStyleBackColor = true;
+            cancelarButton.Click += cancelarButton_Click;
             // 
             // aceptarButton
             // 
@@ -96,6 +97,7 @@
             aceptarButton.TabIndex = 25;
             aceptarButton.Text = "Aceptar";
             aceptarButton.UseVisualStyleBackColor = true;
+            aceptarButton.Click += aceptarButton_Click;
             // 
             // idPlanLabel
             // 
@@ -122,14 +124,14 @@
             ClientSize = new Size(426, 210);
             Controls.Add(idPlanUpDown);
             Controls.Add(DescripcionRichTextBox);
-            Controls.Add(this.añoEspecialidadLabel);
+            Controls.Add(añoEspecialidadLabel);
             Controls.Add(añoEspecialidadNumericUpDown);
             Controls.Add(descripcionLabel);
             Controls.Add(cancelarButton);
             Controls.Add(aceptarButton);
             Controls.Add(idPlanLabel);
             Name = "ComisionDetalle";
-            Text = "Detalle Comicion";
+            Text = "Detalle comisión";
             ((System.ComponentModel.ISupportInitialize)idPlanUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)añoEspecialidadNumericUpDown).EndInit();
             ResumeLayout(false);

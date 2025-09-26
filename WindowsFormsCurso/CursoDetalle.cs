@@ -111,8 +111,6 @@ namespace WindowsForms
         private void SetFormMode(FormMode value)
         {
             mode = value;
-
-
         }
 
 

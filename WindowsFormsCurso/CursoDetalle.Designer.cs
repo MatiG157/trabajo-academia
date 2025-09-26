@@ -46,28 +46,28 @@
             // 
             // idComisionNumericUpDown
             // 
-            idComisionNumericUpDown.Location = new Point(149, 87);
+            idComisionNumericUpDown.Location = new Point(130, 65);
             idComisionNumericUpDown.Margin = new Padding(2);
             idComisionNumericUpDown.Name = "idComisionNumericUpDown";
-            idComisionNumericUpDown.Size = new Size(125, 27);
+            idComisionNumericUpDown.Size = new Size(109, 23);
             idComisionNumericUpDown.TabIndex = 0;
             // 
             // idComisionLabel
             // 
             idComisionLabel.AutoSize = true;
-            idComisionLabel.Location = new Point(26, 94);
+            idComisionLabel.Location = new Point(23, 70);
             idComisionLabel.Margin = new Padding(2, 0, 2, 0);
             idComisionLabel.Name = "idComisionLabel";
-            idComisionLabel.Size = new Size(84, 20);
+            idComisionLabel.Size = new Size(68, 15);
             idComisionLabel.TabIndex = 1;
             idComisionLabel.Text = "idComision";
             // 
             // aceptarButton
             // 
-            aceptarButton.Location = new Point(273, 266);
+            aceptarButton.Location = new Point(239, 200);
             aceptarButton.Margin = new Padding(2);
             aceptarButton.Name = "aceptarButton";
-            aceptarButton.Size = new Size(92, 29);
+            aceptarButton.Size = new Size(80, 22);
             aceptarButton.TabIndex = 2;
             aceptarButton.Text = "Aceptar";
             aceptarButton.UseVisualStyleBackColor = true;
@@ -75,10 +75,10 @@
             // 
             // cancelarButton
             // 
-            cancelarButton.Location = new Point(378, 266);
+            cancelarButton.Location = new Point(331, 200);
             cancelarButton.Margin = new Padding(2);
             cancelarButton.Name = "cancelarButton";
-            cancelarButton.Size = new Size(92, 29);
+            cancelarButton.Size = new Size(80, 22);
             cancelarButton.TabIndex = 3;
             cancelarButton.Text = "Cancelar";
             cancelarButton.UseVisualStyleBackColor = true;
@@ -87,38 +87,38 @@
             // idMateriaLabel
             // 
             idMateriaLabel.AutoSize = true;
-            idMateriaLabel.Location = new Point(26, 50);
+            idMateriaLabel.Location = new Point(23, 38);
             idMateriaLabel.Margin = new Padding(2, 0, 2, 0);
             idMateriaLabel.Name = "idMateriaLabel";
-            idMateriaLabel.Size = new Size(73, 20);
+            idMateriaLabel.Size = new Size(57, 15);
             idMateriaLabel.TabIndex = 5;
             idMateriaLabel.Text = "idMateria";
             // 
             // idMateriaNumericUpDown
             // 
-            idMateriaNumericUpDown.Location = new Point(149, 43);
+            idMateriaNumericUpDown.Location = new Point(130, 32);
             idMateriaNumericUpDown.Margin = new Padding(2);
             idMateriaNumericUpDown.Name = "idMateriaNumericUpDown";
-            idMateriaNumericUpDown.Size = new Size(125, 27);
+            idMateriaNumericUpDown.Size = new Size(109, 23);
             idMateriaNumericUpDown.TabIndex = 1;
             // 
             // AnioCalendarioLabel
             // 
             AnioCalendarioLabel.AutoSize = true;
-            AnioCalendarioLabel.Location = new Point(26, 142);
+            AnioCalendarioLabel.Location = new Point(23, 106);
             AnioCalendarioLabel.Margin = new Padding(2, 0, 2, 0);
             AnioCalendarioLabel.Name = "AnioCalendarioLabel";
-            AnioCalendarioLabel.Size = new Size(114, 20);
+            AnioCalendarioLabel.Size = new Size(90, 15);
             AnioCalendarioLabel.TabIndex = 9;
             AnioCalendarioLabel.Text = "Anio calendario";
             // 
             // AnioCalendarioNumericUpDown
             // 
-            AnioCalendarioNumericUpDown.Location = new Point(149, 142);
+            AnioCalendarioNumericUpDown.Location = new Point(130, 106);
             AnioCalendarioNumericUpDown.Margin = new Padding(2);
             AnioCalendarioNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             AnioCalendarioNumericUpDown.Name = "AnioCalendarioNumericUpDown";
-            AnioCalendarioNumericUpDown.Size = new Size(125, 27);
+            AnioCalendarioNumericUpDown.Size = new Size(109, 23);
             AnioCalendarioNumericUpDown.TabIndex = 0;
             AnioCalendarioNumericUpDown.TabStop = false;
             AnioCalendarioNumericUpDown.TextChanged += AnioCalendarioNumericUpDown_TextChanged;
@@ -127,29 +127,29 @@
             // cupoLabel
             // 
             cupoLabel.AutoSize = true;
-            cupoLabel.Location = new Point(26, 197);
+            cupoLabel.Location = new Point(23, 148);
             cupoLabel.Margin = new Padding(2, 0, 2, 0);
             cupoLabel.Name = "cupoLabel";
-            cupoLabel.Size = new Size(44, 20);
+            cupoLabel.Size = new Size(36, 15);
             cupoLabel.TabIndex = 7;
             cupoLabel.Text = "Cupo";
             cupoLabel.Click += cupoLabel_Click;
             // 
             // cupoNumericUpDown
             // 
-            cupoNumericUpDown.Location = new Point(149, 197);
+            cupoNumericUpDown.Location = new Point(130, 148);
             cupoNumericUpDown.Margin = new Padding(2);
             cupoNumericUpDown.Name = "cupoNumericUpDown";
-            cupoNumericUpDown.Size = new Size(125, 27);
+            cupoNumericUpDown.Size = new Size(109, 23);
             cupoNumericUpDown.TabIndex = 2;
             cupoNumericUpDown.TextChanged += cupoNumericUpDown_TextChanged;
             cupoNumericUpDown.ValueChanged += cupoNumericUpDown_ValueChanged;
             // 
             // CursoDetalle
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(492, 315);
+            ClientSize = new Size(430, 236);
             Controls.Add(AnioCalendarioLabel);
             Controls.Add(AnioCalendarioNumericUpDown);
             Controls.Add(cupoLabel);
@@ -162,7 +162,7 @@
             Controls.Add(idComisionNumericUpDown);
             Margin = new Padding(2);
             Name = "CursoDetalle";
-            Text = "Curso";
+            Text = "Detalle curso";
             Load += CursoDetalle_Load;
             ((System.ComponentModel.ISupportInitialize)idComisionNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)idMateriaNumericUpDown).EndInit();

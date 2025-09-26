@@ -327,13 +327,13 @@ namespace Data.Migrations
                     b.HasOne("Domain.Model.Comision", "Comision")
                         .WithMany()
                         .HasForeignKey("IdComision")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Model.Materia", "Materia")
                         .WithMany()
                         .HasForeignKey("IdMateria")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Comision");

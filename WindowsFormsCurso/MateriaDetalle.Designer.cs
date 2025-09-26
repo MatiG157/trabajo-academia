@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             HorasSemanalesLabel = new Label();
-            AnioCalendarioNumericUpDown = new NumericUpDown();
+            horasSemanalesNumericUpDown = new NumericUpDown();
             horasTotalesLabel = new Label();
-            cupoNumericUpDown = new NumericUpDown();
+            horasTotalesNumericUpDown = new NumericUpDown();
             descripcionLabel = new Label();
             cancelarButton = new Button();
             aceptarButton = new Button();
             DescripcionRichTextBox = new RichTextBox();
             idPlanLabel = new Label();
             idPlanUpDown = new NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)AnioCalendarioNumericUpDown).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)cupoNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)horasSemanalesNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)horasTotalesNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)idPlanUpDown).BeginInit();
             SuspendLayout();
             // 
@@ -53,15 +53,15 @@
             HorasSemanalesLabel.TabIndex = 19;
             HorasSemanalesLabel.Text = "Horas semanales";
             // 
-            // AnioCalendarioNumericUpDown
+            // horasSemanalesNumericUpDown
             // 
-            AnioCalendarioNumericUpDown.Location = new Point(125, 96);
-            AnioCalendarioNumericUpDown.Margin = new Padding(2);
-            AnioCalendarioNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            AnioCalendarioNumericUpDown.Name = "AnioCalendarioNumericUpDown";
-            AnioCalendarioNumericUpDown.Size = new Size(109, 23);
-            AnioCalendarioNumericUpDown.TabIndex = 10;
-            AnioCalendarioNumericUpDown.TabStop = false;
+            horasSemanalesNumericUpDown.Location = new Point(125, 96);
+            horasSemanalesNumericUpDown.Margin = new Padding(2);
+            horasSemanalesNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            horasSemanalesNumericUpDown.Name = "horasSemanalesNumericUpDown";
+            horasSemanalesNumericUpDown.Size = new Size(109, 23);
+            horasSemanalesNumericUpDown.TabIndex = 10;
+            horasSemanalesNumericUpDown.TabStop = false;
             // 
             // horasTotalesLabel
             // 
@@ -73,13 +73,13 @@
             horasTotalesLabel.TabIndex = 18;
             horasTotalesLabel.Text = "Horas totales";
             // 
-            // cupoNumericUpDown
+            // horasTotalesNumericUpDown
             // 
-            cupoNumericUpDown.Location = new Point(125, 130);
-            cupoNumericUpDown.Margin = new Padding(2);
-            cupoNumericUpDown.Name = "cupoNumericUpDown";
-            cupoNumericUpDown.Size = new Size(109, 23);
-            cupoNumericUpDown.TabIndex = 14;
+            horasTotalesNumericUpDown.Location = new Point(125, 130);
+            horasTotalesNumericUpDown.Margin = new Padding(2);
+            horasTotalesNumericUpDown.Name = "horasTotalesNumericUpDown";
+            horasTotalesNumericUpDown.Size = new Size(109, 23);
+            horasTotalesNumericUpDown.TabIndex = 14;
             // 
             // descripcionLabel
             // 
@@ -100,6 +100,7 @@
             cancelarButton.TabIndex = 16;
             cancelarButton.Text = "Cancelar";
             cancelarButton.UseVisualStyleBackColor = true;
+            cancelarButton.Click += cancelarButton_Click;
             // 
             // aceptarButton
             // 
@@ -110,6 +111,7 @@
             aceptarButton.TabIndex = 15;
             aceptarButton.Text = "Aceptar";
             aceptarButton.UseVisualStyleBackColor = true;
+            aceptarButton.Click += aceptarButton_Click;
             // 
             // DescripcionRichTextBox
             // 
@@ -144,17 +146,17 @@
             Controls.Add(idPlanUpDown);
             Controls.Add(DescripcionRichTextBox);
             Controls.Add(HorasSemanalesLabel);
-            Controls.Add(AnioCalendarioNumericUpDown);
+            Controls.Add(horasSemanalesNumericUpDown);
             Controls.Add(horasTotalesLabel);
-            Controls.Add(cupoNumericUpDown);
+            Controls.Add(horasTotalesNumericUpDown);
             Controls.Add(descripcionLabel);
             Controls.Add(cancelarButton);
             Controls.Add(aceptarButton);
             Controls.Add(idPlanLabel);
             Name = "MateriaDetalle";
-            Text = "Materia Detalle";
-            ((System.ComponentModel.ISupportInitialize)AnioCalendarioNumericUpDown).EndInit();
-            ((System.ComponentModel.ISupportInitialize)cupoNumericUpDown).EndInit();
+            Text = "Detalle materia";
+            ((System.ComponentModel.ISupportInitialize)horasSemanalesNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)horasTotalesNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)idPlanUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -163,9 +165,9 @@
         #endregion
 
         private Label HorasSemanalesLabel;
-        private NumericUpDown AnioCalendarioNumericUpDown;
+        private NumericUpDown horasSemanalesNumericUpDown;
         private Label horasTotalesLabel;
-        private NumericUpDown cupoNumericUpDown;
+        private NumericUpDown horasTotalesNumericUpDown;
         private Label descripcionLabel;
         private Button cancelarButton;
         private Button aceptarButton;

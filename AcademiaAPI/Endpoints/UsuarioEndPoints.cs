@@ -1,6 +1,7 @@
 using DTOs;
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
+using Domain.Model;
 
 
 
@@ -28,8 +29,44 @@ namespace AcademiaAPI.Endpoints;
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
 
+            app.MapGet("/usuarios/{email}/{clave}", async (string email, string clave) =>
+            {
+                UsuarioService usuarioService = new UsuarioService();
 
-            app.MapGet("/usuarios", () =>
+                UsuarioCriteriaDTO criteriaDTO = new UsuarioCriteriaDTO();
+
+                criteriaDTO.Email = email;
+                criteriaDTO.Clave = clave;
+
+                var usuario = await usuarioService.Login(criteriaDTO);
+
+                if (usuario == null)
+                {
+                    return Results.NotFound();
+                }
+
+                UsuarioDTO dto = new UsuarioDTO
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    NombreUsuario = usuario.NombreUsuario,
+                    Clave = usuario.Clave,
+                    Habilitado = usuario.Habilitado,
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
+                    Email = usuario.Email,
+                    CambiaClave = usuario.CambiaClave,
+                    IdPersona = usuario.IdPersona
+                };
+
+                return Results.Ok(dto);
+            })
+            .WithName("Login")
+            .Produces<UsuarioDTO>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithOpenApi();
+
+
+        app.MapGet("/usuarios", () =>
             {
                 UsuarioService usuarioService = new UsuarioService();
 

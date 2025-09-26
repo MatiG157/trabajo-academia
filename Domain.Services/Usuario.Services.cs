@@ -120,6 +120,18 @@ namespace Domain.Services
             });
         }
 
+        public async Task<Usuario?> Login(UsuarioCriteriaDTO criteriaDto)
+        {
+            var criteria = new UsuarioCriteria
+            {
+                Email = criteriaDto.Email,
+                Clave = criteriaDto.Clave
+            };
+
+            
+            var usuarioRepository = new UsuarioRepository();
+            return await usuarioRepository.FindByCriteria(criteria);
+        }
 
     }
 }

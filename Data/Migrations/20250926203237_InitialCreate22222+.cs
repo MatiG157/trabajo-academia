@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate22222 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -131,12 +131,14 @@ namespace Data.Migrations
                         name: "FK_Cursos_Comisiones_IdComision",
                         column: x => x.IdComision,
                         principalTable: "Comisiones",
-                        principalColumn: "IdComision");
+                        principalColumn: "IdComision",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cursos_Materias_IdMateria",
                         column: x => x.IdMateria,
                         principalTable: "Materias",
-                        principalColumn: "IdMateria");
+                        principalColumn: "IdMateria",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

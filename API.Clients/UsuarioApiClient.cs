@@ -138,5 +138,17 @@ namespace API.Usuarios
                 throw new Exception($"Timeout al actualizar usuario con Id {usuario.IdUsuario}: {ex.Message}", ex);
             }
         }
+        public static async Task<UsuarioDTO?> Login(string email, string clave)
+        {
+
+            var criteria = new UsuarioCriteriaDTO { Email = email, Clave = clave };
+
+            var response = await client.GetAsync($"usuarios/{criteria.Email}/{criteria.Clave}");
+
+            if (response.IsSuccessStatusCode)
+                return await response.Content.ReadFromJsonAsync<UsuarioDTO>();
+
+            return null;
+        }
     }
 }

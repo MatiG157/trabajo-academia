@@ -91,7 +91,7 @@ namespace API.Comisiones
             }
             catch (TaskCanceledException ex)
             {
-                throw new Exception($"Timeout al crear comusion: {ex.Message}", ex);
+                throw new Exception($"Timeout al crear comision: {ex.Message}", ex);
             }
         }
 

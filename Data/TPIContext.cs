@@ -100,7 +100,8 @@ namespace Data
 
                 entity.HasOne(e => e.Especialidad)
                     .WithMany()
-                    .HasForeignKey(e => e.IdEspecialidad);
+                    .HasForeignKey(e => e.IdEspecialidad)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasData(new
                 {
@@ -108,7 +109,6 @@ namespace Data
                     Descripcion = "Plan básico",
                     IdEspecialidad = 1
                 });
-
 
             });
 
@@ -166,7 +166,8 @@ namespace Data
 
                 entity.HasOne(e => e.Plan)
                     .WithMany()
-                    .HasForeignKey(e => e.IdPlan);
+                    .HasForeignKey(e => e.IdPlan)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 // Datos iniciales
 
@@ -230,7 +231,8 @@ namespace Data
 
                 entity.HasOne(e => e.Persona)
                     .WithMany()
-                    .HasForeignKey(e => e.IdPersona);
+                    .HasForeignKey(e => e.IdPersona)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 // Datos iniciales
 
@@ -277,7 +279,7 @@ namespace Data
                 entity.HasOne(e => e.Materia)
                     .WithMany()
                     .HasForeignKey(e => e.IdMateria)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 //relacion con comision
 
@@ -291,7 +293,7 @@ namespace Data
                 entity.HasOne(e => e.Comision)
                     .WithMany()
                     .HasForeignKey(e => e.IdComision)
-                    .OnDelete(DeleteBehavior.NoAction); 
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Materia>(entity =>
@@ -327,7 +329,8 @@ namespace Data
 
                 entity.HasOne(e => e.Plan)
                     .WithMany()
-                    .HasForeignKey(e => e.IdPlan);
+                    .HasForeignKey(e => e.IdPlan)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             });
 
@@ -361,9 +364,10 @@ namespace Data
 
                 entity.HasOne(e => e.Plan)
                     .WithMany()
-                    .HasForeignKey(e => e.IdPlan);
+                    .HasForeignKey(e => e.IdPlan)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                
+
             });
 
         }

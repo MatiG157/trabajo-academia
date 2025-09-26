@@ -56,28 +56,28 @@
             // cursoToolStripMenuItem
             // 
             cursoToolStripMenuItem.Name = "cursoToolStripMenuItem";
-            cursoToolStripMenuItem.Size = new Size(180, 22);
+            cursoToolStripMenuItem.Size = new Size(125, 22);
             cursoToolStripMenuItem.Text = "&Curso";
             cursoToolStripMenuItem.Click += cursoToolStripMenuItem_Click;
             // 
             // usuarioToolStripMenuItem
             // 
             usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
-            usuarioToolStripMenuItem.Size = new Size(180, 22);
+            usuarioToolStripMenuItem.Size = new Size(125, 22);
             usuarioToolStripMenuItem.Text = "&Usuario";
             usuarioToolStripMenuItem.Click += usuarioToolStripMenuItem_Click;
             // 
             // comisionToolStripMenuItem
             // 
             comisionToolStripMenuItem.Name = "comisionToolStripMenuItem";
-            comisionToolStripMenuItem.Size = new Size(180, 22);
+            comisionToolStripMenuItem.Size = new Size(125, 22);
             comisionToolStripMenuItem.Text = "C&omision";
             comisionToolStripMenuItem.Click += comisionToolStripMenuItem_Click;
             // 
             // materiaToolStripMenuItem
             // 
             materiaToolStripMenuItem.Name = "materiaToolStripMenuItem";
-            materiaToolStripMenuItem.Size = new Size(180, 22);
+            materiaToolStripMenuItem.Size = new Size(125, 22);
             materiaToolStripMenuItem.Text = "&Materia";
             materiaToolStripMenuItem.Click += materiaToolStripMenuItem_Click;
             // 
@@ -89,7 +89,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MenuPrincipal";
-            Text = "Form1";
+            Text = "Academia";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

@@ -51,28 +51,28 @@
             // 
             // nombreUsuarioTextBox
             // 
-            nombreUsuarioTextBox.Location = new Point(149, 24);
+            nombreUsuarioTextBox.Location = new Point(130, 18);
             nombreUsuarioTextBox.Margin = new Padding(2);
             nombreUsuarioTextBox.Name = "nombreUsuarioTextBox";
-            nombreUsuarioTextBox.Size = new Size(167, 27);
+            nombreUsuarioTextBox.Size = new Size(147, 23);
             nombreUsuarioTextBox.TabIndex = 0;
             // 
             // nombreUsuarioLabel
             // 
             nombreUsuarioLabel.AutoSize = true;
-            nombreUsuarioLabel.Location = new Point(26, 31);
+            nombreUsuarioLabel.Location = new Point(23, 23);
             nombreUsuarioLabel.Margin = new Padding(2, 0, 2, 0);
             nombreUsuarioLabel.Name = "nombreUsuarioLabel";
-            nombreUsuarioLabel.Size = new Size(111, 20);
+            nombreUsuarioLabel.Size = new Size(89, 15);
             nombreUsuarioLabel.TabIndex = 1;
             nombreUsuarioLabel.Text = "nombreUsuario";
             // 
             // aceptarButton
             // 
-            aceptarButton.Location = new Point(339, 500);
+            aceptarButton.Location = new Point(297, 375);
             aceptarButton.Margin = new Padding(2);
             aceptarButton.Name = "aceptarButton";
-            aceptarButton.Size = new Size(92, 29);
+            aceptarButton.Size = new Size(80, 22);
             aceptarButton.TabIndex = 2;
             aceptarButton.Text = "Aceptar";
             aceptarButton.UseVisualStyleBackColor = true;
@@ -80,10 +80,10 @@
             // 
             // cancelarButton
             // 
-            cancelarButton.Location = new Point(453, 500);
+            cancelarButton.Location = new Point(396, 375);
             cancelarButton.Margin = new Padding(2);
             cancelarButton.Name = "cancelarButton";
-            cancelarButton.Size = new Size(92, 29);
+            cancelarButton.Size = new Size(80, 22);
             cancelarButton.TabIndex = 3;
             cancelarButton.Text = "Cancelar";
             cancelarButton.UseVisualStyleBackColor = true;
@@ -92,131 +92,135 @@
             // claveLabel
             // 
             claveLabel.AutoSize = true;
-            claveLabel.Location = new Point(26, 81);
+            claveLabel.Location = new Point(23, 61);
             claveLabel.Margin = new Padding(2, 0, 2, 0);
             claveLabel.Name = "claveLabel";
-            claveLabel.Size = new Size(43, 20);
+            claveLabel.Size = new Size(34, 15);
             claveLabel.TabIndex = 5;
             claveLabel.Text = "clave";
             claveLabel.Click += claveLabel_Click;
             // 
             // claveTextBox
             // 
-            claveTextBox.Location = new Point(149, 74);
+            claveTextBox.Location = new Point(130, 56);
             claveTextBox.Margin = new Padding(2);
             claveTextBox.Name = "claveTextBox";
-            claveTextBox.Size = new Size(167, 27);
+            claveTextBox.Size = new Size(147, 23);
             claveTextBox.TabIndex = 1;
             // 
             // habilitadoLabel
             // 
             habilitadoLabel.AutoSize = true;
-            habilitadoLabel.Location = new Point(23, 142);
+            habilitadoLabel.Location = new Point(20, 106);
             habilitadoLabel.Margin = new Padding(2, 0, 2, 0);
             habilitadoLabel.Name = "habilitadoLabel";
-            habilitadoLabel.Size = new Size(80, 20);
+            habilitadoLabel.Size = new Size(62, 15);
             habilitadoLabel.TabIndex = 9;
             habilitadoLabel.Text = "Habilitado";
             // 
             // habilitadoCheckBox
             // 
-            habilitadoCheckBox.Location = new Point(149, 142);
+            habilitadoCheckBox.Location = new Point(130, 106);
             habilitadoCheckBox.Margin = new Padding(2);
             habilitadoCheckBox.Name = "habilitadoCheckBox";
-            habilitadoCheckBox.Size = new Size(125, 27);
+            habilitadoCheckBox.Size = new Size(109, 20);
             habilitadoCheckBox.TabIndex = 0;
             habilitadoCheckBox.TabStop = false;
             // 
             // nombreLabel
             // 
             nombreLabel.AutoSize = true;
-            nombreLabel.Location = new Point(26, 197);
+            nombreLabel.Location = new Point(23, 148);
             nombreLabel.Margin = new Padding(2, 0, 2, 0);
             nombreLabel.Name = "nombreLabel";
-            nombreLabel.Size = new Size(64, 20);
+            nombreLabel.Size = new Size(51, 15);
             nombreLabel.TabIndex = 7;
             nombreLabel.Text = "Nombre";
             nombreLabel.Click += nombreLabel_Click;
             // 
             // nombreTextBox
             // 
-            nombreTextBox.Location = new Point(149, 197);
+            nombreTextBox.Location = new Point(130, 148);
             nombreTextBox.Margin = new Padding(2);
             nombreTextBox.Name = "nombreTextBox";
-            nombreTextBox.Size = new Size(167, 27);
+            nombreTextBox.Size = new Size(147, 23);
             nombreTextBox.TabIndex = 2;
             // 
             // apellidoLabel
             // 
             apellidoLabel.AutoSize = true;
-            apellidoLabel.Location = new Point(26, 264);
+            apellidoLabel.Location = new Point(23, 198);
             apellidoLabel.Name = "apellidoLabel";
-            apellidoLabel.Size = new Size(64, 20);
+            apellidoLabel.Size = new Size(49, 15);
             apellidoLabel.TabIndex = 10;
             apellidoLabel.Text = "apellido";
             // 
             // apellidoTextBox
             // 
-            apellidoTextBox.Location = new Point(149, 261);
+            apellidoTextBox.Location = new Point(130, 196);
+            apellidoTextBox.Margin = new Padding(3, 2, 3, 2);
             apellidoTextBox.Name = "apellidoTextBox";
-            apellidoTextBox.Size = new Size(167, 27);
+            apellidoTextBox.Size = new Size(147, 23);
             apellidoTextBox.TabIndex = 11;
             // 
             // emailTextBox
             // 
-            emailTextBox.Location = new Point(149, 320);
+            emailTextBox.Location = new Point(130, 240);
+            emailTextBox.Margin = new Padding(3, 2, 3, 2);
             emailTextBox.Name = "emailTextBox";
-            emailTextBox.Size = new Size(167, 27);
+            emailTextBox.Size = new Size(147, 23);
             emailTextBox.TabIndex = 13;
             // 
             // emailLabel
             // 
             emailLabel.AutoSize = true;
-            emailLabel.Location = new Point(26, 323);
+            emailLabel.Location = new Point(23, 242);
             emailLabel.Name = "emailLabel";
-            emailLabel.Size = new Size(46, 20);
+            emailLabel.Size = new Size(36, 15);
             emailLabel.TabIndex = 12;
             emailLabel.Text = "email";
             // 
             // cambiaClaveLabel
             // 
             cambiaClaveLabel.AutoSize = true;
-            cambiaClaveLabel.Location = new Point(26, 371);
+            cambiaClaveLabel.Location = new Point(23, 278);
             cambiaClaveLabel.Name = "cambiaClaveLabel";
-            cambiaClaveLabel.Size = new Size(94, 20);
+            cambiaClaveLabel.Size = new Size(75, 15);
             cambiaClaveLabel.TabIndex = 14;
             cambiaClaveLabel.Text = "cambiaClave";
             // 
             // idPersonaLabel
             // 
             idPersonaLabel.AutoSize = true;
-            idPersonaLabel.Location = new Point(26, 422);
+            idPersonaLabel.Location = new Point(23, 316);
             idPersonaLabel.Name = "idPersonaLabel";
-            idPersonaLabel.Size = new Size(73, 20);
+            idPersonaLabel.Size = new Size(59, 15);
             idPersonaLabel.TabIndex = 16;
             idPersonaLabel.Text = "idPersona";
             // 
             // cambiaClaveCheckBox
             // 
             cambiaClaveCheckBox.AutoSize = true;
-            cambiaClaveCheckBox.Location = new Point(149, 371);
+            cambiaClaveCheckBox.Location = new Point(130, 278);
+            cambiaClaveCheckBox.Margin = new Padding(3, 2, 3, 2);
             cambiaClaveCheckBox.Name = "cambiaClaveCheckBox";
-            cambiaClaveCheckBox.Size = new Size(18, 17);
+            cambiaClaveCheckBox.Size = new Size(15, 14);
             cambiaClaveCheckBox.TabIndex = 17;
             cambiaClaveCheckBox.UseVisualStyleBackColor = true;
             // 
             // idPersonaNumericUpDown
             // 
-            idPersonaNumericUpDown.Location = new Point(149, 415);
+            idPersonaNumericUpDown.Location = new Point(130, 311);
+            idPersonaNumericUpDown.Margin = new Padding(3, 2, 3, 2);
             idPersonaNumericUpDown.Name = "idPersonaNumericUpDown";
-            idPersonaNumericUpDown.Size = new Size(150, 27);
+            idPersonaNumericUpDown.Size = new Size(131, 23);
             idPersonaNumericUpDown.TabIndex = 18;
             // 
             // UsuarioDetalle
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(556, 556);
+            ClientSize = new Size(486, 417);
             Controls.Add(idPersonaNumericUpDown);
             Controls.Add(cambiaClaveCheckBox);
             Controls.Add(idPersonaLabel);
@@ -237,7 +241,7 @@
             Controls.Add(nombreUsuarioTextBox);
             Margin = new Padding(2);
             Name = "UsuarioDetalle";
-            Text = "Usuario";
+            Text = "Detalle usuario";
             Load += UsuarioDetalle_Load;
             ((System.ComponentModel.ISupportInitialize)idPersonaNumericUpDown).EndInit();
             ResumeLayout(false);

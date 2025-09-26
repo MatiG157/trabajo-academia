@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using API.Materia;
 using DTOs;
 using WindowsForms;
 
@@ -23,7 +24,7 @@ namespace WindowsFormsCurso
             set
             {
                 materia = value;
-                // this.SetCurso();
+                this.SetMateria();
             }
         }
 
@@ -35,14 +36,69 @@ namespace WindowsFormsCurso
             }
             set
             {
-                //SetFormMode(value);
+                SetFormMode(value);
             }
         }
+
         public MateriaDetalle()
         {
             InitializeComponent();
+
+            Mode = FormMode.Add;
         }
 
+        private async void aceptarButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
 
+                this.Materia.Descripcion = (string)DescripcionRichTextBox.Text;
+                this.Materia.HsSemanales = (int)horasSemanalesNumericUpDown.Value;
+                this.Materia.HsTotales = (int)horasTotalesNumericUpDown.Value;
+                this.Materia.IdPlan = (int)idPlanUpDown.Value;
+
+
+
+                if (this.Mode == FormMode.Update)
+                {
+                    await MateriaApiClient.UpdateAsync(this.Materia);
+                }
+                else
+                {
+                    await MateriaApiClient.AddAsync(this.Materia);
+                }
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void SetMateria()
+        {
+
+            this.horasSemanalesNumericUpDown.Maximum = 999999;
+            this.horasTotalesNumericUpDown.Maximum = 999999;
+            this.idPlanUpDown.Maximum = 999999;
+
+            this.DescripcionRichTextBox.Text = this.Materia.Descripcion;
+            this.horasSemanalesNumericUpDown.Value = this.Materia.HsSemanales;
+            this.horasTotalesNumericUpDown.Value = this.Materia.HsTotales;
+            this.idPlanUpDown.Value = this.Materia.IdPlan;
+        }
+
+        private void SetFormMode(FormMode value)
+        {
+            mode = value;
+        }
+
+        private void cancelarButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
+

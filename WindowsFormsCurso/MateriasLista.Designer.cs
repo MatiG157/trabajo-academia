@@ -93,7 +93,7 @@
             Controls.Add(agregarButton);
             Controls.Add(materiasDataGridView);
             Name = "MateriasLista";
-            Text = "Form1";
+            Text = "Materias";
             Load += materias_load;
             ((System.ComponentModel.ISupportInitialize)materiasDataGridView).EndInit();
             ResumeLayout(false);

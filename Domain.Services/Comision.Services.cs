@@ -11,6 +11,7 @@ namespace Domain.Services
             var comisionRepository = new ComisionRepository();
 
             Comision comision = new Comision(0, dto.AnioEspecialidad, dto.Descripcion);
+            comision.SetPlanId(dto.IdPlan);
 
             comisionRepository.Add(comision);
 

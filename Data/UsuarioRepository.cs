@@ -137,6 +137,19 @@ namespace Data
 
             return usuarios;
         }
+        public async Task<Usuario?> FindByCriteria(UsuarioCriteria criteria)
+        {
+            using var context = CreateContext();
 
+            var query = context.Usuarios.AsQueryable();
+
+            if (!string.IsNullOrEmpty(criteria.Email))
+                query = query.Where(u => u.Email == criteria.Email);
+
+            if (!string.IsNullOrEmpty(criteria.Clave))
+                query = query.Where(u => u.Clave == criteria.Clave);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }
