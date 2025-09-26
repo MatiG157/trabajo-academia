@@ -100,6 +100,13 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Especialidades");
+
+                    b.HasData(
+                        new
+                        {
+                            IdEspecialidad = 1,
+                            Descripcion = "Especialidad"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Model.Materia", b =>
@@ -160,7 +167,6 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime>("FechaNacimiento")
-                        .HasMaxLength(30)
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdPlan")
@@ -189,6 +195,20 @@ namespace Data.Migrations
                     b.HasIndex("IdPlan");
 
                     b.ToTable("Personas");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPersona = 1,
+                            Apellido = "Admin",
+                            Direccion = "Admin 123",
+                            Email = "admin@gmail.com",
+                            FechaNacimiento = new DateTime(2004, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IdPlan = 1,
+                            Legajo = 1234,
+                            Telefono = "3419999999",
+                            TipoPersona = "no se"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Model.Plan", b =>
@@ -215,6 +235,14 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Planes");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPlan = 1,
+                            Descripcion = "Plan básico",
+                            IdEspecialidad = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Model.Usuario", b =>
@@ -267,6 +295,20 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdUsuario = 1,
+                            Apellido = "Admin",
+                            CambiaClave = false,
+                            Clave = "1234",
+                            Email = "admin@gmail.com",
+                            Habilitado = true,
+                            IdPersona = 1,
+                            Nombre = "Admin",
+                            NombreUsuario = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Model.Comision", b =>

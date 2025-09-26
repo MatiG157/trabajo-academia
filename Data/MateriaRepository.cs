@@ -35,7 +35,7 @@ namespace Data
         {
             using var context = CreateContext();
             return context.Materias
-                .Include(m => m.IdPlan)
+                .Include(m => m.Plan)
                 .FirstOrDefault(u => u.IdMateria == id);
         }
 
@@ -43,7 +43,7 @@ namespace Data
         {
             using var context = CreateContext();
             return context.Materias
-                .Include(m => m.IdPlan)
+                .Include(m => m.Plan)
                 .ToList();
         }
 

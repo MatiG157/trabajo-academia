@@ -29,7 +29,7 @@ namespace Data
 
         public TPIContext()
         {
-            this.Database.EnsureCreated();
+            // this.Database.EnsureCreated();
         }
 
         
@@ -52,48 +52,138 @@ namespace Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Curso>(entity =>
+            modelBuilder.Entity<Especialidad>(entity =>
             {
-                entity.ToTable("Cursos");
+                entity.HasKey(e => e.IdEspecialidad);
 
-                entity.HasKey(e => e.IdCurso);
-
-                entity.Property(e => e.IdCurso)
+                entity.Property(e => e.IdEspecialidad)
                     .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.AnioCalendario)
-                    .IsRequired();
+                entity.HasIndex(e => e.IdEspecialidad)
+                   .IsUnique();
 
-                entity.Property(e => e.Cupo)
-                    .IsRequired();
-
-                //relacion con materia
-
-                entity.Property(e => e.IdMateria)
+                entity.Property(e => e.Descripcion)
                     .IsRequired()
-                    .HasField("_materiaId");
+                    .HasMaxLength(360);
 
-                entity.Navigation(e => e.Materia)
-                    .HasField("_materia");
 
-                entity.HasOne(e => e.Materia)
-                    .WithMany()
-                    .HasForeignKey(e => e.IdMateria)
-                    .OnDelete(DeleteBehavior.NoAction);
+                entity.HasData(new
+                {
+                    IdEspecialidad = 1,
+                    Descripcion = "Especialidad"
+                });
 
-                //relacion con comision
+            });
 
-                entity.Property(e => e.IdComision)
+            modelBuilder.Entity<Plan>(entity =>
+            {
+                entity.HasKey(e => e.IdPlan);
+
+                entity.Property(e => e.IdPlan)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdPlan)
+                   .IsUnique();
+
+                entity.Property(e => e.Descripcion)
                     .IsRequired()
-                    .HasField("_comisionId");
+                    .HasMaxLength(360);
 
-                entity.Navigation(e => e.Comision)
-                    .HasField("_comision");
+                //relacion con Especialidad
 
-                entity.HasOne(e => e.Comision)
+                entity.Property(e => e.IdEspecialidad)
+                    .IsRequired()
+                    .HasField("_especialidadId");
+
+                entity.Navigation(e => e.Especialidad)
+                    .HasField("_especialidad");
+
+                entity.HasOne(e => e.Especialidad)
                     .WithMany()
-                    .HasForeignKey(e => e.IdComision)
-                    .OnDelete(DeleteBehavior.NoAction); 
+                    .HasForeignKey(e => e.IdEspecialidad);
+
+                entity.HasData(new
+                {
+                    IdPlan = 1,
+                    Descripcion = "Plan básico",
+                    IdEspecialidad = 1
+                });
+
+
+            });
+
+            modelBuilder.Entity<Persona>(entity =>
+            {
+                entity.HasKey(e => e.IdPersona);
+
+                entity.Property(e => e.IdPersona)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdPersona)
+                   .IsUnique();
+
+                entity.Property(e => e.Apellido)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Direccion)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.Email)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.FechaNacimiento)
+                   .IsRequired();
+
+                entity.Property(e => e.IdPlan)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.Legajo)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.Telefono)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+                entity.Property(e => e.TipoPersona)
+                   .IsRequired()
+                   .HasMaxLength(30);
+
+
+
+                //Relacion con Plan
+
+                entity.Property(e => e.IdPlan)
+                    .IsRequired()
+                    .HasField("_planId");
+
+                entity.Navigation(e => e.Plan)
+                    .HasField("_plan");
+
+                entity.HasOne(e => e.Plan)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdPlan);
+
+                // Datos iniciales
+
+                entity.HasData(new
+                {
+                    IdPersona = 1,
+                    Apellido = "Admin",
+                    Direccion = "Admin 123",
+                    Email = "admin@gmail.com",
+                    FechaNacimiento = new DateTime(2004, 3, 3),
+                    Legajo = 1234,
+                    Telefono = "3419999999",
+                    TipoPersona = "no se",
+                    IdPlan = 1
+                }
+                );
+
             });
 
             modelBuilder.Entity<Usuario>(static entity =>
@@ -154,13 +244,56 @@ namespace Data
                     Habilitado = true,
                     NombreUsuario = "admin",
                     IdPersona = 1
-}
+                }
                 );
 
 
             });
 
-            //Materia
+            modelBuilder.Entity<Curso>(entity =>
+            {
+                entity.ToTable("Cursos");
+
+                entity.HasKey(e => e.IdCurso);
+
+                entity.Property(e => e.IdCurso)
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.AnioCalendario)
+                    .IsRequired();
+
+                entity.Property(e => e.Cupo)
+                    .IsRequired();
+
+                //relacion con materia
+
+                entity.Property(e => e.IdMateria)
+                    .IsRequired()
+                    .HasField("_materiaId");
+
+                entity.Navigation(e => e.Materia)
+                    .HasField("_materia");
+
+                entity.HasOne(e => e.Materia)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdMateria)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                //relacion con comision
+
+                entity.Property(e => e.IdComision)
+                    .IsRequired()
+                    .HasField("_comisionId");
+
+                entity.Navigation(e => e.Comision)
+                    .HasField("_comision");
+
+                entity.HasOne(e => e.Comision)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdComision)
+                    .OnDelete(DeleteBehavior.NoAction); 
+            });
+
             modelBuilder.Entity<Materia>(entity =>
             {
                 entity.HasKey(e => e.IdMateria);
@@ -198,9 +331,6 @@ namespace Data
 
             });
 
-
-            //Comisión
-
             modelBuilder.Entity<Comision>(entity =>
             {
                 entity.HasKey(e => e.IdComision);
@@ -234,113 +364,6 @@ namespace Data
                     .HasForeignKey(e => e.IdPlan);
 
                 
-            });
-
-            modelBuilder.Entity<Persona>(entity =>
-            {
-                entity.HasKey(e => e.IdPersona);
-
-                entity.Property(e => e.IdPersona)
-                    .ValueGeneratedOnAdd();
-
-                entity.HasIndex(e => e.IdPersona)
-                   .IsUnique();
-
-                entity.Property(e => e.Apellido)
-                    .IsRequired()
-                    .HasMaxLength(30);
-
-                entity.Property(e => e.Direccion)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-                entity.Property(e => e.Email)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-                entity.Property(e => e.FechaNacimiento)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-                entity.Property(e => e.IdPlan)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-                entity.Property(e => e.Legajo)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-                entity.Property(e => e.Telefono)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-                entity.Property(e => e.TipoPersona)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-
-
-                //Relacion con Plan
-
-                entity.Property(e => e.IdPlan)
-                    .IsRequired()
-                    .HasField("_planId");
-
-                entity.Navigation(e => e.Plan)
-                    .HasField("_plan");
-
-                entity.HasOne(e => e.Plan)
-                    .WithMany()
-                    .HasForeignKey(e => e.IdPlan);
-
-
-            });
-
-            modelBuilder.Entity<Especialidad>(entity =>
-            {
-                entity.HasKey(e => e.IdEspecialidad);
-
-                entity.Property(e => e.IdEspecialidad)
-                    .ValueGeneratedOnAdd();
-
-                entity.HasIndex(e => e.IdEspecialidad)
-                   .IsUnique();
-
-                entity.Property(e => e.Descripcion)
-                    .IsRequired()
-                    .HasMaxLength(360);
-                    
-
-            });
-
-            modelBuilder.Entity<Plan>(entity =>
-            {
-                entity.HasKey(e => e.IdPlan);
-
-                entity.Property(e => e.IdPlan)
-                    .ValueGeneratedOnAdd();
-
-                entity.HasIndex(e => e.IdPlan)
-                   .IsUnique();
-
-                entity.Property(e => e.Descripcion)
-                    .IsRequired()
-                    .HasMaxLength(360);
-
-                //relacion con Especialidad
-
-                entity.Property(e => e.IdEspecialidad)
-                    .IsRequired()
-                    .HasField("_especialidadId");
-
-                entity.Navigation(e => e.Especialidad)
-                    .HasField("_especialidad");
-
-                entity.HasOne(e => e.Especialidad)
-                    .WithMany()
-                    .HasForeignKey(e => e.IdEspecialidad);
-
-
             });
 
         }

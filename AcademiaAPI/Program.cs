@@ -3,6 +3,7 @@ using Domain.Services;
 using Domain.Model;
 using DTOs;
 using AcademiaAPI.Endpoints;
+using WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,9 @@ app.UseHttpsRedirection();
 
 app.MapCursoEndpoints();
 app.MapUsuarioEndpoints();
+app.MapMateriaEndpoints();
+app.MapPersonaEndpoints();
+app.MapComisionEndpoints();
 
 
 app.Run();

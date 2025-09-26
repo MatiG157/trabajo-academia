@@ -96,7 +96,7 @@ namespace Data.Migrations
                     Apellido = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", maxLength: 30, nullable: false),
+                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Legajo = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     TipoPersona = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
@@ -164,6 +164,26 @@ namespace Data.Migrations
                         principalColumn: "IdPersona",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Especialidades",
+                columns: new[] { "IdEspecialidad", "Descripcion" },
+                values: new object[] { 1, "Especialidad" });
+
+            migrationBuilder.InsertData(
+                table: "Planes",
+                columns: new[] { "IdPlan", "Descripcion", "IdEspecialidad" },
+                values: new object[] { 1, "Plan básico", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Personas",
+                columns: new[] { "IdPersona", "Apellido", "Direccion", "Email", "FechaNacimiento", "IdPlan", "Legajo", "Telefono", "TipoPersona" },
+                values: new object[] { 1, "Admin", "Admin 123", "admin@gmail.com", new DateTime(2004, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1234, "3419999999", "no se" });
+
+            migrationBuilder.InsertData(
+                table: "Usuarios",
+                columns: new[] { "IdUsuario", "Apellido", "CambiaClave", "Clave", "Email", "Habilitado", "IdPersona", "Nombre", "NombreUsuario" },
+                values: new object[] { 1, "Admin", false, "1234", "admin@gmail.com", true, 1, "Admin", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comisiones_IdComision",

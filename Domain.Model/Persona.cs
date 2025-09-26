@@ -19,6 +19,8 @@ namespace Domain.Model
         private int _planId;
         private Plan? _plan;
 
+        public Persona() { }
+
         public int IdPlan
         {
             get => _plan?.IdPlan ?? _planId;
