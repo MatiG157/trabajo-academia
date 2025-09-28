@@ -32,6 +32,7 @@
             eliminarButton = new Button();
             agregarButton = new Button();
             comisionesDataGridView = new DataGridView();
+            refrescarButton = new Button();
             ((System.ComponentModel.ISupportInitialize)comisionesDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -83,11 +84,22 @@
             comisionesDataGridView.Size = new Size(751, 270);
             comisionesDataGridView.TabIndex = 4;
             // 
+            // refrescarButton
+            // 
+            refrescarButton.Location = new Point(401, 294);
+            refrescarButton.Name = "refrescarButton";
+            refrescarButton.Size = new Size(80, 23);
+            refrescarButton.TabIndex = 10;
+            refrescarButton.Text = "Refrescar";
+            refrescarButton.UseVisualStyleBackColor = true;
+            refrescarButton.Click += refrescarButton_Click;
+            // 
             // ComisionesLista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(779, 326);
+            Controls.Add(refrescarButton);
             Controls.Add(modificarButton);
             Controls.Add(eliminarButton);
             Controls.Add(agregarButton);
@@ -105,5 +117,6 @@
         private Button eliminarButton;
         private Button agregarButton;
         private DataGridView comisionesDataGridView;
+        private Button refrescarButton;
     }
 }

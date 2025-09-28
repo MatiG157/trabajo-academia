@@ -1,6 +1,7 @@
 ﻿using DTOs;
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI
 {
@@ -88,22 +89,31 @@ namespace WebAPI
                 .WithOpenApi();
 
 
+
                 app.MapDelete("/materias/{id}", (int id) =>
                 {
-                    MateriaService materiaService = new MateriaService();
-
-                    var deleted = materiaService.Delete(id);
-
-                    if (!deleted)
+                    try
                     {
-                        return Results.NotFound();
+                        MateriaService materiaService = new MateriaService();
+                        var deleted = materiaService.Delete(id);
+
+                        if (!deleted)
+                            return Results.NotFound();
+
+                        return Results.NoContent();
                     }
-
-                    return Results.NoContent();
-
+                    catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("REFERENCE") == true)
+                    {
+                        return Results.BadRequest(new { error = "No se puede eliminar la materia porque existen cursos asociados. Elimine primero los cursos relacionados." });
+                    }
+                    catch (Exception ex)
+                    {
+                        return Results.BadRequest(new { error = ex.Message });
+                    }
                 })
                 .WithName("DeleteMateria")
                 .Produces(StatusCodes.Status204NoContent)
+                .Produces(StatusCodes.Status400BadRequest)
                 .Produces(StatusCodes.Status404NotFound)
                 .WithOpenApi();
 

@@ -112,5 +112,10 @@ namespace WindowsForms
         {
 
         }
+
+        private void refrescarButton_Click(object sender, EventArgs e)
+        {
+            this.GetAllAndLoad();
+        }
     }
 }

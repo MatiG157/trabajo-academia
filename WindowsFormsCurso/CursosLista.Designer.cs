@@ -32,6 +32,7 @@
             agregarButton = new Button();
             eliminarButton = new Button();
             modificarButton = new Button();
+            refrescarButton = new Button();
             ((System.ComponentModel.ISupportInitialize)cursosDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -39,7 +40,7 @@
             // 
             cursosDataGridView.AllowUserToOrderColumns = true;
             cursosDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            cursosDataGridView.Location = new Point(24, 24);
+            cursosDataGridView.Location = new Point(21, 18);
             cursosDataGridView.Margin = new Padding(2);
             cursosDataGridView.MultiSelect = false;
             cursosDataGridView.Name = "cursosDataGridView";
@@ -47,15 +48,15 @@
             cursosDataGridView.RowHeadersWidth = 82;
             cursosDataGridView.RowTemplate.Height = 41;
             cursosDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            cursosDataGridView.Size = new Size(858, 360);
+            cursosDataGridView.Size = new Size(751, 270);
             cursosDataGridView.TabIndex = 0;
             // 
             // agregarButton
             // 
-            agregarButton.Location = new Point(790, 401);
+            agregarButton.Location = new Point(691, 301);
             agregarButton.Margin = new Padding(2);
             agregarButton.Name = "agregarButton";
-            agregarButton.Size = new Size(92, 29);
+            agregarButton.Size = new Size(80, 22);
             agregarButton.TabIndex = 1;
             agregarButton.Text = "Agregar";
             agregarButton.UseVisualStyleBackColor = true;
@@ -63,10 +64,10 @@
             // 
             // eliminarButton
             // 
-            eliminarButton.Location = new Point(578, 401);
+            eliminarButton.Location = new Point(506, 301);
             eliminarButton.Margin = new Padding(2);
             eliminarButton.Name = "eliminarButton";
-            eliminarButton.Size = new Size(92, 29);
+            eliminarButton.Size = new Size(80, 22);
             eliminarButton.TabIndex = 2;
             eliminarButton.Text = "Eliminar";
             eliminarButton.UseVisualStyleBackColor = true;
@@ -74,20 +75,31 @@
             // 
             // modificarButton
             // 
-            modificarButton.Location = new Point(684, 401);
+            modificarButton.Location = new Point(598, 301);
             modificarButton.Margin = new Padding(2);
             modificarButton.Name = "modificarButton";
-            modificarButton.Size = new Size(92, 29);
+            modificarButton.Size = new Size(80, 22);
             modificarButton.TabIndex = 3;
             modificarButton.Text = "Modificar";
             modificarButton.UseVisualStyleBackColor = true;
             modificarButton.Click += modificarButton_Click;
             // 
+            // refrescarButton
+            // 
+            refrescarButton.Location = new Point(410, 301);
+            refrescarButton.Name = "refrescarButton";
+            refrescarButton.Size = new Size(80, 23);
+            refrescarButton.TabIndex = 9;
+            refrescarButton.Text = "Refrescar";
+            refrescarButton.UseVisualStyleBackColor = true;
+            refrescarButton.Click += refrescarButton_Click;
+            // 
             // CursosLista
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(910, 536);
+            ClientSize = new Size(796, 402);
+            Controls.Add(refrescarButton);
             Controls.Add(modificarButton);
             Controls.Add(eliminarButton);
             Controls.Add(agregarButton);
@@ -106,5 +118,6 @@
         private Button agregarButton;
         private Button eliminarButton;
         private Button modificarButton;
+        private Button refrescarButton;
     }
 }

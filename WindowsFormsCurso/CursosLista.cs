@@ -108,6 +108,9 @@ namespace WindowsForms
             return curso;
         }
 
-
+        private void refrescarButton_Click(object sender, EventArgs e)
+        {
+            this.GetAllAndLoad();
+        }
     }
 }

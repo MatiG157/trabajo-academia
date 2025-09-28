@@ -21,6 +21,7 @@ namespace Data
         public bool Delete(int id)
         {
             using var context = CreateContext();
+            Console.WriteLine("entro al repository");
             var cliente = context.Materias.Find(id);
             if (cliente != null)
             {

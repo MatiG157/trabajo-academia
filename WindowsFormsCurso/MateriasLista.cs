@@ -121,5 +121,10 @@ namespace WindowsFormsCurso
 
             return materia;
         }
+
+        private void refrescarButton_Click(object sender, EventArgs e)
+        {
+            this.GetAllAndLoad();
+        }
     }
 }

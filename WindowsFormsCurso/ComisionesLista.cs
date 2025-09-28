@@ -118,5 +118,10 @@ namespace WindowsFormsCurso
                 MessageBox.Show($"Error al eliminar comision: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void refrescarButton_Click(object sender, EventArgs e)
+        {
+            this.GetAllAndLoad();
+        }
     }
 }
