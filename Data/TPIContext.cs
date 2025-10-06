@@ -29,7 +29,7 @@ namespace Data
 
         public TPIContext()
         {
-            // this.Database.EnsureCreated();
+            this.Database.EnsureCreated();
         }
 
         
@@ -180,7 +180,7 @@ namespace Data
                     FechaNacimiento = new DateTime(2004, 3, 3),
                     Legajo = 1234,
                     Telefono = "3419999999",
-                    TipoPersona = "no se",
+                    TipoPersona = "Administrador",
                     IdPlan = 1
                 }
                 );
