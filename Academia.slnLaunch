@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "AcademiaAPI\\AcademiaAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "WindowsFormsCurso\\WindowsFormsCurso.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

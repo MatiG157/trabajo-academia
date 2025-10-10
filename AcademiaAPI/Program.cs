@@ -4,6 +4,7 @@ using Domain.Model;
 using DTOs;
 using AcademiaAPI.Endpoints;
 using WebAPI;
+using Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,8 @@ app.MapUsuarioEndpoints();
 app.MapMateriaEndpoints();
 app.MapPersonaEndpoints();
 app.MapComisionEndpoints();
+
+//var temp = new TPIContext();
 
 
 app.Run();
