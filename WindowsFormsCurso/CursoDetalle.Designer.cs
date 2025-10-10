@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            idComisionNumericUpDown = new NumericUpDown();
             idComisionLabel = new Label();
             aceptarButton = new Button();
             cancelarButton = new Button();
@@ -38,19 +37,12 @@
             AnioCalendarioNumericUpDown = new NumericUpDown();
             cupoLabel = new Label();
             cupoNumericUpDown = new NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)idComisionNumericUpDown).BeginInit();
+            comisionesDropDown = new ComboBox();
+            materiaDropDown = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)idMateriaNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AnioCalendarioNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cupoNumericUpDown).BeginInit();
             SuspendLayout();
-            // 
-            // idComisionNumericUpDown
-            // 
-            idComisionNumericUpDown.Location = new Point(130, 65);
-            idComisionNumericUpDown.Margin = new Padding(2);
-            idComisionNumericUpDown.Name = "idComisionNumericUpDown";
-            idComisionNumericUpDown.Size = new Size(109, 23);
-            idComisionNumericUpDown.TabIndex = 0;
             // 
             // idComisionLabel
             // 
@@ -58,9 +50,9 @@
             idComisionLabel.Location = new Point(23, 70);
             idComisionLabel.Margin = new Padding(2, 0, 2, 0);
             idComisionLabel.Name = "idComisionLabel";
-            idComisionLabel.Size = new Size(68, 15);
+            idComisionLabel.Size = new Size(58, 15);
             idComisionLabel.TabIndex = 1;
-            idComisionLabel.Text = "idComision";
+            idComisionLabel.Text = "Comision";
             // 
             // aceptarButton
             // 
@@ -145,11 +137,29 @@
             cupoNumericUpDown.TextChanged += cupoNumericUpDown_TextChanged;
             cupoNumericUpDown.ValueChanged += cupoNumericUpDown_ValueChanged;
             // 
+            // comisionesDropDown
+            // 
+            comisionesDropDown.FormattingEnabled = true;
+            comisionesDropDown.Location = new Point(130, 67);
+            comisionesDropDown.Name = "comisionesDropDown";
+            comisionesDropDown.Size = new Size(250, 23);
+            comisionesDropDown.TabIndex = 10;
+            // 
+            // materiaDropDown
+            // 
+            materiaDropDown.FormattingEnabled = true;
+            materiaDropDown.Location = new Point(259, 32);
+            materiaDropDown.Name = "materiaDropDown";
+            materiaDropDown.Size = new Size(121, 23);
+            materiaDropDown.TabIndex = 11;
+            // 
             // CursoDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(430, 236);
+            Controls.Add(materiaDropDown);
+            Controls.Add(comisionesDropDown);
             Controls.Add(AnioCalendarioLabel);
             Controls.Add(AnioCalendarioNumericUpDown);
             Controls.Add(cupoLabel);
@@ -159,12 +169,10 @@
             Controls.Add(cancelarButton);
             Controls.Add(aceptarButton);
             Controls.Add(idComisionLabel);
-            Controls.Add(idComisionNumericUpDown);
             Margin = new Padding(2);
             Name = "CursoDetalle";
             Text = "Detalle curso";
             Load += CursoDetalle_Load;
-            ((System.ComponentModel.ISupportInitialize)idComisionNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)idMateriaNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)AnioCalendarioNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)cupoNumericUpDown).EndInit();
@@ -173,8 +181,6 @@
         }
 
         #endregion
-
-        private NumericUpDown idComisionNumericUpDown;
         private Label idComisionLabel;
 
         private Button aceptarButton;
@@ -190,5 +196,7 @@
         private NumericUpDown AnioCalendarioNumericUpDown;
 
         private TextBox textBox1;
+        private ComboBox comisionesDropDown;
+        private ComboBox materiaDropDown;
     }
 }

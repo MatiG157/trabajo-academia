@@ -241,7 +241,7 @@ namespace Data
                     IdUsuario = 1,
                     Apellido = "Admin",
                     Nombre = "Admin",
-                    Clave = "1234",
+                    Clave = "123",
                     Email = "admin@gmail.com",
                     Habilitado = true,
                     NombreUsuario = "admin",

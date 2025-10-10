@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public class PersonaCriteriaDTO
+    public class PlanCriteriaDTO
     {
         public string Texto { get; set; } = string.Empty;
-        public string TipoPersona { get; set; }
     }
 }

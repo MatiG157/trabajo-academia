@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using API.Cursos;
+using API.Comisiones;
 
 namespace WindowsForms
 {
@@ -62,7 +63,7 @@ namespace WindowsForms
             {
 
                 this.Curso.IdMateria = (int)idMateriaNumericUpDown.Value;
-                this.Curso.IdComision = (int)idComisionNumericUpDown.Value;
+                this.Curso.IdComision = (int)comisionesDropDown.SelectedValue;
                 this.Curso.AnioCalendario = (int)AnioCalendarioNumericUpDown.Value;
                 this.Curso.Cupo = (int)cupoNumericUpDown.Value;
 
@@ -124,9 +125,17 @@ namespace WindowsForms
 
         }
 
-        private void CursoDetalle_Load(object sender, EventArgs e)
+        private async void CursoDetalle_Load(object sender, EventArgs e)
         {
+            var comisiones = await ComisionApiClient.GetAllAsync();
+            comisionesDropDown.DataSource = comisiones;
+            comisionesDropDown.DisplayMember = "Descripcion"; // Muestra la descripción
+            comisionesDropDown.ValueMember = "IdComision";
 
+            /*var planes = await Planes.GetAllAsync();
+            comisionesDropDown.DataSource = planes;
+            comisionesDropDown.DisplayMember = "Descripcion"; // Muestra la descripción
+            comisionesDropDown.ValueMember = "IdPlan";*/
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
