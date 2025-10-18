@@ -403,7 +403,7 @@ namespace Data
                 entity.HasOne(e => e.Alumno)
                     .WithMany()
                     .HasForeignKey(e => e.IdAlumno)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 //Relacion con Curso 
 
