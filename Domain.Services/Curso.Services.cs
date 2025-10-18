@@ -45,7 +45,7 @@ namespace Domain.Services
 
         public IEnumerable<CursoDTO> GetAll()
         {
-            var cursoRepository = new CursoRepository();
+            CursoRepository cursoRepository = new CursoRepository();
             var cursos = cursoRepository.GetAll();
 
             return cursos.Select(curso => new CursoDTO

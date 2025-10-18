@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using API.Comisiones;
+using API.Planes;
 using DTOs;
 using WindowsForms;
 
@@ -56,7 +57,7 @@ namespace WindowsFormsCurso
 
                 this.Comision.Descripcion = (string)DescripcionRichTextBox.Text;
                 this.Comision.AnioEspecialidad = (int)añoEspecialidadNumericUpDown.Value;
-                this.Comision.IdPlan = (int)idPlanUpDown.Value;
+                this.Comision.IdPlan = (int)planDropDown.SelectedValue;
 
 
 
@@ -81,11 +82,10 @@ namespace WindowsFormsCurso
         private void SetComision()
         {
 
-            this.idPlanUpDown.Maximum = 999999;
 
             this.DescripcionRichTextBox.Text = this.Comision.Descripcion;
             this.añoEspecialidadNumericUpDown.Value = this.Comision.AnioEspecialidad;
-            this.idPlanUpDown.Value = this.Comision.IdPlan;
+            this.planDropDown.SelectedValue = this.Comision.IdPlan;
         }
 
         private void SetFormMode(FormMode value)
@@ -96,6 +96,15 @@ namespace WindowsFormsCurso
         private void cancelarButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private async void Comision_Load(object sender, EventArgs e)
+        {
+
+            var planes = await PlanApiClient.GetAllAsync();
+            planDropDown.DataSource = planes;
+            planDropDown.DisplayMember = "Descripcion";
+            planDropDown.ValueMember = "IdPlan";
         }
     }
 }

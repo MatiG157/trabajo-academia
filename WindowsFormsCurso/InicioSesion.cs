@@ -42,6 +42,7 @@ namespace WindowsFormsCurso
             {
                 MenuPrincipal form = new MenuPrincipal();
                 form.Show();
+                this.Hide();
             }
             else
             {

@@ -99,7 +99,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(796, 402);
+            ClientSize = new Size(789, 337);
             Controls.Add(refrescarButton);
             Controls.Add(modificarButton);
             Controls.Add(eliminarButton);

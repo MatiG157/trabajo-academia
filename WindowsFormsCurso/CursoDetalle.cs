@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using API.Cursos;
 using API.Comisiones;
+using API.Materias;
 
 namespace WindowsForms
 {
@@ -62,7 +63,7 @@ namespace WindowsForms
             try
             {
 
-                this.Curso.IdMateria = (int)idMateriaNumericUpDown.Value;
+                this.Curso.IdMateria = (int)materiaDropDown.SelectedValue;
                 this.Curso.IdComision = (int)comisionesDropDown.SelectedValue;
                 this.Curso.AnioCalendario = (int)AnioCalendarioNumericUpDown.Value;
                 this.Curso.Cupo = (int)cupoNumericUpDown.Value;
@@ -95,16 +96,14 @@ namespace WindowsForms
         private void SetCurso()
         {
 
-            this.idMateriaNumericUpDown.Maximum = 99999;
-            this.idComisionNumericUpDown.Maximum = 99999;
             this.AnioCalendarioNumericUpDown.Maximum = 99999;
             this.cupoNumericUpDown.Maximum = 999999;
 
 
 
 
-            this.idMateriaNumericUpDown.Value = this.Curso.IdMateria;
-            this.idComisionNumericUpDown.Value = this.Curso.IdComision;
+            this.materiaDropDown.SelectedValue = this.Curso.IdMateria;
+            this.comisionesDropDown.SelectedValue = this.Curso.IdComision; 
             this.AnioCalendarioNumericUpDown.Value = this.Curso.AnioCalendario;
             this.cupoNumericUpDown.Value = this.Curso.Cupo;
         }
@@ -129,13 +128,13 @@ namespace WindowsForms
         {
             var comisiones = await ComisionApiClient.GetAllAsync();
             comisionesDropDown.DataSource = comisiones;
-            comisionesDropDown.DisplayMember = "Descripcion"; // Muestra la descripción
+            comisionesDropDown.DisplayMember = "Display"; // Muestra la descripción
             comisionesDropDown.ValueMember = "IdComision";
 
-            /*var planes = await Planes.GetAllAsync();
-            comisionesDropDown.DataSource = planes;
+            var materias = await MateriaApiClient.GetAllAsync();
+            comisionesDropDown.DataSource = materias;
             comisionesDropDown.DisplayMember = "Descripcion"; // Muestra la descripción
-            comisionesDropDown.ValueMember = "IdPlan";*/
+            comisionesDropDown.ValueMember = "IdMateria";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

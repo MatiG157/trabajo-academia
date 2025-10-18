@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Domain.Model;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
 
 namespace Data
 {
@@ -26,6 +27,7 @@ namespace Data
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
         public DbSet<Plan> Planes { get; set; }
+        public DbSet<AlumnoInscripcion> AlumnosInscripciones { get; set; }
 
         public TPIContext()
         {
@@ -365,6 +367,56 @@ namespace Data
                 entity.HasOne(e => e.Plan)
                     .WithMany()
                     .HasForeignKey(e => e.IdPlan)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+
+            });
+
+
+            modelBuilder.Entity<AlumnoInscripcion>(entity =>
+            {
+                entity.HasKey(e => e.IdInscripcion);
+
+                entity.Property(e => e.IdInscripcion)
+                    .ValueGeneratedOnAdd();
+
+                entity.HasIndex(e => e.IdInscripcion)
+                   .IsUnique();
+
+                entity.Property(e => e.Condicion)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Nota)
+                   .HasMaxLength(30);
+
+
+                //Relacion con Persona (Alumno)
+
+                entity.Property(e => e.IdAlumno)
+                    .IsRequired()
+                    .HasField("_alumnoId");
+
+                entity.Navigation(e => e.Alumno)
+                    .HasField("_alumno");
+
+                entity.HasOne(e => e.Alumno)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdAlumno)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                //Relacion con Curso 
+
+                entity.Property(e => e.IdCurso)
+                    .IsRequired()
+                    .HasField("_cursoId");
+
+                entity.Navigation(e => e.Curso)
+                    .HasField("_curso");
+
+                entity.HasOne(e => e.Curso)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdCurso)
                     .OnDelete(DeleteBehavior.Cascade);
 
 

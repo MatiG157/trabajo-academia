@@ -12,9 +12,9 @@ using API.Comisiones;
 
 namespace WindowsFormsCurso
 {
-    public partial class Form1 : Form
+    public partial class AlumnosLista : Form
     {
-        public Form1()
+        public AlumnosLista()
         {
             InitializeComponent();
         }
@@ -28,8 +28,13 @@ namespace WindowsFormsCurso
         {
             try
             {
+
+                var personas = await PersonaApiClient.GetAllAsync();
+                var alumnos = personas.Where(p => p.TipoPersona == "alumno").ToList();
+
+
                 this.comisionesDataGridView.DataSource = null;
-                this.comisionesDataGridView.DataSource = await PersonaApiClient.GetAllAsync();
+                this.comisionesDataGridView.DataSource = alumnos;
 
                 if (this.comisionesDataGridView.Rows.Count > 0)
                 {

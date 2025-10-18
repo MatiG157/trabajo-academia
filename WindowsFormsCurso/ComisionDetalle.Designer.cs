@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            idPlanUpDown = new NumericUpDown();
             añoEspecialidadLabel = new Label();
             añoEspecialidadNumericUpDown = new NumericUpDown();
             descripcionLabel = new Label();
@@ -36,16 +35,9 @@
             aceptarButton = new Button();
             idPlanLabel = new Label();
             DescripcionRichTextBox = new RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)idPlanUpDown).BeginInit();
+            planDropDown = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)añoEspecialidadNumericUpDown).BeginInit();
             SuspendLayout();
-            // 
-            // idPlanUpDown
-            // 
-            idPlanUpDown.Location = new Point(122, 131);
-            idPlanUpDown.Name = "idPlanUpDown";
-            idPlanUpDown.Size = new Size(109, 23);
-            idPlanUpDown.TabIndex = 31;
             // 
             // añoEspecialidadLabel
             // 
@@ -63,7 +55,7 @@
             añoEspecialidadNumericUpDown.Margin = new Padding(2);
             añoEspecialidadNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             añoEspecialidadNumericUpDown.Name = "añoEspecialidadNumericUpDown";
-            añoEspecialidadNumericUpDown.Size = new Size(109, 23);
+            añoEspecialidadNumericUpDown.Size = new Size(121, 23);
             añoEspecialidadNumericUpDown.TabIndex = 22;
             añoEspecialidadNumericUpDown.TabStop = false;
             // 
@@ -117,12 +109,20 @@
             DescripcionRichTextBox.TabIndex = 30;
             DescripcionRichTextBox.Text = "";
             // 
+            // planDropDown
+            // 
+            planDropDown.FormattingEnabled = true;
+            planDropDown.Location = new Point(122, 130);
+            planDropDown.Name = "planDropDown";
+            planDropDown.Size = new Size(121, 23);
+            planDropDown.TabIndex = 32;
+            // 
             // ComisionDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(426, 210);
-            Controls.Add(idPlanUpDown);
+            Controls.Add(planDropDown);
             Controls.Add(DescripcionRichTextBox);
             Controls.Add(añoEspecialidadLabel);
             Controls.Add(añoEspecialidadNumericUpDown);
@@ -132,15 +132,13 @@
             Controls.Add(idPlanLabel);
             Name = "ComisionDetalle";
             Text = "Detalle comisión";
-            ((System.ComponentModel.ISupportInitialize)idPlanUpDown).EndInit();
+            Load += Comision_Load;
             ((System.ComponentModel.ISupportInitialize)añoEspecialidadNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private NumericUpDown idPlanUpDown;
         private Label HorasSemanalesLabel;
         private NumericUpDown añoEspecialidadNumericUpDown;
         private Label descripcionLabel;
@@ -149,5 +147,6 @@
         private Label idPlanLabel;
         private Label añoEspecialidadLabel;
         private RichTextBox DescripcionRichTextBox;
+        private ComboBox planDropDown;
     }
 }

@@ -213,7 +213,7 @@
             idPersonaNumericUpDown.Location = new Point(130, 311);
             idPersonaNumericUpDown.Margin = new Padding(3, 2, 3, 2);
             idPersonaNumericUpDown.Name = "idPersonaNumericUpDown";
-            idPersonaNumericUpDown.Size = new Size(131, 23);
+            idPersonaNumericUpDown.Size = new Size(147, 23);
             idPersonaNumericUpDown.TabIndex = 18;
             // 
             // UsuarioDetalle

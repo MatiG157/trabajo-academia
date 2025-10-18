@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using API.Materia;
+using API.Comisiones;
+using API.Materias;
+using API.Planes;
 using DTOs;
 using WindowsForms;
 
@@ -55,7 +57,7 @@ namespace WindowsFormsCurso
                 this.Materia.Descripcion = (string)DescripcionRichTextBox.Text;
                 this.Materia.HsSemanales = (int)horasSemanalesNumericUpDown.Value;
                 this.Materia.HsTotales = (int)horasTotalesNumericUpDown.Value;
-                this.Materia.IdPlan = (int)idPlanUpDown.Value;
+                this.Materia.IdPlan = (int)planDropDown.SelectedValue;
 
 
 
@@ -82,12 +84,11 @@ namespace WindowsFormsCurso
 
             this.horasSemanalesNumericUpDown.Maximum = 999999;
             this.horasTotalesNumericUpDown.Maximum = 999999;
-            this.idPlanUpDown.Maximum = 999999;
 
             this.DescripcionRichTextBox.Text = this.Materia.Descripcion;
             this.horasSemanalesNumericUpDown.Value = this.Materia.HsSemanales;
             this.horasTotalesNumericUpDown.Value = this.Materia.HsTotales;
-            this.idPlanUpDown.Value = this.Materia.IdPlan;
+            this.planDropDown.SelectedValue = this.Materia.IdPlan;
         }
 
         private void SetFormMode(FormMode value)
@@ -98,6 +99,16 @@ namespace WindowsFormsCurso
         private void cancelarButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private async void Materia_Load(object sender, EventArgs e)
+        {
+
+            var planes = await PlanApiClient.GetAllAsync();
+            planDropDown.DataSource = planes;
+            planDropDown.DisplayMember = "Descripcion"; 
+            planDropDown.ValueMember = "IdPlan";
+
         }
     }
 }

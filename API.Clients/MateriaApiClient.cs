@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTOs;
 
-namespace API.Materia
+namespace API.Materias
 {
     public class MateriaApiClient
     {

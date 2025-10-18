@@ -42,7 +42,7 @@ namespace EspecialidadAPI.Endpoints
                 .WithOpenApi();
 
 
-                app.MapPost("/especialidad", (EspecialidadDTO dto) =>
+                app.MapPost("/especialidades", (EspecialidadDTO dto) =>
                 {
                     try
                     {

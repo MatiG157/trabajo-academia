@@ -11,6 +11,8 @@
         private int _materiaId;
         private Materia? _materia;
 
+        public Curso() { }
+
         public int IdMateria
         {
             get => _materia?.IdMateria ?? _materiaId;

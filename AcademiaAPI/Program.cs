@@ -3,8 +3,10 @@ using Domain.Services;
 using Domain.Model;
 using DTOs;
 using AcademiaAPI.Endpoints;
-using WebAPI;
+//using WebAPI;
 using Data;
+using MateriaAPI.Endpoints;
+using EspecialidadAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,7 @@ builder.Services.AddHttpLogging(o => { });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,7 +25,6 @@ if (app.Environment.IsDevelopment())
     app.UseHttpLogging();
 }
 
-//app.UseHttpsRedirection();
 
 
 app.MapCursoEndpoints();
@@ -31,8 +32,10 @@ app.MapUsuarioEndpoints();
 app.MapMateriaEndpoints();
 app.MapPersonaEndpoints();
 app.MapComisionEndpoints();
+app.MapPlanEndpoints();
+app.MapEspecialidadEndpoints();
+app.MapAlumnoInscripcionEndpoints();
 
-//var temp = new TPIContext();
 
 
 app.Run();

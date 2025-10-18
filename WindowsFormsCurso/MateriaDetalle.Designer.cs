@@ -28,58 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            HorasSemanalesLabel = new Label();
-            horasSemanalesNumericUpDown = new NumericUpDown();
-            horasTotalesLabel = new Label();
-            horasTotalesNumericUpDown = new NumericUpDown();
             descripcionLabel = new Label();
             cancelarButton = new Button();
             aceptarButton = new Button();
             DescripcionRichTextBox = new RichTextBox();
-            idPlanLabel = new Label();
-            idPlanUpDown = new NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)horasSemanalesNumericUpDown).BeginInit();
+            planLabel = new Label();
+            planDropDown = new ComboBox();
+            horasTotalesNumericUpDown = new NumericUpDown();
+            horasTotalesLabel = new Label();
+            horasSemanalesNumericUpDown = new NumericUpDown();
+            HorasSemanalesLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)horasTotalesNumericUpDown).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)idPlanUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)horasSemanalesNumericUpDown).BeginInit();
             SuspendLayout();
-            // 
-            // HorasSemanalesLabel
-            // 
-            HorasSemanalesLabel.AutoSize = true;
-            HorasSemanalesLabel.Location = new Point(25, 98);
-            HorasSemanalesLabel.Margin = new Padding(2, 0, 2, 0);
-            HorasSemanalesLabel.Name = "HorasSemanalesLabel";
-            HorasSemanalesLabel.Size = new Size(96, 15);
-            HorasSemanalesLabel.TabIndex = 19;
-            HorasSemanalesLabel.Text = "Horas semanales";
-            // 
-            // horasSemanalesNumericUpDown
-            // 
-            horasSemanalesNumericUpDown.Location = new Point(125, 96);
-            horasSemanalesNumericUpDown.Margin = new Padding(2);
-            horasSemanalesNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            horasSemanalesNumericUpDown.Name = "horasSemanalesNumericUpDown";
-            horasSemanalesNumericUpDown.Size = new Size(109, 23);
-            horasSemanalesNumericUpDown.TabIndex = 10;
-            horasSemanalesNumericUpDown.TabStop = false;
-            // 
-            // horasTotalesLabel
-            // 
-            horasTotalesLabel.AutoSize = true;
-            horasTotalesLabel.Location = new Point(25, 132);
-            horasTotalesLabel.Margin = new Padding(2, 0, 2, 0);
-            horasTotalesLabel.Name = "horasTotalesLabel";
-            horasTotalesLabel.Size = new Size(76, 15);
-            horasTotalesLabel.TabIndex = 18;
-            horasTotalesLabel.Text = "Horas totales";
-            // 
-            // horasTotalesNumericUpDown
-            // 
-            horasTotalesNumericUpDown.Location = new Point(125, 130);
-            horasTotalesNumericUpDown.Margin = new Padding(2);
-            horasTotalesNumericUpDown.Name = "horasTotalesNumericUpDown";
-            horasTotalesNumericUpDown.Size = new Size(109, 23);
-            horasTotalesNumericUpDown.TabIndex = 14;
             // 
             // descripcionLabel
             // 
@@ -121,29 +82,68 @@
             DescripcionRichTextBox.TabIndex = 20;
             DescripcionRichTextBox.Text = "";
             // 
-            // idPlanLabel
+            // planLabel
             // 
-            idPlanLabel.AutoSize = true;
-            idPlanLabel.Location = new Point(25, 164);
-            idPlanLabel.Margin = new Padding(2, 0, 2, 0);
-            idPlanLabel.Name = "idPlanLabel";
-            idPlanLabel.Size = new Size(43, 15);
-            idPlanLabel.TabIndex = 13;
-            idPlanLabel.Text = "Id plan";
+            planLabel.AutoSize = true;
+            planLabel.Location = new Point(25, 164);
+            planLabel.Margin = new Padding(2, 0, 2, 0);
+            planLabel.Name = "planLabel";
+            planLabel.Size = new Size(30, 15);
+            planLabel.TabIndex = 13;
+            planLabel.Text = "Plan";
             // 
-            // idPlanUpDown
+            // planDropDown
             // 
-            idPlanUpDown.Location = new Point(125, 162);
-            idPlanUpDown.Name = "idPlanUpDown";
-            idPlanUpDown.Size = new Size(109, 23);
-            idPlanUpDown.TabIndex = 21;
+            planDropDown.FormattingEnabled = true;
+            planDropDown.Location = new Point(125, 161);
+            planDropDown.Name = "planDropDown";
+            planDropDown.Size = new Size(132, 23);
+            planDropDown.TabIndex = 22;
+            // 
+            // horasTotalesNumericUpDown
+            // 
+            horasTotalesNumericUpDown.Location = new Point(125, 130);
+            horasTotalesNumericUpDown.Margin = new Padding(2);
+            horasTotalesNumericUpDown.Name = "horasTotalesNumericUpDown";
+            horasTotalesNumericUpDown.Size = new Size(132, 23);
+            horasTotalesNumericUpDown.TabIndex = 14;
+            // 
+            // horasTotalesLabel
+            // 
+            horasTotalesLabel.AutoSize = true;
+            horasTotalesLabel.Location = new Point(25, 132);
+            horasTotalesLabel.Margin = new Padding(2, 0, 2, 0);
+            horasTotalesLabel.Name = "horasTotalesLabel";
+            horasTotalesLabel.Size = new Size(76, 15);
+            horasTotalesLabel.TabIndex = 18;
+            horasTotalesLabel.Text = "Horas totales";
+            // 
+            // horasSemanalesNumericUpDown
+            // 
+            horasSemanalesNumericUpDown.Location = new Point(125, 96);
+            horasSemanalesNumericUpDown.Margin = new Padding(2);
+            horasSemanalesNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            horasSemanalesNumericUpDown.Name = "horasSemanalesNumericUpDown";
+            horasSemanalesNumericUpDown.Size = new Size(132, 23);
+            horasSemanalesNumericUpDown.TabIndex = 10;
+            horasSemanalesNumericUpDown.TabStop = false;
+            // 
+            // HorasSemanalesLabel
+            // 
+            HorasSemanalesLabel.AutoSize = true;
+            HorasSemanalesLabel.Location = new Point(25, 98);
+            HorasSemanalesLabel.Margin = new Padding(2, 0, 2, 0);
+            HorasSemanalesLabel.Name = "HorasSemanalesLabel";
+            HorasSemanalesLabel.Size = new Size(96, 15);
+            HorasSemanalesLabel.TabIndex = 19;
+            HorasSemanalesLabel.Text = "Horas semanales";
             // 
             // MateriaDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(447, 234);
-            Controls.Add(idPlanUpDown);
+            Controls.Add(planDropDown);
             Controls.Add(DescripcionRichTextBox);
             Controls.Add(HorasSemanalesLabel);
             Controls.Add(horasSemanalesNumericUpDown);
@@ -152,27 +152,26 @@
             Controls.Add(descripcionLabel);
             Controls.Add(cancelarButton);
             Controls.Add(aceptarButton);
-            Controls.Add(idPlanLabel);
+            Controls.Add(planLabel);
             Name = "MateriaDetalle";
             Text = "Detalle materia";
-            ((System.ComponentModel.ISupportInitialize)horasSemanalesNumericUpDown).EndInit();
+            Load += Materia_Load;
             ((System.ComponentModel.ISupportInitialize)horasTotalesNumericUpDown).EndInit();
-            ((System.ComponentModel.ISupportInitialize)idPlanUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)horasSemanalesNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Label HorasSemanalesLabel;
-        private NumericUpDown horasSemanalesNumericUpDown;
-        private Label horasTotalesLabel;
-        private NumericUpDown horasTotalesNumericUpDown;
         private Label descripcionLabel;
         private Button cancelarButton;
         private Button aceptarButton;
         private RichTextBox DescripcionRichTextBox;
-        private Label idPlanLabel;
-        private NumericUpDown idPlanUpDown;
+        private Label planLabel;
+        private ComboBox planDropDown;
+        private NumericUpDown horasTotalesNumericUpDown;
+        private Label horasTotalesLabel;
+        private NumericUpDown horasSemanalesNumericUpDown;
+        private Label HorasSemanalesLabel;
     }
 }

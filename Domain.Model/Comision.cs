@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Model
 {
+
     public class Comision
     {
+        
+
         public int IdComision { get; set; }
         public int AnioEspecialidad {  get; set; }
         public string Descripcion {  get; set; }
@@ -16,6 +19,8 @@ namespace Domain.Model
 
         private int _planId;
         private Plan? _plan;
+
+        public Comision () { }
 
         public int IdPlan
         {

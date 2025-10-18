@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using API.Cursos;
-using API.Materia;
+using API.Materias;
 using DTOs;
 using WindowsForms;
 

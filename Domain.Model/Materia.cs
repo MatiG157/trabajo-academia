@@ -20,11 +20,13 @@ namespace Domain.Model
         private int _planId;
         private Plan? _plan;
 
+
         public int IdPlan
         {
             get => _plan?.IdPlan ?? _planId;
             private set => _planId = value;
         }
+
 
         public Plan? Plan
         {

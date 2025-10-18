@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Endpoints\Class.cs" />
     <Compile Remove="Endpoints\Class1.cs" />
     <Compile Remove="Endpoints\Class2.cs" />
     <Compile Remove="Endpoints\ComisionEndPoint.cs" />
     <Compile Remove="Endpoints\Materia.cs" />
+    <Compile Remove="Endpoints\PlanEndPoint.cs" />
   </ItemGroup>
 
   <ItemGroup>
