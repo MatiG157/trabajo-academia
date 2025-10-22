@@ -88,6 +88,32 @@ public static class CursoEndpoints
         .WithOpenApi();
 
 
+        app.MapPut("/cursos/bajarCupo/{id}", (CursoDTO dto) =>
+        {
+            try
+            {
+                CursoService cursoService = new CursoService();
+
+                var found = cursoService.BajarCupo(dto);
+
+                if (!found)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+        })
+        .WithName("BajarCupoCurso")
+        .Produces(StatusCodes.Status404NotFound)
+        .Produces(StatusCodes.Status400BadRequest)
+        .WithOpenApi();
+
+
         app.MapDelete("/cursos/{id}", (int id) =>
         {
             CursoService cursoService = new CursoService();

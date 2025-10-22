@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using API.Personas;
 using API.Usuarios;
 using DTOs;
 
@@ -40,7 +41,13 @@ namespace WindowsFormsCurso
 
             if (usuarioBD != null)
             {
+                var persona = new PersonaDTO();
+
+                persona = await PersonaApiClient.GetAsync(usuarioBD.IdPersona);
+
                 MenuPrincipal form = new MenuPrincipal();
+                form.Usuario = usuarioBD;
+                form.Modo = persona.TipoPersona;
                 form.Show();
                 this.Hide();
             }

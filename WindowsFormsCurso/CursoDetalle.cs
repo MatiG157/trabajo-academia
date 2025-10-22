@@ -132,9 +132,9 @@ namespace WindowsForms
             comisionesDropDown.ValueMember = "IdComision";
 
             var materias = await MateriaApiClient.GetAllAsync();
-            comisionesDropDown.DataSource = materias;
-            comisionesDropDown.DisplayMember = "Descripcion"; // Muestra la descripción
-            comisionesDropDown.ValueMember = "IdMateria";
+            materiaDropDown.DataSource = materias;
+            materiaDropDown.DisplayMember = "Descripcion"; // Muestra la descripción
+            materiaDropDown.ValueMember = "IdMateria";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

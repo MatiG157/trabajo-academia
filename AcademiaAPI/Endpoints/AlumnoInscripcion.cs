@@ -86,6 +86,7 @@ public static class AlumnoInscripcionEndpoints
        .Produces(StatusCodes.Status400BadRequest)
        .WithOpenApi();
 
+        
 
 
         app.MapDelete("/alumnosInscripciones/{id}", (int id) =>

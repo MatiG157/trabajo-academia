@@ -41,7 +41,10 @@
             ponerNotasToolStripMenuItem = new ToolStripMenuItem();
             funcionalidadAlumnosToolStripMenuItem = new ToolStripMenuItem();
             inscribirseACursoToolStripMenuItem = new ToolStripMenuItem();
+            pictureBox1 = new PictureBox();
+            label1 = new Label();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -133,18 +136,48 @@
             inscribirseACursoToolStripMenuItem.Name = "inscribirseACursoToolStripMenuItem";
             inscribirseACursoToolStripMenuItem.Size = new Size(168, 22);
             inscribirseACursoToolStripMenuItem.Text = "&Inscribirse a curso";
+            inscribirseACursoToolStripMenuItem.Click += inscribirseACursoToolStripMenuItem_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox1.BackColor = Color.Silver;
+            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox1.Location = new Point(66, 61);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(664, 343);
+            pictureBox1.TabIndex = 3;
+            pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label1.AutoSize = true;
+            label1.BackColor = Color.LightGray;
+            label1.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(267, 107);
+            label1.Name = "label1";
+            label1.Size = new Size(302, 65);
+            label1.TabIndex = 4;
+            label1.Text = "BIENVENIDO";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ButtonShadow;
             ClientSize = new Size(800, 450);
+            Controls.Add(label1);
+            Controls.Add(pictureBox1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MenuPrincipal";
             Text = "Academia";
+            Load += Menu_load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -164,5 +197,7 @@
         private ToolStripMenuItem especialidadesToolStripMenuItem;
         private ToolStripMenuItem funcionalidadAlumnosToolStripMenuItem;
         private ToolStripMenuItem inscribirseACursoToolStripMenuItem;
+        private PictureBox pictureBox1;
+        private Label label1;
     }
 }

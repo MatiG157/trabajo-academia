@@ -139,5 +139,28 @@ namespace API.Cursos
                 throw new Exception($"Timeout al actualizar curso con Id {curso.IdCurso}: {ex.Message}", ex);
             }
         }
+        public static async Task BajarCupoAsync(CursoDTO curso)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync($"cursos/bajarCupo/{curso.IdCurso}", curso);
+
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al bajar cupo del curso con Id {curso.IdCurso}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al actualizar curso con Id {curso.IdCurso}: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al actualizar curso con Id {curso.IdCurso}: {ex.Message}", ex);
+            }
+        }
+
     }
 }

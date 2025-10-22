@@ -68,6 +68,24 @@ namespace Data
             return false;
         }
 
+        public bool BajarCupo(Curso curso)
+        {
+            using var context = CreateContext();
+            var existingCurso = context.Cursos.Find(curso.IdCurso);
+            if (existingCurso != null)
+            {
+                existingCurso.SetMateriaId(curso.IdMateria);
+                existingCurso.SetComisionId(curso.IdComision);
+                existingCurso.AnioCalendario = curso.AnioCalendario;
+                existingCurso.Cupo = curso.Cupo;
+
+                context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+
         /*public bool EmailExists(string email, int? excludeId = null)
         {
             using var context = CreateContext();

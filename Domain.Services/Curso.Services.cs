@@ -66,6 +66,16 @@ namespace Domain.Services
             return cursoRepository.Update(curso);
         }
 
+
+        public bool BajarCupo(CursoDTO dto)
+        {
+            var cursoRepository = new CursoRepository();
+
+            int cupo = dto.Cupo - 1;
+            Curso curso = new Curso(dto.IdCurso, dto.IdMateria, dto.IdComision, dto.AnioCalendario, cupo);
+            return cursoRepository.BajarCupo(curso);
+        }
+
         public IEnumerable<CursoDTO> GetByCriteria(CursoCriteriaDTO criteriaDTO)
         {
             var cursoRepository = new CursoRepository();

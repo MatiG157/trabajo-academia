@@ -41,14 +41,14 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(59, 11);
+            comboBox1.Location = new Point(88, 11);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(161, 23);
             comboBox1.TabIndex = 0;
             // 
             // button1
             // 
-            button1.Location = new Point(242, 11);
+            button1.Location = new Point(271, 11);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 1;
@@ -91,7 +91,7 @@
             // cursoLabel
             // 
             cursoLabel.AutoSize = true;
-            cursoLabel.Location = new Point(12, 15);
+            cursoLabel.Location = new Point(41, 15);
             cursoLabel.Name = "cursoLabel";
             cursoLabel.Size = new Size(38, 15);
             cursoLabel.TabIndex = 6;
