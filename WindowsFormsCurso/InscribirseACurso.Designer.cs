@@ -59,7 +59,7 @@
             Controls.Add(buttonInscribirse);
             Controls.Add(dataGridViewCursos);
             Name = "InscribirseACurso";
-            Text = "Form1";
+            Text = "Inscribirse a curso";
             Load += Cursos_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewCursos).EndInit();
             ResumeLayout(false);

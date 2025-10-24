@@ -3,6 +3,7 @@
     public class Curso {
     
         public int IdCurso { get; set; }
+        public string Descripcion { get; set; }
         public int AnioCalendario { get; set; }
         public int Cupo { get; set; }
 
@@ -57,12 +58,12 @@
             }
         }
 
-        public Curso(int idCurso, int idMateria, int idComision, int anioCalendario, int cupo)
+        public Curso(int idCurso, int idMateria, int idComision, string descripcion, int anioCalendario, int cupo)
         {
-
             IdCurso = idCurso;
             IdMateria = idMateria;
             IdComision = idComision;
+            Descripcion = descripcion;
             AnioCalendario = anioCalendario;
             Cupo = cupo;
         }

@@ -59,13 +59,13 @@ namespace Data
             if (existingAlumnoInscripcion != null)
             {
                 existingAlumnoInscripcion.Nota = alumnoInscripcion.Nota;
+                existingAlumnoInscripcion.Condicion = alumnoInscripcion.Condicion;
 
                 context.SaveChanges();
                 return true;
             }
             return false;
         }
-
 
 
     }

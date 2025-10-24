@@ -65,6 +65,7 @@ namespace WindowsForms
 
                 this.Curso.IdMateria = (int)materiaDropDown.SelectedValue;
                 this.Curso.IdComision = (int)comisionesDropDown.SelectedValue;
+                this.Curso.Descripcion = textBoxDescripcion.Text;
                 this.Curso.AnioCalendario = (int)AnioCalendarioNumericUpDown.Value;
                 this.Curso.Cupo = (int)cupoNumericUpDown.Value;
 
@@ -103,7 +104,8 @@ namespace WindowsForms
 
 
             this.materiaDropDown.SelectedValue = this.Curso.IdMateria;
-            this.comisionesDropDown.SelectedValue = this.Curso.IdComision; 
+            this.comisionesDropDown.SelectedValue = this.Curso.IdComision;
+            this.textBoxDescripcion.Text = this.Curso.Descripcion;
             this.AnioCalendarioNumericUpDown.Value = this.Curso.AnioCalendario;
             this.cupoNumericUpDown.Value = this.Curso.Cupo;
         }

@@ -10,7 +10,7 @@ namespace Domain.Services
         {
             var cursoRepository = new CursoRepository();
 
-            Curso curso = new Curso(0, dto.IdMateria, dto.IdComision, dto.AnioCalendario, dto.Cupo);
+            Curso curso = new Curso(0, dto.IdMateria, dto.IdComision, dto.Descripcion, dto.AnioCalendario, dto.Cupo);
 
             cursoRepository.Add(curso);
 
@@ -39,6 +39,7 @@ namespace Domain.Services
                 IdMateria = curso.IdMateria,
                 IdComision = curso.IdComision,
                 AnioCalendario = curso.AnioCalendario,
+                Descripcion = curso.Descripcion,
                 Cupo = curso.Cupo
             };
         }
@@ -53,6 +54,7 @@ namespace Domain.Services
                 IdCurso = curso.IdCurso,
                 IdMateria = curso.IdMateria,
                 IdComision = curso.IdComision,
+                Descripcion = curso.Descripcion,
                 AnioCalendario = curso.AnioCalendario,
                 Cupo = curso.Cupo
             }).ToList();
@@ -62,7 +64,7 @@ namespace Domain.Services
         {
             var cursoRepository = new CursoRepository();
 
-            Curso curso = new Curso(dto.IdCurso, dto.IdMateria, dto.IdComision, dto.AnioCalendario, dto.Cupo);
+            Curso curso = new Curso(dto.IdCurso, dto.IdMateria, dto.IdComision, dto.Descripcion, dto.AnioCalendario, dto.Cupo);
             return cursoRepository.Update(curso);
         }
 
@@ -72,7 +74,7 @@ namespace Domain.Services
             var cursoRepository = new CursoRepository();
 
             int cupo = dto.Cupo - 1;
-            Curso curso = new Curso(dto.IdCurso, dto.IdMateria, dto.IdComision, dto.AnioCalendario, cupo);
+            Curso curso = new Curso(dto.IdCurso, dto.IdMateria, dto.IdComision, dto.Descripcion, dto.AnioCalendario, cupo);
             return cursoRepository.BajarCupo(curso);
         }
 
@@ -92,6 +94,7 @@ namespace Domain.Services
                 IdCurso = c.IdCurso,
                 IdMateria = c.IdMateria,
                 IdComision = c.IdComision,
+                Descripcion = c.Descripcion,
                 AnioCalendario = c.AnioCalendario,
                 Cupo = c.Cupo
             });

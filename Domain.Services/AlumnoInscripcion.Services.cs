@@ -64,7 +64,22 @@ namespace Domain.Services
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
 
-            string condicion = dto.Condicion;
+            if (dto.Nota is null || dto.Nota < 0 || dto.Nota > 10) { 
+                throw new ArgumentException("La nota debe estar entre 0 y 10.");
+            }
+
+            string condicion = "Cursando";
+
+            if(dto.Nota >= 6 && dto.Nota <= 10)
+            {
+                condicion = "Aprobado";
+            }
+            else if (dto.Nota >= 0 && dto.Nota < 6)
+            {
+                condicion = "Desaprobado";
+            }
+
+
             AlumnoInscripcion alumnoInscripcion = new AlumnoInscripcion(dto.IdInscripcion, condicion, dto.Nota);
             alumnoInscripcion.SetCursoId(dto.IdCurso);
             alumnoInscripcion.SetAlumnoId(dto.IdAlumno);

@@ -7,6 +7,7 @@ using AcademiaAPI.Endpoints;
 using Data;
 using MateriaAPI.Endpoints;
 using EspecialidadAPI.Endpoints;
+using DocenteCursoAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ app.MapComisionEndpoints();
 app.MapPlanEndpoints();
 app.MapEspecialidadEndpoints();
 app.MapAlumnoInscripcionEndpoints();
+app.MapDocenteCursoEndpoints();
 
 
 

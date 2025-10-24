@@ -38,6 +38,10 @@
             cupoNumericUpDown = new NumericUpDown();
             comisionesDropDown = new ComboBox();
             materiaDropDown = new ComboBox();
+            label1 = new Label();
+            textBoxDescripcion = new TextBox();
+            label2 = new Label();
+            comboBoxProfesor = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)AnioCalendarioNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cupoNumericUpDown).BeginInit();
             SuspendLayout();
@@ -45,7 +49,7 @@
             // idComisionLabel
             // 
             idComisionLabel.AutoSize = true;
-            idComisionLabel.Location = new Point(23, 70);
+            idComisionLabel.Location = new Point(23, 108);
             idComisionLabel.Margin = new Padding(2, 0, 2, 0);
             idComisionLabel.Name = "idComisionLabel";
             idComisionLabel.Size = new Size(58, 15);
@@ -54,7 +58,7 @@
             // 
             // aceptarButton
             // 
-            aceptarButton.Location = new Point(239, 200);
+            aceptarButton.Location = new Point(247, 257);
             aceptarButton.Margin = new Padding(2);
             aceptarButton.Name = "aceptarButton";
             aceptarButton.Size = new Size(80, 22);
@@ -65,7 +69,7 @@
             // 
             // cancelarButton
             // 
-            cancelarButton.Location = new Point(331, 200);
+            cancelarButton.Location = new Point(339, 257);
             cancelarButton.Margin = new Padding(2);
             cancelarButton.Name = "cancelarButton";
             cancelarButton.Size = new Size(80, 22);
@@ -77,7 +81,7 @@
             // materiaLabel
             // 
             materiaLabel.AutoSize = true;
-            materiaLabel.Location = new Point(23, 38);
+            materiaLabel.Location = new Point(23, 76);
             materiaLabel.Margin = new Padding(2, 0, 2, 0);
             materiaLabel.Name = "materiaLabel";
             materiaLabel.Size = new Size(47, 15);
@@ -87,7 +91,7 @@
             // AnioCalendarioLabel
             // 
             AnioCalendarioLabel.AutoSize = true;
-            AnioCalendarioLabel.Location = new Point(23, 106);
+            AnioCalendarioLabel.Location = new Point(23, 172);
             AnioCalendarioLabel.Margin = new Padding(2, 0, 2, 0);
             AnioCalendarioLabel.Name = "AnioCalendarioLabel";
             AnioCalendarioLabel.Size = new Size(90, 15);
@@ -96,7 +100,7 @@
             // 
             // AnioCalendarioNumericUpDown
             // 
-            AnioCalendarioNumericUpDown.Location = new Point(130, 106);
+            AnioCalendarioNumericUpDown.Location = new Point(130, 170);
             AnioCalendarioNumericUpDown.Margin = new Padding(2);
             AnioCalendarioNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             AnioCalendarioNumericUpDown.Name = "AnioCalendarioNumericUpDown";
@@ -109,7 +113,7 @@
             // cupoLabel
             // 
             cupoLabel.AutoSize = true;
-            cupoLabel.Location = new Point(23, 148);
+            cupoLabel.Location = new Point(23, 207);
             cupoLabel.Margin = new Padding(2, 0, 2, 0);
             cupoLabel.Name = "cupoLabel";
             cupoLabel.Size = new Size(36, 15);
@@ -119,7 +123,7 @@
             // 
             // cupoNumericUpDown
             // 
-            cupoNumericUpDown.Location = new Point(130, 148);
+            cupoNumericUpDown.Location = new Point(130, 207);
             cupoNumericUpDown.Margin = new Padding(2);
             cupoNumericUpDown.Name = "cupoNumericUpDown";
             cupoNumericUpDown.Size = new Size(250, 23);
@@ -130,7 +134,7 @@
             // comisionesDropDown
             // 
             comisionesDropDown.FormattingEnabled = true;
-            comisionesDropDown.Location = new Point(130, 67);
+            comisionesDropDown.Location = new Point(130, 105);
             comisionesDropDown.Name = "comisionesDropDown";
             comisionesDropDown.Size = new Size(250, 23);
             comisionesDropDown.TabIndex = 10;
@@ -138,16 +142,54 @@
             // materiaDropDown
             // 
             materiaDropDown.FormattingEnabled = true;
-            materiaDropDown.Location = new Point(130, 32);
+            materiaDropDown.Location = new Point(130, 73);
             materiaDropDown.Name = "materiaDropDown";
             materiaDropDown.Size = new Size(250, 23);
             materiaDropDown.TabIndex = 11;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(23, 44);
+            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(69, 15);
+            label1.TabIndex = 12;
+            label1.Text = "Descripcion";
+            // 
+            // textBoxDescripcion
+            // 
+            textBoxDescripcion.Location = new Point(130, 41);
+            textBoxDescripcion.Name = "textBoxDescripcion";
+            textBoxDescripcion.Size = new Size(250, 23);
+            textBoxDescripcion.TabIndex = 13;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(23, 139);
+            label2.Name = "label2";
+            label2.Size = new Size(51, 15);
+            label2.TabIndex = 14;
+            label2.Text = "Profesor";
+            // 
+            // comboBoxProfesor
+            // 
+            comboBoxProfesor.FormattingEnabled = true;
+            comboBoxProfesor.Location = new Point(130, 136);
+            comboBoxProfesor.Name = "comboBoxProfesor";
+            comboBoxProfesor.Size = new Size(250, 23);
+            comboBoxProfesor.TabIndex = 15;
             // 
             // CursoDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(430, 236);
+            ClientSize = new Size(430, 288);
+            Controls.Add(comboBoxProfesor);
+            Controls.Add(label2);
+            Controls.Add(textBoxDescripcion);
+            Controls.Add(label1);
             Controls.Add(materiaDropDown);
             Controls.Add(comisionesDropDown);
             Controls.Add(AnioCalendarioLabel);
@@ -185,5 +227,9 @@
         private TextBox textBox1;
         private ComboBox comisionesDropDown;
         private ComboBox materiaDropDown;
+        private Label label1;
+        private TextBox textBoxDescripcion;
+        private Label label2;
+        private ComboBox comboBoxProfesor;
     }
 }

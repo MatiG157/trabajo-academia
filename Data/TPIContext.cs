@@ -28,7 +28,9 @@ namespace Data
         public DbSet<Especialidad> Especialidades { get; set; }
         public DbSet<Plan> Planes { get; set; }
         public DbSet<AlumnoInscripcion> AlumnosInscripciones { get; set; }
+        public DbSet<DocenteCurso> DocentesCursos { get; set; }
 
+        
         public TPIContext()
         {
             this.Database.EnsureCreated();
@@ -266,6 +268,9 @@ namespace Data
                 entity.Property(e => e.AnioCalendario)
                     .IsRequired();
 
+                entity.Property(e => e.Descripcion)
+                    .IsRequired();
+
                 entity.Property(e => e.Cupo)
                     .IsRequired();
 
@@ -372,7 +377,6 @@ namespace Data
 
             });
 
-
             modelBuilder.Entity<AlumnoInscripcion>(entity =>
             {
                 entity.HasKey(e => e.IdInscripcion);
@@ -421,6 +425,42 @@ namespace Data
 
 
             });
+
+            modelBuilder.Entity<DocenteCurso>(entity =>
+            {
+                entity.HasKey(e => new { e.IdDocente, e.IdCurso }); // Clave primaria compuesta
+
+
+                // Relación con Persona (Docente)
+                entity.Property(e => e.IdDocente)
+                    .IsRequired()
+                    .HasField("_docenteId");
+
+                entity.Navigation(e => e.Docente)
+                    .HasField("_docente");
+
+                entity.HasOne(e => e.Docente)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdDocente)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Relación con Curso
+                entity.Property(e => e.IdCurso)
+                    .IsRequired()
+                    .HasField("_cursoId");
+
+                entity.Navigation(e => e.Curso)
+                    .HasField("_curso");
+
+                entity.HasOne(e => e.Curso)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdCurso)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+
+            });
+
+
 
         }
     }

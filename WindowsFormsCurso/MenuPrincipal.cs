@@ -125,6 +125,16 @@ namespace WindowsFormsCurso
                 //this.funcionaliadprofesoresToolStripMenuItem.Visible = false;
             }
         }
+
+        private void ponerNotasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PonerNotas form = new PonerNotas();
+            form.Usuario = this.usuario;
+            form.MdiParent = this;   // Se abre dentro del contenedor MDI
+            this.label1.SendToBack();
+            this.pictureBox1.SendToBack();
+            form.Show();
+        }
     }
 }
 

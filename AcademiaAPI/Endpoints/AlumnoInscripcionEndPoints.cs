@@ -61,11 +61,13 @@ public static class AlumnoInscripcionEndpoints
         .Produces(StatusCodes.Status400BadRequest)
         .WithOpenApi();
 
-        app.MapPut("/alumnosInscripciones/{id}", (AlumnoInscripcionDTO dto) =>
+        app.MapPut("/alumnosInscripciones/{id}", (int id, AlumnoInscripcionDTO dto) =>
         {
             try
             {
                 AlumnoInscripcionService alumnoInscripcionService = new AlumnoInscripcionService();
+
+                dto.IdInscripcion = id;
 
                 var found = alumnoInscripcionService.Update(dto);
 
@@ -86,7 +88,7 @@ public static class AlumnoInscripcionEndpoints
        .Produces(StatusCodes.Status400BadRequest)
        .WithOpenApi();
 
-        
+
 
 
         app.MapDelete("/alumnosInscripciones/{id}", (int id) =>

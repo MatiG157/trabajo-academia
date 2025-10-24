@@ -44,8 +44,24 @@ namespace WindowsFormsCurso
             try
             {
                 this.dataGridViewCursos.DataSource = null;
-                this.dataGridViewCursos.DataSource = await CursoApiClient.GetAllAsync();
+                var cursos = await CursoApiClient.GetAllAsync();
+                var inscripciones = await AlumnoInscripcionApiClient.GetAllAsync();
+                int idAlumnoActual = usuario.IdPersona; 
 
+
+                // 1. Obtener los IDs de los cursos donde el alumno ya está inscripto
+                var cursosInscriptoIds = inscripciones
+                    .Where(i => i.IdAlumno == idAlumnoActual)
+                    .Select(i => i.IdCurso)
+                    .ToList();
+
+                // 2. Filtrar los cursos con cupo > 0 y que NO estén en la lista de inscriptos
+                var cursosDisponibles = cursos
+                    .Where(c => c.Cupo > 0 && !cursosInscriptoIds.Contains(c.IdCurso))
+                    .ToList();
+
+
+                this.dataGridViewCursos.DataSource = cursosDisponibles;
                 if (this.dataGridViewCursos.Rows.Count > 0)
                 {
                     this.dataGridViewCursos.Rows[0].Selected = true;
@@ -87,6 +103,8 @@ namespace WindowsFormsCurso
                     await CursoApiClient.BajarCupoAsync(curso);
 
                     MessageBox.Show("Inscripción realizada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.GetAllAndLoad();
                 }
                 else
                 {

@@ -117,6 +117,7 @@ namespace API.AlumnosInscripciones
             }
         }
 
+
         public static async Task UpdateAsync(AlumnoInscripcionDTO alumnoInscripcion)
         {
             try
@@ -138,6 +139,34 @@ namespace API.AlumnosInscripciones
                 throw new Exception($"Timeout al actualizar inscripcion con Id {alumnoInscripcion.IdInscripcion}: {ex.Message}", ex);
             }
         }
+
+        public static async Task PonerNotaAsync(int id, int nota)
+        {
+            try
+            {
+
+                AlumnoInscripcionDTO alumnoInscripcion = await GetAsync(id);
+                alumnoInscripcion.Nota = nota;
+                await UpdateAsync(alumnoInscripcion);
+
+                HttpResponseMessage response = await client.PutAsJsonAsync($"alumnosInscripciones/{id}", alumnoInscripcion);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al actualizar inscripcion con Id {id}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al actualizar inscripcion con Id {id}: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al actualizar inscripcion con Id {id}: {ex.Message}", ex);
+            }
+        }
+
     }
 }
 

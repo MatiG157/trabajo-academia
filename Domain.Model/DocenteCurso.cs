@@ -32,33 +32,35 @@
 
         // Atributos para la relacion con Persona ("Docente")
 
-        private int _personaId;
-        private Persona? _persona;
+        private int _docenteId;
+        private Persona? _docente;
 
-        public int IdPersona
+        public int IdDocente
         {
-            get => _persona?.IdPersona ?? _personaId;
-            private set => _personaId = value;
+            get => _docente?.IdPersona ?? _docenteId;
+            private set => _docenteId = value;
         }
 
-        public Persona? Persona
+        public Persona? Docente
         {
-            get => _persona;
+            get => _docente;
             private set
             {
-                _persona = value;
-                if (value != null && _personaId != value.IdPersona)
+                _docente = value;
+                if (value != null && _docenteId != value.IdPersona)
                 {
-                    _personaId = value.IdPersona; // Sincronizar automáticamente
+                    _docenteId = value.IdPersona; // Sincronizar automáticamente
                 }
             }
         }
+
+        public DocenteCurso() { }
 
         public DocenteCurso(string cargo,int idCurso, int idPersona)
         {
             Cargo = cargo;
             IdCurso = idCurso;
-            IdPersona = idPersona;
+            IdDocente = idPersona;
         }
 
         public void SetCursoId(int idCurso)
@@ -82,25 +84,25 @@
             _cursoId = curso.IdCurso;
         }
 
-        public void SetPersonaId(int idPersona)
+        public void SetDocenteId(int idDocente)
         {   
-            if (idPersona <= 0)
-                throw new ArgumentException("El idPersona debe ser mayor que 0.", nameof(idPersona));
+            if (idDocente <= 0)
+                throw new ArgumentException("El id del Docente debe ser mayor que 0.", nameof(idDocente));
 
-            _personaId = idPersona;
+            _docenteId = idDocente;
 
             // Solo invalidar si hay inconsistencia
-            if (_persona != null && _persona.IdPersona != idPersona)
+            if (_docente != null && _docente.IdPersona != idDocente)
             {
-                _persona = null; // Invalidar navigation property
+                _docente = null; // Invalidar navigation property
             }
         }
 
-        public void SetPersona(Persona persona)
+        public void SetDocente(Persona docente)
         {
-            ArgumentNullException.ThrowIfNull(persona);
-            _persona = persona;
-            _personaId = persona.IdPersona;
+            ArgumentNullException.ThrowIfNull(docente);
+            _docente = docente;
+            _docenteId = docente.IdPersona;
         }
     }
 

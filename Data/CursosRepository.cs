@@ -60,6 +60,7 @@ namespace Data
                 existingCurso.SetMateriaId(curso.IdMateria);
                 existingCurso.SetComisionId(curso.IdComision);
                 existingCurso.AnioCalendario = curso.AnioCalendario;
+                existingCurso.Descripcion = curso.Descripcion;
                 existingCurso.Cupo = curso.Cupo;
 
                 context.SaveChanges();
@@ -77,6 +78,7 @@ namespace Data
                 existingCurso.SetMateriaId(curso.IdMateria);
                 existingCurso.SetComisionId(curso.IdComision);
                 existingCurso.AnioCalendario = curso.AnioCalendario;
+                existingCurso.Descripcion = curso.Descripcion;
                 existingCurso.Cupo = curso.Cupo;
 
                 context.SaveChanges();
@@ -100,7 +102,7 @@ namespace Data
         public IEnumerable<Curso> GetByCriteria(CursoCriteria criteria)
         {
             const string sql = @"
-                SELECT c.IdCurso, c.IdMateria, c.IdComision, c.AnioCalendario, c.Cupo, 
+                SELECT c.IdCurso, c.IdMateria, c.IdComision, c.Descripcion, c.AnioCalendario, c.Cupo, 
                        com.AnioEspecialidad, com.Descripcion, com.IdPlan,
                        m.Descripcion, m.HsSemanales, m.HsTotales, m.IdPlan
                 FROM Cursos c
@@ -129,28 +131,29 @@ namespace Data
                     reader.GetInt32(0),    // IdCurso
                     reader.GetInt32(1),   // IdMateria
                     reader.GetInt32(2),   // IdComision
-                    reader.GetInt32(3),   // AnioCalendario
-                    reader.GetInt32(4)    // Cupo
+                    reader.GetString(3),   // Descripcion
+                    reader.GetInt32(4),   // AnioCalendario
+                    reader.GetInt32(5)    // Cupo
                 );
 
                 // Crear y asignar la comision
                 var comision = new Comision(
                     reader.GetInt32(2), // idComision
-                    reader.GetInt32(5), // anioEspecialidad
-                    reader.GetString(6) // Descripcion
+                    reader.GetInt32(6), // anioEspecialidad
+                    reader.GetString(7) // Descripcion
                     );
-                comision.SetPlanId(reader.GetInt32(7));
+                comision.SetPlanId(reader.GetInt32(8));
                 
                 curso.SetComision(comision);
 
                 // Crear y asignar la materia
                 var materia = new Materia(
                     reader.GetInt32(1), // idMateria
-                    reader.GetString(8), // descripcion
-                    reader.GetInt32(9), // hsSemanales
-                    reader.GetInt32(10) // hsTotales
+                    reader.GetString(9), // descripcion
+                    reader.GetInt32(10), // hsSemanales
+                    reader.GetInt32(11) // hsTotales
                     );
-                materia.SetPlanId(reader.GetInt32(11));
+                materia.SetPlanId(reader.GetInt32(12));
                 curso.SetMateria(materia);
 
                 cursos.Add(curso);

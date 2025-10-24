@@ -121,8 +121,9 @@
             // ponerNotasToolStripMenuItem
             // 
             ponerNotasToolStripMenuItem.Name = "ponerNotasToolStripMenuItem";
-            ponerNotasToolStripMenuItem.Size = new Size(137, 22);
+            ponerNotasToolStripMenuItem.Size = new Size(180, 22);
             ponerNotasToolStripMenuItem.Text = "&Poner notas";
+            ponerNotasToolStripMenuItem.Click += ponerNotasToolStripMenuItem_Click;
             // 
             // funcionalidadAlumnosToolStripMenuItem
             // 
@@ -134,7 +135,7 @@
             // inscribirseACursoToolStripMenuItem
             // 
             inscribirseACursoToolStripMenuItem.Name = "inscribirseACursoToolStripMenuItem";
-            inscribirseACursoToolStripMenuItem.Size = new Size(168, 22);
+            inscribirseACursoToolStripMenuItem.Size = new Size(180, 22);
             inscribirseACursoToolStripMenuItem.Text = "&Inscribirse a curso";
             inscribirseACursoToolStripMenuItem.Click += inscribirseACursoToolStripMenuItem_Click;
             // 
