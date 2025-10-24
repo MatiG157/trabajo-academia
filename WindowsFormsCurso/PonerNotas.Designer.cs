@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             comboBoxCursos = new ComboBox();
-            button1 = new Button();
-            dataGridView1 = new DataGridView();
-            button2 = new Button();
+            buttonFiltrar = new Button();
+            dataGridViewAlumnos = new DataGridView();
+            buttonPonerNota = new Button();
             cursoLabel = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewAlumnos).BeginInit();
             SuspendLayout();
             // 
             // comboBoxCursos
@@ -44,31 +44,33 @@
             comboBoxCursos.Size = new Size(214, 23);
             comboBoxCursos.TabIndex = 0;
             // 
-            // button1
+            // buttonFiltrar
             // 
-            button1.Location = new Point(279, 11);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 1;
-            button1.Text = "Filtrar";
-            button1.UseVisualStyleBackColor = true;
+            buttonFiltrar.Location = new Point(279, 11);
+            buttonFiltrar.Name = "buttonFiltrar";
+            buttonFiltrar.Size = new Size(75, 23);
+            buttonFiltrar.TabIndex = 1;
+            buttonFiltrar.Text = "Filtrar";
+            buttonFiltrar.UseVisualStyleBackColor = true;
+            buttonFiltrar.Click += buttonFiltrar_Click;
             // 
-            // dataGridView1
+            // dataGridViewAlumnos
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 41);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(709, 262);
-            dataGridView1.TabIndex = 2;
+            dataGridViewAlumnos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewAlumnos.Location = new Point(12, 41);
+            dataGridViewAlumnos.Name = "dataGridViewAlumnos";
+            dataGridViewAlumnos.Size = new Size(709, 262);
+            dataGridViewAlumnos.TabIndex = 2;
             // 
-            // button2
+            // buttonPonerNota
             // 
-            button2.Location = new Point(646, 309);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 3;
-            button2.Text = "Poner Nota";
-            button2.UseVisualStyleBackColor = true;
+            buttonPonerNota.Location = new Point(646, 309);
+            buttonPonerNota.Name = "buttonPonerNota";
+            buttonPonerNota.Size = new Size(75, 23);
+            buttonPonerNota.TabIndex = 3;
+            buttonPonerNota.Text = "Poner Nota";
+            buttonPonerNota.UseVisualStyleBackColor = true;
+            buttonPonerNota.Click += buttonPonerNota_Click;
             // 
             // cursoLabel
             // 
@@ -85,14 +87,14 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(733, 344);
             Controls.Add(cursoLabel);
-            Controls.Add(button2);
-            Controls.Add(dataGridView1);
-            Controls.Add(button1);
+            Controls.Add(buttonPonerNota);
+            Controls.Add(dataGridViewAlumnos);
+            Controls.Add(buttonFiltrar);
             Controls.Add(comboBoxCursos);
             Name = "PonerNotas";
             Text = "Poner notas";
             Load += Poner_notas_load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewAlumnos).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -100,9 +102,9 @@
         #endregion
 
         private ComboBox comboBoxCursos;
-        private Button button1;
-        private DataGridView dataGridView1;
-        private Button button2;
+        private Button buttonFiltrar;
+        private DataGridView dataGridViewAlumnos;
+        private Button buttonPonerNota;
         private Label cursoLabel;
     }
 }

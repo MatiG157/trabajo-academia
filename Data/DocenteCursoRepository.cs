@@ -11,7 +11,13 @@ namespace Data
             return new TPIContext();
         }
 
-        
+        public void Add(DocenteCurso docenteCurso)
+        {
+            using var context = CreateContext();
+            context.DocentesCursos.Add(docenteCurso);
+            context.SaveChanges();
+        }
+
         public async Task<IEnumerable<DocenteCurso?>?> FindByCriteria(DocenteCursoCriteria criteria)
         {
             using var context = CreateContext();

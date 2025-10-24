@@ -9,26 +9,43 @@ namespace DocenteCursoAPI.Endpoints
     {
         public static void MapDocenteCursoEndpoints(this WebApplication app)
         {
+            app.MapPost("/docentesCursos", (DocenteCursoDTO dto) =>
             {
-              
-                app.MapGet("/docentesCursos/criteria", (int idDocente) =>
+                try
                 {
-                    try
-                    {
-                        DocenteCursoService docenteCursoService = new DocenteCursoService();
-                        var criteria = new DocenteCursoCriteriaDTO { IdDocente = idDocente };
-                        var docentesCursos = docenteCursoService.GetByCriteria(criteria);
-                        return Results.Ok(docentesCursos);
-                    }
-                    catch (Exception ex)
-                    {
-                        return Results.BadRequest(new { error = ex.Message });
-                    }
-                })
-                    .WithName("GetDocenteCursoByCriteria")
-                    .WithOpenApi();
+                    DocenteCursoService docenteCursoService = new DocenteCursoService();
 
-            }
+                    DocenteCursoDTO docenteCursoDTO = docenteCursoService.Add(dto);
+
+                    return Results.Created($"/docentesCursos/{docenteCursoDTO.IdDocente}/{docenteCursoDTO.IdCurso}", docenteCursoDTO);
+
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("AddDocenteCurso")
+            .Produces<DocenteCursoDTO>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithOpenApi();
+
+            app.MapGet("/docentesCursos/criteria", async (int idDocente) =>
+            {
+                try
+                {
+                    DocenteCursoService docenteCursoService = new DocenteCursoService();
+                    var criteria = new DocenteCursoCriteriaDTO { IdDocente = idDocente };
+                    var docentesCursos = await docenteCursoService.GetByCriteria(criteria);
+                    return Results.Ok(docentesCursos);
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("GetDocenteCursoByCriteria")
+            .WithOpenApi();
         }
     }
 }

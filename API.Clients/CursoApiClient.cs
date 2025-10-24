@@ -73,13 +73,19 @@ namespace API.Cursos
             }
         }
 
-        public async static Task AddAsync(CursoDTO curso)
+        public static async Task<CursoDTO> AddAsync(CursoDTO curso)
         {
             try
             {
                 HttpResponseMessage response = await client.PostAsJsonAsync("cursos", curso);
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    // Deserializa el objeto creado que devuelve la API
+                    var cursoCreado = await response.Content.ReadFromJsonAsync<CursoDTO>();
+                    return cursoCreado;
+                }
+                else
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
                     throw new Exception($"Error al crear curso. Status: {response.StatusCode}, Detalle: {errorContent}");

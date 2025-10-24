@@ -11,8 +11,21 @@ namespace Domain.Services
 {
     public class DocenteCursoService
     {
+        public DocenteCursoDTO Add(DocenteCursoDTO dto)
+        {
+            var docenteCursoRepository = new DocenteCursoRepository();
 
-        public async Task<IEnumerable<DocenteCurso?>> GetByCriteria(DocenteCursoCriteriaDTO criteriaDto)
+            DocenteCurso docenteCurso = new DocenteCurso(dto.Cargo, dto.IdCurso, dto.IdDocente);
+
+            docenteCursoRepository.Add(docenteCurso);
+
+            dto.IdCurso = docenteCurso.IdCurso;
+            dto.IdDocente = docenteCurso.IdDocente;
+
+            return dto;
+        }
+
+        public async Task<IEnumerable<DocenteCursoDTO>> GetByCriteria(DocenteCursoCriteriaDTO criteriaDto)
         {
             var criteria = new DocenteCursoCriteria
             {
@@ -21,7 +34,16 @@ namespace Domain.Services
 
             var docenteCursoRepository = new DocenteCursoRepository();
 
-            return await docenteCursoRepository.FindByCriteria(criteria);
+            var entidades = await docenteCursoRepository.FindByCriteria(criteria);
+
+            var dtos = entidades.Select(dc => new DocenteCursoDTO
+            {
+                IdCurso = dc.IdCurso,
+                IdDocente = dc.IdDocente,
+                Cargo = dc.Cargo
+            }).ToList();
+
+            return dtos;
         }
 
     }

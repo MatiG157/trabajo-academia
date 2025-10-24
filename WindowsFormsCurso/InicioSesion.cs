@@ -27,7 +27,8 @@ namespace WindowsFormsCurso
         {
             Registrarse form = new Registrarse();
             form.Show();
-            
+            this.Hide();
+
         }
 
         private async void iniciarSesionButton_Click(object sender, EventArgs e)

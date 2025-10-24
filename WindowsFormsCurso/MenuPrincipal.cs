@@ -114,7 +114,7 @@ namespace WindowsFormsCurso
                 this.funcionaliadprofesoresToolStripMenuItem.Visible = false;
                 this.listasToolStripMenuItem.Visible = false;
             }
-            else if (this.modo == "Profesor")
+            else if (this.modo == "Docente")
             {
                 this.funcionalidadAlumnosToolStripMenuItem.Visible = false;
                 this.listasToolStripMenuItem.Visible = false;

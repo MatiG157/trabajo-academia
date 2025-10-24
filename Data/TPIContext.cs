@@ -70,11 +70,10 @@ namespace Data
                     .IsRequired()
                     .HasMaxLength(360);
 
-
                 entity.HasData(new
                 {
-                    IdEspecialidad = 1,
-                    Descripcion = "Especialidad"
+                    Descripcion = "Especialidad básica",
+                    IdEspecialidad = 1
                 });
 
             });
@@ -189,6 +188,22 @@ namespace Data
                 }
                 );
 
+
+                entity.HasData(new
+                {
+                   
+                    IdPersona = 2,
+                    Apellido = "Profe",
+                    Direccion = "Profe 123",
+                    Email = "profe@gmail.com",
+                    FechaNacimiento = new DateTime(2004, 3, 3),
+                    Legajo = 1234,
+                    Telefono = "3419999999",
+                    TipoPersona = "Docente",
+                    IdPlan = 1
+                }
+             );
+
             });
 
             modelBuilder.Entity<Usuario>(static entity =>
@@ -253,6 +268,18 @@ namespace Data
                 }
                 );
 
+                entity.HasData(new Usuario
+                {
+                    IdUsuario = 2,
+                    Apellido = "Profe",
+                    Nombre = "Profe",
+                    Clave = "123",
+                    Email = "profe@gmail.com",
+                    Habilitado = true,
+                    NombreUsuario = "profe",
+                    IdPersona = 2
+                }
+             );
 
             });
 
@@ -301,6 +328,21 @@ namespace Data
                     .WithMany()
                     .HasForeignKey(e => e.IdComision)
                     .OnDelete(DeleteBehavior.Cascade);
+
+
+           //     entity.HasData(new Curso
+           //     {
+           //         IdCurso = 1,
+           //         Descripcion = "Curso 1",
+           //         AnioCalendario = new DateTime(2004, 3, 3),
+           //         Cupo = 20,
+           //         Email = "profe@gmail.com",
+           //         Habilitado = true,
+           //         NombreUsuario = "profe",
+           //         IdPersona = 1
+           //     }
+           //);
+
             });
 
             modelBuilder.Entity<Materia>(entity =>
@@ -457,6 +499,17 @@ namespace Data
                     .HasForeignKey(e => e.IdCurso)
                     .OnDelete(DeleteBehavior.Cascade);
 
+
+
+                // Datos iniciales
+
+                //entity.HasData(new DocenteCurso
+                //{
+                //    Cargo = "Teoría",
+                //    IdCurso = "1",
+                //    IdDocente = "2",
+                //}
+                //);
 
             });
 

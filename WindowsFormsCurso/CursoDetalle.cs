@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using API.Cursos;
 using API.Comisiones;
 using API.Materias;
+using API.Usuarios;
+using API.Personas;
+using API.DocentesCursos;
 
 namespace WindowsForms
 {
@@ -37,6 +40,8 @@ namespace WindowsForms
             }
         }
 
+
+
         public FormMode Mode
         {
             get
@@ -54,21 +59,18 @@ namespace WindowsForms
             InitializeComponent();
 
             Mode = FormMode.Add;
+
         }
 
         private async void aceptarButton_Click(object sender, EventArgs e)
         {
-            //if (this.ValidateCurso())
-
             try
             {
-
                 this.Curso.IdMateria = (int)materiaDropDown.SelectedValue;
                 this.Curso.IdComision = (int)comisionesDropDown.SelectedValue;
                 this.Curso.Descripcion = textBoxDescripcion.Text;
                 this.Curso.AnioCalendario = (int)AnioCalendarioNumericUpDown.Value;
                 this.Curso.Cupo = (int)cupoNumericUpDown.Value;
-
 
 
                 if (this.Mode == FormMode.Update)
@@ -77,7 +79,13 @@ namespace WindowsForms
                 }
                 else
                 {
-                    await CursoApiClient.AddAsync(this.Curso);
+                    var cursoCreado = await CursoApiClient.AddAsync(this.Curso);
+
+                    var docenteCurso = new DocenteCursoDTO();
+                    docenteCurso.IdCurso = cursoCreado.IdCurso;
+                    docenteCurso.IdDocente = (int)this.profesorDropDown.SelectedValue;
+                    docenteCurso.Cargo = (string)this.cargosDropDown.SelectedItem;
+                    await DocenteCursoApiClient.AddAsync(docenteCurso);
                 }
 
                 this.Close();
@@ -86,7 +94,6 @@ namespace WindowsForms
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void cancelarButton_Click(object sender, EventArgs e)
@@ -115,17 +122,6 @@ namespace WindowsForms
             mode = value;
         }
 
-
-        private void AnioCalendarioNumericUpDown_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cupoNumericUpDown_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private async void CursoDetalle_Load(object sender, EventArgs e)
         {
             var comisiones = await ComisionApiClient.GetAllAsync();
@@ -133,30 +129,33 @@ namespace WindowsForms
             comisionesDropDown.DisplayMember = "Display"; // Muestra la descripción
             comisionesDropDown.ValueMember = "IdComision";
 
+            this.cargosDropDown.Items.Add("Teoría");
+            this.cargosDropDown.Items.Add("Práctica");
+
             var materias = await MateriaApiClient.GetAllAsync();
             materiaDropDown.DataSource = materias;
-            materiaDropDown.DisplayMember = "Descripcion"; // Muestra la descripción
+            materiaDropDown.DisplayMember = "Descripcion";
             materiaDropDown.ValueMember = "IdMateria";
-        }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+            var personas = await PersonaApiClient.GetAllAsync();
+            var usuarios = await UsuarioApiClient.GetAllAsync();
 
-        }
 
-        private void cupoNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
 
-        }
 
-        private void cupoLabel_Click(object sender, EventArgs e)
-        {
+            var profesores = (from persona in personas
+                              join usuario in usuarios on persona.IdPersona equals usuario.IdPersona
+                              where persona.TipoPersona == "Docente"
+                              select new
+                              {
+                                  IdPersona = persona.IdPersona,
+                                  NombreCompleto = $"{usuario.NombreUsuario} {usuario.Apellido}",
+                              }).ToList();
 
-        }
 
-        private void AnioCalendarioNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-
+            profesorDropDown.DataSource = profesores;
+            profesorDropDown.DisplayMember = "NombreCompleto";
+            profesorDropDown.ValueMember = "IdPersona";
         }
     }
 }
