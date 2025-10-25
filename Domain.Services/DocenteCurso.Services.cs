@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Data;
 using Domain.Model;
@@ -11,13 +9,13 @@ namespace Domain.Services
 {
     public class DocenteCursoService
     {
-        public DocenteCursoDTO Add(DocenteCursoDTO dto)
+        public async Task<DocenteCursoDTO> Add(DocenteCursoDTO dto)
         {
             var docenteCursoRepository = new DocenteCursoRepository();
 
             DocenteCurso docenteCurso = new DocenteCurso(dto.Cargo, dto.IdCurso, dto.IdDocente);
 
-            docenteCursoRepository.Add(docenteCurso);
+            await docenteCursoRepository.Add(docenteCurso);
 
             dto.IdCurso = docenteCurso.IdCurso;
             dto.IdDocente = docenteCurso.IdDocente;
@@ -45,7 +43,5 @@ namespace Domain.Services
 
             return dtos;
         }
-
     }
-   
 }

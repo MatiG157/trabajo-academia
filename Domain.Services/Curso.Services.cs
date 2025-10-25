@@ -6,29 +6,29 @@ namespace Domain.Services
 {
     public class CursoService
     {
-        public CursoDTO Add(CursoDTO dto)
+        public async Task<CursoDTO> Add(CursoDTO dto)
         {
             var cursoRepository = new CursoRepository();
 
             Curso curso = new Curso(0, dto.IdMateria, dto.IdComision, dto.Descripcion, dto.AnioCalendario, dto.Cupo);
 
-            cursoRepository.Add(curso);
+            await cursoRepository.Add(curso);
 
             dto.IdCurso = curso.IdCurso;
 
             return dto;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var cursoRepository = new CursoRepository();
-            return cursoRepository.Delete(id);
+            return await cursoRepository.Delete(id);
         }
 
-        public CursoDTO Get(int id)
+        public async Task<CursoDTO?> Get(int id)
         {
             var cursoRepository = new CursoRepository();
-            Curso? curso = cursoRepository.Get(id);
+            Curso? curso = await cursoRepository.Get(id);
 
             if (curso == null)
                 return null;
@@ -44,10 +44,10 @@ namespace Domain.Services
             };
         }
 
-        public IEnumerable<CursoDTO> GetAll()
+        public async Task<IEnumerable<CursoDTO>> GetAll()
         {
             CursoRepository cursoRepository = new CursoRepository();
-            var cursos = cursoRepository.GetAll();
+            var cursos = await cursoRepository.GetAll();
 
             return cursos.Select(curso => new CursoDTO
             {
@@ -60,25 +60,24 @@ namespace Domain.Services
             }).ToList();
         }
 
-        public bool Update(CursoDTO dto)
+        public async Task<bool> Update(CursoDTO dto)
         {
             var cursoRepository = new CursoRepository();
 
             Curso curso = new Curso(dto.IdCurso, dto.IdMateria, dto.IdComision, dto.Descripcion, dto.AnioCalendario, dto.Cupo);
-            return cursoRepository.Update(curso);
+            return await cursoRepository.Update(curso);
         }
 
-
-        public bool BajarCupo(CursoDTO dto)
+        public async Task<bool> BajarCupo(CursoDTO dto)
         {
             var cursoRepository = new CursoRepository();
 
             int cupo = dto.Cupo - 1;
             Curso curso = new Curso(dto.IdCurso, dto.IdMateria, dto.IdComision, dto.Descripcion, dto.AnioCalendario, cupo);
-            return cursoRepository.BajarCupo(curso);
+            return await cursoRepository.BajarCupo(curso);
         }
 
-        public IEnumerable<CursoDTO> GetByCriteria(CursoCriteriaDTO criteriaDTO)
+        public async Task<IEnumerable<CursoDTO>> GetByCriteria(CursoCriteriaDTO criteriaDTO)
         {
             var cursoRepository = new CursoRepository();
 
@@ -86,7 +85,7 @@ namespace Domain.Services
             var criteria = new CursoCriteria(criteriaDTO.Texto);
 
             // Llamar al repositorio
-            var cursos = cursoRepository.GetByCriteria(criteria);
+            var cursos = await cursoRepository.GetByCriteria(criteria);
 
             // Mapear Domain Model a DTO
             return cursos.Select(c => new CursoDTO
@@ -99,6 +98,6 @@ namespace Domain.Services
                 Cupo = c.Cupo
             });
         }
-
     }
 }
+

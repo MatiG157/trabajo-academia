@@ -9,11 +9,11 @@ public static class AlumnoInscripcionEndpoints
 {
     public static void MapAlumnoInscripcionEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/alumnosInscripciones/{id}/{idCurso}", (int id, int idCurso) =>
+        app.MapGet("/alumnosInscripciones/{id}/{idCurso}", async (int id, int idCurso) =>
         {
             AlumnoInscripcionService alumnoInscripcionService = new AlumnoInscripcionService();
 
-            AlumnoInscripcionDTO dto = alumnoInscripcionService.Get(id,idCurso);
+            AlumnoInscripcionDTO dto = await alumnoInscripcionService.Get(id,idCurso);
 
             if (dto == null)
             {
@@ -28,11 +28,11 @@ public static class AlumnoInscripcionEndpoints
         .WithOpenApi();
 
 
-        app.MapGet("/alumnosInscripciones", () =>
+        app.MapGet("/alumnosInscripciones", async () =>
         {
             AlumnoInscripcionService alumnoInscripcioService = new AlumnoInscripcionService();
 
-            var dtos = alumnoInscripcioService.GetAll();
+            var dtos = await alumnoInscripcioService.GetAll();
 
             return Results.Ok(dtos);
         })
@@ -41,13 +41,13 @@ public static class AlumnoInscripcionEndpoints
         .WithOpenApi();
 
 
-        app.MapPost("/alumnosInscripciones", (AlumnoInscripcionDTO dto) =>
+        app.MapPost("/alumnosInscripciones", async (AlumnoInscripcionDTO dto) =>
         {
             try
             {
                 AlumnoInscripcionService alumnoInscripcionService = new AlumnoInscripcionService();
 
-                AlumnoInscripcionDTO alumnoInscripcionDTO = alumnoInscripcionService.Add(dto);
+                AlumnoInscripcionDTO alumnoInscripcionDTO = await alumnoInscripcionService.Add(dto);
 
                 return Results.Created($"/alumnosInscripciones/{alumnoInscripcionDTO.IdInscripcion}", alumnoInscripcionDTO);
             }
@@ -61,7 +61,7 @@ public static class AlumnoInscripcionEndpoints
         .Produces(StatusCodes.Status400BadRequest)
         .WithOpenApi();
 
-        app.MapPut("/alumnosInscripciones/{idInscripcion}/{idCurso}", (int idInscripcion, int idCurso, AlumnoInscripcionDTO dto) =>
+        app.MapPut("/alumnosInscripciones/{idInscripcion}/{idCurso}", async (int idInscripcion, int idCurso, AlumnoInscripcionDTO dto) =>
         {
             try
             {
@@ -70,7 +70,7 @@ public static class AlumnoInscripcionEndpoints
                 dto.IdInscripcion = idInscripcion;
                 dto.IdCurso = idCurso;
 
-                var found = alumnoInscripcionService.Update(dto);
+                var found = await alumnoInscripcionService.Update(dto);
 
                 if (!found)
                 {
@@ -92,11 +92,11 @@ public static class AlumnoInscripcionEndpoints
 
 
 
-        app.MapDelete("/alumnosInscripciones/{id}", (int id) =>
+        app.MapDelete("/alumnosInscripciones/{id}", async (int id) =>
         {
             AlumnoInscripcionService alumnoInscripcionService = new AlumnoInscripcionService();
 
-            var deleted = alumnoInscripcionService.Delete(id);
+            var deleted = await alumnoInscripcionService.Delete(id);
 
             if (!deleted)
             {
@@ -110,7 +110,6 @@ public static class AlumnoInscripcionEndpoints
         .Produces(StatusCodes.Status204NoContent)
         .Produces(StatusCodes.Status404NotFound)
         .WithOpenApi();
-
 
     }
 }

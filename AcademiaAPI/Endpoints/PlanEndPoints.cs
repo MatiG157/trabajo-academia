@@ -1,19 +1,18 @@
 ﻿using DTOs;
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
-
-
+using System.Threading.Tasks;
 
 namespace AcademiaAPI.Endpoints;
 public static class PlanEndpoints
 {
     public static void MapPlanEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/planes/{id}", (int id) =>
+        app.MapGet("/planes/{id}", async (int id) =>
         {
             PlanService planService = new PlanService();
 
-            PlanDTO dto = planService.Get(id);
+            PlanDTO dto = await planService.Get(id);
 
             if (dto == null)
             {
@@ -28,11 +27,11 @@ public static class PlanEndpoints
         .WithOpenApi();
 
 
-        app.MapGet("/planes", () =>
+        app.MapGet("/planes", async () =>
         {
             PlanService planService = new PlanService();
 
-            var dtos = planService.GetAll();
+            var dtos = await planService.GetAll();
 
             return Results.Ok(dtos);
         })
@@ -41,13 +40,13 @@ public static class PlanEndpoints
         .WithOpenApi();
 
 
-        app.MapPost("/planes", (PlanDTO dto) =>
+        app.MapPost("/planes", async (PlanDTO dto) =>
         {
             try
             {
                 PlanService planService = new PlanService();
 
-                PlanDTO planDTO = planService.Add(dto);
+                PlanDTO planDTO = await planService.Add(dto);
 
                 return Results.Created($"/planes/{planDTO.IdPlan}", planDTO);
             }
@@ -62,13 +61,13 @@ public static class PlanEndpoints
         .WithOpenApi();
 
 
-        app.MapPut("/planes/{id}", (PlanDTO dto) =>
+        app.MapPut("/planes/{id}", async (PlanDTO dto) =>
         {
             try
             {
                 PlanService planService = new PlanService();
 
-                var found = planService.Update(dto);
+                var found = await planService.Update(dto);
 
                 if (!found)
                 {
@@ -88,11 +87,11 @@ public static class PlanEndpoints
         .WithOpenApi();
 
 
-        app.MapDelete("/planes/{id}", (int id) =>
+        app.MapDelete("/planes/{id}", async (int id) =>
         {
             PlanService planService = new PlanService();
 
-            var deleted = planService.Delete(id);
+            var deleted = await planService.Delete(id);
 
             if (!deleted)
             {
@@ -100,20 +99,20 @@ public static class PlanEndpoints
             }
 
             return Results.NoContent();
-
         })
         .WithName("DeletePlan")
         .Produces(StatusCodes.Status204NoContent)
         .Produces(StatusCodes.Status404NotFound)
         .WithOpenApi();
 
-        app.MapGet("/planes/criteria", (string texto) =>
+
+        app.MapGet("/planes/criteria", async (string texto) =>
         {
             try
             {
                 PlanService planService = new PlanService();
                 var criteria = new PlanCriteriaDTO { Texto = texto };
-                var planes = planService.GetByCriteria(criteria);
+                var planes = await planService.GetByCriteria(criteria);
                 return Results.Ok(planes);
             }
             catch (Exception ex)
@@ -123,6 +122,5 @@ public static class PlanEndpoints
         })
         .WithName("GetPlanesByCriteria")
         .WithOpenApi();
-
     }
 }

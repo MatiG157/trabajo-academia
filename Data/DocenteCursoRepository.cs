@@ -1,6 +1,8 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data
 {
@@ -11,16 +13,16 @@ namespace Data
             return new TPIContext();
         }
 
-        public void Add(DocenteCurso docenteCurso)
+        public async Task Add(DocenteCurso docenteCurso)
         {
-            using var context = CreateContext();
-            context.DocentesCursos.Add(docenteCurso);
-            context.SaveChanges();
+            await using var context = CreateContext();
+            await context.DocentesCursos.AddAsync(docenteCurso);
+            await context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<DocenteCurso?>?> FindByCriteria(DocenteCursoCriteria criteria)
         {
-            using var context = CreateContext();
+            await using var context = CreateContext();
 
             return await context.DocentesCursos
                 .Where(u => u.IdDocente == criteria.IdDocente)

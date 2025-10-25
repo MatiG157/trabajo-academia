@@ -50,12 +50,13 @@
             reportePlanesButton.TabIndex = 1;
             reportePlanesButton.Text = "Reporte Planes";
             reportePlanesButton.UseVisualStyleBackColor = true;
+            reportePlanesButton.Click += reportePlanesButton_Click;
             // 
             // Reportes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(552, 319);
+            ClientSize = new Size(552, 137);
             Controls.Add(reportePlanesButton);
             Controls.Add(reporteCursosButton);
             Name = "Reportes";

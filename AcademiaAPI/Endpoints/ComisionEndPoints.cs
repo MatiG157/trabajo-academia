@@ -2,18 +2,16 @@
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
 
-
-
 namespace AcademiaAPI.Endpoints;
 public static class ComisionEndpoints
 {
     public static void MapComisionEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/comisiones/{id}", (int id) =>
+        app.MapGet("/comisiones/{id}", async (int id) =>
         {
             ComisionService comisionService = new ComisionService();
 
-            ComisionDTO dto = comisionService.Get(id);
+            ComisionDTO dto = await comisionService.Get(id);
 
             if (dto == null)
             {
@@ -28,11 +26,11 @@ public static class ComisionEndpoints
         .WithOpenApi();
 
 
-        app.MapGet("/comisiones", () =>
+        app.MapGet("/comisiones", async () =>
         {
             ComisionService comisionService = new ComisionService();
 
-            var dtos = comisionService.GetAll();
+            var dtos = await comisionService.GetAll();
 
             return Results.Ok(dtos);
         })
@@ -41,13 +39,13 @@ public static class ComisionEndpoints
         .WithOpenApi();
 
 
-        app.MapPost("/comisiones", (ComisionDTO dto) =>
+        app.MapPost("/comisiones", async (ComisionDTO dto) =>
         {
             try
             {
                 ComisionService comisionService = new ComisionService();
 
-                ComisionDTO comisionDTO = comisionService.Add(dto);
+                ComisionDTO comisionDTO = await comisionService.Add(dto);
 
                 return Results.Created($"/comisiones/{comisionDTO.IdComision}", comisionDTO);
             }
@@ -62,13 +60,13 @@ public static class ComisionEndpoints
         .WithOpenApi();
 
 
-        app.MapPut("/comisiones/{id}", (ComisionDTO dto) =>
+        app.MapPut("/comisiones/{id}", async (ComisionDTO dto) =>
         {
             try
             {
                 ComisionService comisionService = new ComisionService();
 
-                var found = comisionService.Update(dto);
+                var found = await comisionService.Update(dto);
 
                 if (!found)
                 {
@@ -88,11 +86,11 @@ public static class ComisionEndpoints
         .WithOpenApi();
 
 
-        app.MapDelete("/comisiones/{id}", (int id) =>
+        app.MapDelete("/comisiones/{id}", async (int id) =>
         {
             ComisionService comisionService = new ComisionService();
 
-            var deleted = comisionService.Delete(id);
+            var deleted = await comisionService.Delete(id);
 
             if (!deleted)
             {
@@ -107,13 +105,14 @@ public static class ComisionEndpoints
         .Produces(StatusCodes.Status404NotFound)
         .WithOpenApi();
 
-        app.MapGet("/comisiones/criteria", (string texto) =>
+
+        app.MapGet("/comisiones/criteria", async (string texto) =>
         {
             try
             {
                 ComisionService comisionService = new ComisionService();
                 var criteria = new ComisionCriteriaDTO { Texto = texto };
-                var cursos = comisionService.GetByCriteria(criteria);
+                var cursos = await comisionService.GetByCriteria(criteria);
                 return Results.Ok(cursos);
             }
             catch (Exception ex)
@@ -123,6 +122,6 @@ public static class ComisionEndpoints
         })
         .WithName("GetComisionesByCriteria")
         .WithOpenApi();
-
     }
 }
+

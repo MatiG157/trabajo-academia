@@ -6,7 +6,7 @@ namespace Domain.Services
 {
     public class AlumnoInscripcionService
     {
-        public AlumnoInscripcionDTO Add(AlumnoInscripcionDTO dto)
+        public async Task<AlumnoInscripcionDTO>  Add(AlumnoInscripcionDTO dto)
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
 
@@ -14,23 +14,23 @@ namespace Domain.Services
             alumnoInscripcion.SetCursoId(dto.IdCurso);
             alumnoInscripcion.SetAlumnoId(dto.IdAlumno);
 
-            alumnoInscripcionRepository.Add(alumnoInscripcion);
+            await alumnoInscripcionRepository.Add(alumnoInscripcion);
 
             dto.IdInscripcion = alumnoInscripcion.IdInscripcion;
 
             return dto;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
-            return alumnoInscripcionRepository.Delete(id);
+            return await alumnoInscripcionRepository.Delete(id);
         }
 
-        public AlumnoInscripcionDTO Get(int id, int idCurso)
+        public async  Task<AlumnoInscripcionDTO> Get(int id, int idCurso)
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
-            AlumnoInscripcion? alumnoInscripcion = alumnoInscripcionRepository.Get(id, idCurso);
+            AlumnoInscripcion? alumnoInscripcion = await alumnoInscripcionRepository.Get(id, idCurso);
 
             if (alumnoInscripcion == null)
                 return null;
@@ -45,10 +45,10 @@ namespace Domain.Services
             };
         }
 
-        public IEnumerable<AlumnoInscripcionDTO> GetAll()
+        public async  Task<IEnumerable<AlumnoInscripcionDTO>> GetAll()
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
-            var alumnosInscripciones = alumnoInscripcionRepository.GetAll();
+            var alumnosInscripciones = await alumnoInscripcionRepository.GetAll();
 
             return alumnosInscripciones.Select(alumnoInscripcion => new AlumnoInscripcionDTO
             {
@@ -60,7 +60,7 @@ namespace Domain.Services
             }).ToList();
         }
 
-        public bool Update(AlumnoInscripcionDTO dto)
+        public async Task<bool> Update(AlumnoInscripcionDTO dto)
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
 
@@ -83,28 +83,8 @@ namespace Domain.Services
             AlumnoInscripcion alumnoInscripcion = new AlumnoInscripcion(dto.IdInscripcion, condicion, dto.Nota);
             alumnoInscripcion.SetCursoId(dto.IdCurso);
             alumnoInscripcion.SetAlumnoId(dto.IdAlumno);
-            return alumnoInscripcionRepository.Update(alumnoInscripcion);
+            return await alumnoInscripcionRepository.Update(alumnoInscripcion);
         }
-
-        //public IEnumerable<ComisionDTO> GetByCriteria(ComisionCriteriaDTO criteriaDTO)
-        //{
-        //    var comisionRepository = new ComisionRepository();
-
-        //    // Mapear DTO a Domain Model
-        //    var criteria = new ComisionCriteria(criteriaDTO.Texto);
-
-        //    // Llamar al repositorio
-        //    var comisiones = comisionRepository.GetByCriteria(criteria);
-
-        //    // Mapear Domain Model a DTO
-        //    return comisiones.Select(c => new ComisionDTO
-        //    {
-        //        IdComision = c.IdComision,
-        //        AnioEspecialidad = c.AnioEspecialidad,
-        //        Descripcion = c.Descripcion,
-        //        IdPlan = c.IdPlan,
-        //    });
-        //}
 
     }
 }

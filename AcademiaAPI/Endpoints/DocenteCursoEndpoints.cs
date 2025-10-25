@@ -1,7 +1,6 @@
 ﻿using DTOs;
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 
 namespace DocenteCursoAPI.Endpoints
 {
@@ -9,15 +8,18 @@ namespace DocenteCursoAPI.Endpoints
     {
         public static void MapDocenteCursoEndpoints(this WebApplication app)
         {
-            app.MapPost("/docentesCursos", (DocenteCursoDTO dto) =>
+            app.MapPost("/docentesCursos", async (DocenteCursoDTO dto) =>
             {
                 try
                 {
                     DocenteCursoService docenteCursoService = new DocenteCursoService();
 
-                    DocenteCursoDTO docenteCursoDTO = docenteCursoService.Add(dto);
+                    DocenteCursoDTO docenteCursoDTO = await docenteCursoService.Add(dto);
 
-                    return Results.Created($"/docentesCursos/{docenteCursoDTO.IdDocente}/{docenteCursoDTO.IdCurso}", docenteCursoDTO);
+                    return Results.Created(
+                        $"/docentesCursos/{docenteCursoDTO.IdDocente}/{docenteCursoDTO.IdCurso}",
+                        docenteCursoDTO
+                    );
 
                 }
                 catch (ArgumentException ex)

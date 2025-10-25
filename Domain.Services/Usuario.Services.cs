@@ -6,39 +6,35 @@ namespace Domain.Services
 {
     public class UsuarioService
     {
-
-        public UsuarioDTO Add(UsuarioDTO dto)
+        public async Task<UsuarioDTO> Add(UsuarioDTO dto)
         {
             var usuarioRepository = new UsuarioRepository();
 
             // Validar que el email no esté duplicado
-            if (usuarioRepository.EmailExists(dto.Email))
+            if (await usuarioRepository.EmailExists(dto.Email))
             {
                 throw new ArgumentException($"Ya existe un usuario con el Email '{dto.Email}'.");
             }
 
             Usuario usuario = new Usuario(0, dto.NombreUsuario, dto.Clave, dto.Habilitado, dto.Nombre, dto.Apellido, dto.Email, dto.CambiaClave, dto.IdPersona);
 
-            usuarioRepository.Add(usuario);
+            await usuarioRepository.Add(usuario);
 
             dto.IdUsuario = usuario.IdUsuario;
 
             return dto;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var usuarioRepository = new UsuarioRepository();
-            return usuarioRepository.Delete(id);
+            return await usuarioRepository.Delete(id);
         }
 
-
-
-
-        public UsuarioDTO Get(int id)
+        public async Task<UsuarioDTO?> Get(int id)
         {
             var usuarioRepository = new UsuarioRepository();
-            Usuario? usuario = usuarioRepository.Get(id);
+            Usuario? usuario = await usuarioRepository.Get(id);
 
             if (usuario == null)
                 return null;
@@ -57,10 +53,10 @@ namespace Domain.Services
             };
         }
 
-        public IEnumerable<UsuarioDTO> GetAll()
+        public async Task<IEnumerable<UsuarioDTO>> GetAll()
         {
             var usuarioRepository = new UsuarioRepository();
-            var usuarios = usuarioRepository.GetAll();
+            var usuarios = await usuarioRepository.GetAll();
 
             return usuarios.Select(usuario => new UsuarioDTO
             {
@@ -73,29 +69,25 @@ namespace Domain.Services
                 Email = usuario.Email,
                 CambiaClave = usuario.CambiaClave,
                 IdPersona = usuario.IdPersona
-
-
             }).ToList();
         }
 
-        public bool Update(UsuarioDTO dto)
+        public async Task<bool> Update(UsuarioDTO dto)
         {
             var usuarioRepository = new UsuarioRepository();
 
             // Validar que el email no esté duplicado (excluyendo el usuario actual)
-            if (usuarioRepository.EmailExists(dto.Email, dto.IdUsuario))
+            if (await usuarioRepository.EmailExists(dto.Email, dto.IdUsuario))
             {
                 throw new ArgumentException($"Ya existe otro usuario con el Email '{dto.Email}'.");
             }
 
             Usuario usuario = new Usuario(dto.IdUsuario, dto.NombreUsuario, dto.Clave, dto.Habilitado, dto.Nombre, dto.Apellido, dto.Email, dto.CambiaClave, dto.IdPersona);
 
-            return usuarioRepository.Update(usuario);
+            return await usuarioRepository.Update(usuario);
         }
 
-
-
-        public IEnumerable<UsuarioDTO> GetByCriteria(UsuarioCriteriaDTO criteriaDTO)
+        public async Task<IEnumerable<UsuarioDTO>> GetByCriteria(UsuarioCriteriaDTO criteriaDTO)
         {
             var usuarioRepository = new UsuarioRepository();
 
@@ -103,7 +95,7 @@ namespace Domain.Services
             var criteria = new UsuarioCriteria(criteriaDTO.Texto);
 
             // Llamar al repositorio
-            var usuarios = usuarioRepository.GetByCriteria(criteria);
+            var usuarios = await usuarioRepository.GetByCriteria(criteria);
 
             // Mapear Domain Model a DTO
             return usuarios.Select(u => new UsuarioDTO
@@ -128,10 +120,8 @@ namespace Domain.Services
                 Clave = criteriaDto.Clave
             };
 
-            
             var usuarioRepository = new UsuarioRepository();
             return await usuarioRepository.FindByCriteria(criteria);
         }
-
     }
 }

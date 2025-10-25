@@ -9,8 +9,8 @@ using MateriaAPI.Endpoints;
 using EspecialidadAPI.Endpoints;
 using DocenteCursoAPI.Endpoints;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

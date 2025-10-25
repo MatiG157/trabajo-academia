@@ -1,34 +1,37 @@
 ﻿using Domain.Model;
 using Data;
 using DTOs;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Domain.Services
 {
     public class EspecialidadService
     {
-        public EspecialidadDTO Add(EspecialidadDTO dto)
+        public async Task<EspecialidadDTO> Add(EspecialidadDTO dto)
         {
             var especialidadRepository = new EspecialidadRepository();
 
             Especialidad especialidad = new Especialidad(0, dto.Descripcion);
 
-            especialidadRepository.Add(especialidad);
+            await especialidadRepository.Add(especialidad);
 
             dto.IdEspecialidad = especialidad.IdEspecialidad;
 
             return dto;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var especialidadRepository = new EspecialidadRepository();
-            return especialidadRepository.Delete(id);
+            return await especialidadRepository.Delete(id);
         }
 
-        public EspecialidadDTO Get(int id)
+        public async Task<EspecialidadDTO> Get(int id)
         {
             var especialidadRepository = new EspecialidadRepository();
-            Especialidad? especialidad = especialidadRepository.Get(id);
+            Especialidad? especialidad = await especialidadRepository.Get(id);
 
             if (especialidad == null)
                 return null;
@@ -40,10 +43,10 @@ namespace Domain.Services
             };
         }
 
-        public IEnumerable<EspecialidadDTO> GetAll()
+        public async Task<IEnumerable<EspecialidadDTO>> GetAll()
         {
             var especialidadRepository = new EspecialidadRepository();
-            var especialidades = especialidadRepository.GetAll();
+            var especialidades = await especialidadRepository.GetAll();
 
             return especialidades.Select(especialidad => new EspecialidadDTO
             {
@@ -52,15 +55,15 @@ namespace Domain.Services
             }).ToList();
         }
 
-        public bool Update(EspecialidadDTO dto)
+        public async Task<bool> Update(EspecialidadDTO dto)
         {
-            var especilidadRepository = new EspecialidadRepository();
+            var especialidadRepository = new EspecialidadRepository();
 
             Especialidad especialidad = new Especialidad(dto.IdEspecialidad, dto.Descripcion);
-            return especilidadRepository.Update(especialidad);
+            return await especialidadRepository.Update(especialidad);
         }
 
-        public IEnumerable<EspecialidadDTO> GetByCriteria(EspecialidadCriteriaDTO criteriaDTO)
+        public async Task<IEnumerable<EspecialidadDTO>> GetByCriteria(EspecialidadCriteriaDTO criteriaDTO)
         {
             var especialidadRepository = new EspecialidadRepository();
 
@@ -68,7 +71,7 @@ namespace Domain.Services
             var criteria = new EspecialidadCriteria(criteriaDTO.Texto);
 
             // Llamar al repositorio
-            var especialidades = especialidadRepository.GetByCriteria(criteria);
+            var especialidades = await especialidadRepository.GetByCriteria(criteria);
 
             // Mapear Domain Model a DTO
             return especialidades.Select(e => new EspecialidadDTO
@@ -77,6 +80,5 @@ namespace Domain.Services
                 Descripcion = e.Descripcion,
             });
         }
-
     }
 }

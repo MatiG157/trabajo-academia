@@ -43,6 +43,7 @@
             inscribirseACursoToolStripMenuItem = new ToolStripMenuItem();
             pictureBox1 = new PictureBox();
             label1 = new Label();
+            reportesToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -58,7 +59,7 @@
             // 
             // listasToolStripMenuItem
             // 
-            listasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cursoToolStripMenuItem, usuarioToolStripMenuItem, comisionToolStripMenuItem, materiaToolStripMenuItem, planToolStripMenuItem, alumnosToolStripMenuItem, especialidadesToolStripMenuItem });
+            listasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cursoToolStripMenuItem, usuarioToolStripMenuItem, comisionToolStripMenuItem, materiaToolStripMenuItem, planToolStripMenuItem, alumnosToolStripMenuItem, especialidadesToolStripMenuItem, reportesToolStripMenuItem });
             listasToolStripMenuItem.Name = "listasToolStripMenuItem";
             listasToolStripMenuItem.Size = new Size(48, 20);
             listasToolStripMenuItem.Text = "&Listas";
@@ -66,48 +67,48 @@
             // cursoToolStripMenuItem
             // 
             cursoToolStripMenuItem.Name = "cursoToolStripMenuItem";
-            cursoToolStripMenuItem.Size = new Size(150, 22);
+            cursoToolStripMenuItem.Size = new Size(180, 22);
             cursoToolStripMenuItem.Text = "&Cursos";
             cursoToolStripMenuItem.Click += cursoToolStripMenuItem_Click;
             // 
             // usuarioToolStripMenuItem
             // 
             usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
-            usuarioToolStripMenuItem.Size = new Size(150, 22);
+            usuarioToolStripMenuItem.Size = new Size(180, 22);
             usuarioToolStripMenuItem.Text = "&Usuarios";
             usuarioToolStripMenuItem.Click += usuarioToolStripMenuItem_Click;
             // 
             // comisionToolStripMenuItem
             // 
             comisionToolStripMenuItem.Name = "comisionToolStripMenuItem";
-            comisionToolStripMenuItem.Size = new Size(150, 22);
+            comisionToolStripMenuItem.Size = new Size(180, 22);
             comisionToolStripMenuItem.Text = "C&omisiones";
             comisionToolStripMenuItem.Click += comisionToolStripMenuItem_Click;
             // 
             // materiaToolStripMenuItem
             // 
             materiaToolStripMenuItem.Name = "materiaToolStripMenuItem";
-            materiaToolStripMenuItem.Size = new Size(150, 22);
+            materiaToolStripMenuItem.Size = new Size(180, 22);
             materiaToolStripMenuItem.Text = "&Materias";
             materiaToolStripMenuItem.Click += materiaToolStripMenuItem_Click;
             // 
             // planToolStripMenuItem
             // 
             planToolStripMenuItem.Name = "planToolStripMenuItem";
-            planToolStripMenuItem.Size = new Size(150, 22);
+            planToolStripMenuItem.Size = new Size(180, 22);
             planToolStripMenuItem.Text = "&Planes";
             planToolStripMenuItem.Click += planToolStripMenuItem_Click;
             // 
             // alumnosToolStripMenuItem
             // 
             alumnosToolStripMenuItem.Name = "alumnosToolStripMenuItem";
-            alumnosToolStripMenuItem.Size = new Size(150, 22);
+            alumnosToolStripMenuItem.Size = new Size(180, 22);
             alumnosToolStripMenuItem.Text = "&Alumnos";
             // 
             // especialidadesToolStripMenuItem
             // 
             especialidadesToolStripMenuItem.Name = "especialidadesToolStripMenuItem";
-            especialidadesToolStripMenuItem.Size = new Size(150, 22);
+            especialidadesToolStripMenuItem.Size = new Size(180, 22);
             especialidadesToolStripMenuItem.Text = "&Especialidades";
             especialidadesToolStripMenuItem.Click += especialidadesToolStripMenuItem_Click;
             // 
@@ -121,7 +122,7 @@
             // ponerNotasToolStripMenuItem
             // 
             ponerNotasToolStripMenuItem.Name = "ponerNotasToolStripMenuItem";
-            ponerNotasToolStripMenuItem.Size = new Size(180, 22);
+            ponerNotasToolStripMenuItem.Size = new Size(137, 22);
             ponerNotasToolStripMenuItem.Text = "&Poner notas";
             ponerNotasToolStripMenuItem.Click += ponerNotasToolStripMenuItem_Click;
             // 
@@ -135,7 +136,7 @@
             // inscribirseACursoToolStripMenuItem
             // 
             inscribirseACursoToolStripMenuItem.Name = "inscribirseACursoToolStripMenuItem";
-            inscribirseACursoToolStripMenuItem.Size = new Size(180, 22);
+            inscribirseACursoToolStripMenuItem.Size = new Size(168, 22);
             inscribirseACursoToolStripMenuItem.Text = "&Inscribirse a curso";
             inscribirseACursoToolStripMenuItem.Click += inscribirseACursoToolStripMenuItem_Click;
             // 
@@ -162,6 +163,13 @@
             label1.TabIndex = 4;
             label1.Text = "BIENVENIDO";
             label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // reportesToolStripMenuItem
+            // 
+            reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
+            reportesToolStripMenuItem.Size = new Size(180, 22);
+            reportesToolStripMenuItem.Text = "&Reportes";
+            reportesToolStripMenuItem.Click += reportesToolStripMenuItem_Click;
             // 
             // MenuPrincipal
             // 
@@ -200,5 +208,6 @@
         private ToolStripMenuItem inscribirseACursoToolStripMenuItem;
         private PictureBox pictureBox1;
         private Label label1;
+        private ToolStripMenuItem reportesToolStripMenuItem;
     }
 }

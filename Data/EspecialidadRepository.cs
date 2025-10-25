@@ -1,8 +1,8 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-//using Microsoft.Data.SqlClient;
-
+using System.Threading.Tasks;
 
 namespace Data
 {
@@ -13,90 +13,81 @@ namespace Data
             return new TPIContext();
         }
 
-        public void Add(Especialidad especialidad)
+        public async Task Add(Especialidad especialidad)
         {
-            using var context = CreateContext();
-            context.Especialidades.Add(especialidad);
-            context.SaveChanges();
+            await using var context = CreateContext();
+            await context.Especialidades.AddAsync(especialidad);
+            await context.SaveChangesAsync();
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            using var context = CreateContext();
-            var especialidad = context.Especialidades.Find(id);
+            await using var context = CreateContext();
+            var especialidad = await context.Especialidades.FindAsync(id);
             if (especialidad != null)
             {
                 context.Especialidades.Remove(especialidad);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public Especialidad? Get(int id)
+        public async Task<Especialidad?> Get(int id)
         {
-            using var context = CreateContext();
-            return context.Especialidades
-                .FirstOrDefault(e => e.IdEspecialidad == id);
+            await using var context = CreateContext();
+            return await context.Especialidades
+                .FirstOrDefaultAsync(e => e.IdEspecialidad == id);
         }
 
-        public IEnumerable<Especialidad> GetAll()
+        public async Task<IEnumerable<Especialidad>> GetAll()
         {
-            using var context = CreateContext();
-            return context.Especialidades
-                .ToList();
+            await using var context = CreateContext();
+            return await context.Especialidades
+                .ToListAsync();
         }
 
-        public bool Update(Especialidad especialidad)
+        public async Task<bool> Update(Especialidad especialidad)
         {
-            using var context = CreateContext();
-            var existingEspecialidad = context.Especialidades.Find(especialidad.IdEspecialidad);
+            await using var context = CreateContext();
+            var existingEspecialidad = await context.Especialidades.FindAsync(especialidad.IdEspecialidad);
             if (existingEspecialidad != null)
             {
-
                 existingEspecialidad.Descripcion = especialidad.Descripcion;
-
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-     
-        public IEnumerable<Especialidad> GetByCriteria(EspecialidadCriteria criteria)
+        public async Task<IEnumerable<Especialidad>> GetByCriteria(EspecialidadCriteria criteria)
         {
             const string sql = @"
                 SELECT e.IdEspecialidad, e.Descripcion
                 FROM Especialidades e             
                 WHERE e.Descripcion LIKE @SearchTerm";
 
-
             var especialidades = new List<Especialidad>();
             string connectionString = new TPIContext().Database.GetConnectionString();
             string searchPattern = $"%{criteria.Texto}%";
 
-            using var connection = new SqlConnection(connectionString);
-            using var command = new SqlCommand(sql, connection);
+            await using var connection = new SqlConnection(connectionString);
+            await connection.OpenAsync();
 
+            await using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@SearchTerm", searchPattern);
 
-            connection.Open();
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 var especialidad = new Especialidad(
                     reader.GetInt32(0),    // IdEspecialidad
-                    reader.GetString(1)   // Descripcion
-                   
+                    reader.GetString(1)    // Descripcion
                 );
-
-
-           
+                especialidades.Add(especialidad);
             }
 
             return especialidades;
         }
-
     }
 }

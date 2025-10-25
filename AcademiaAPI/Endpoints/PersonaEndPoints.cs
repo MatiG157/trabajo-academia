@@ -8,11 +8,11 @@ namespace AcademiaAPI.Endpoints
     {
         public static void MapPersonaEndpoints(this WebApplication app)
         {
-            app.MapGet("/personas/{id}", (int id) =>
+            app.MapGet("/personas/{id}", async (int id) =>
             {
                 PersonaService personaService = new PersonaService();
 
-                PersonaDTO dto = personaService.Get(id);
+                PersonaDTO dto = await personaService.Get(id);
 
                 if (dto == null)
                 {
@@ -21,17 +21,16 @@ namespace AcademiaAPI.Endpoints
 
                 return Results.Ok(dto);
             })
-        .WithName("GetPersona")
-        .Produces<PersonaDTO>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound)
-        .WithOpenApi();
+            .WithName("GetPersona")
+            .Produces<PersonaDTO>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithOpenApi();
 
-
-            app.MapGet("/personas", () =>
+            app.MapGet("/personas", async () =>
             {
                 PersonaService personaService = new PersonaService();
 
-                var dtos = personaService.GetAll();
+                var dtos = await personaService.GetAll();
 
                 return Results.Ok(dtos);
             })
@@ -39,14 +38,13 @@ namespace AcademiaAPI.Endpoints
             .Produces<List<PersonaDTO>>(StatusCodes.Status200OK)
             .WithOpenApi();
 
-
-            app.MapPost("/personas", (PersonaDTO dto) =>
+            app.MapPost("/personas", async (PersonaDTO dto) =>
             {
                 try
                 {
                     PersonaService personaService = new PersonaService();
 
-                    PersonaDTO personaDTO = personaService.Add(dto);
+                    PersonaDTO personaDTO = await personaService.Add(dto);
 
                     return Results.Created($"/personas/{personaDTO.IdPersona}", personaDTO);
                 }
@@ -60,14 +58,13 @@ namespace AcademiaAPI.Endpoints
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi();
 
-
-            app.MapPut("/personas/{id}", (PersonaDTO dto) =>
+            app.MapPut("/personas/{id}", async (PersonaDTO dto) =>
             {
                 try
                 {
                     PersonaService personaService = new PersonaService();
 
-                    var found = personaService.Update(dto);
+                    var found = await personaService.Update(dto);
 
                     if (!found)
                     {
@@ -86,12 +83,11 @@ namespace AcademiaAPI.Endpoints
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi();
 
-
-            app.MapDelete("/personas/{id}", (int id) =>
+            app.MapDelete("/personas/{id}", async (int id) =>
             {
                 PersonaService personaService = new PersonaService();
 
-                var deleted = personaService.Delete(id);
+                var deleted = await personaService.Delete(id);
 
                 if (!deleted)
                 {
@@ -106,13 +102,13 @@ namespace AcademiaAPI.Endpoints
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
 
-            app.MapGet("/personas/criteria", (string texto) =>
+            app.MapGet("/personas/criteria", async (string texto) =>
             {
                 try
                 {
                     PersonaService personaService = new PersonaService();
                     var criteria = new PersonaCriteriaDTO { Texto = texto };
-                    var personas = personaService.GetByCriteria(criteria);
+                    var personas = await personaService.GetByCriteria(criteria);
                     return Results.Ok(personas);
                 }
                 catch (Exception ex)

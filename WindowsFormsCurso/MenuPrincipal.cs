@@ -135,6 +135,15 @@ namespace WindowsFormsCurso
             this.pictureBox1.SendToBack();
             form.Show();
         }
+
+        private void reportesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Reportes form = new Reportes();
+            form.MdiParent = this;   // Se abre dentro del contenedor MDI
+            this.label1.SendToBack();
+            this.pictureBox1.SendToBack();
+            form.Show();
+        }
     }
 }
 

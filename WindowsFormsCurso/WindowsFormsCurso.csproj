@@ -19,14 +19,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
     <PackageReference Include="QuestPDF" Version="2025.7.3" />
-	<PackageReference Include="System.Windows.Forms.DataVisualization" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
   
     <ProjectReference Include="..\API.Clients\API.Clients.csproj" />
+  
+    <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
+    <ProjectReference Include="..\Reportes\Reportes.csproj" />
 	
   </ItemGroup>
 

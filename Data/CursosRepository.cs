@@ -1,60 +1,92 @@
 ﻿using Domain.Model;
+using DTOs;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
-//using Microsoft.Data.SqlClient;
-
+using Microsoft.Data.SqlClient;
 
 namespace Data
 {
     public class CursoRepository
     {
+        public async Task<List<CursoCountDTO>> GetCursosConCantidadAlumnosAsync()
+        {
+            var result = new List<CursoCountDTO>();
+
+            const string sql = @"
+                SELECT c.IdCurso,
+                       c.Descripcion,
+                       COUNT(ai.IdInscripcion) AS Alumnos
+                FROM Cursos c
+                LEFT JOIN AlumnosInscripciones ai ON ai.IdCurso = c.IdCurso
+                GROUP BY c.IdCurso, c.Descripcion
+                ORDER BY Alumnos DESC, c.Descripcion;
+            ";
+
+            await using var conn = new SqlConnection("Server=DESKTOP-U0T0E2H\\SQLEXPRESS;Database=puto;Trusted_Connection=True;TrustServerCertificate=True;");
+            await conn.OpenAsync();
+
+            await using var cmd = new SqlCommand(sql, conn);
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new CursoCountDTO
+                {
+                    IdCursoCount = reader.GetInt32(reader.GetOrdinal("IdCurso")),
+                    Descripcion = reader.GetString(reader.GetOrdinal("Descripcion")),
+                    Cantidad = reader.GetInt32(reader.GetOrdinal("Alumnos"))
+                });
+            }
+
+            return result;
+        }
+
         private TPIContext CreateContext()
         {
             return new TPIContext();
         }
 
-        public void Add(Curso curso)
+        public async Task Add(Curso curso)
         {
-            using var context = CreateContext();
-            context.Cursos.Add(curso);
-            context.SaveChanges();
+            await using var context = CreateContext();
+            await context.Cursos.AddAsync(curso);
+            await context.SaveChangesAsync();
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            using var context = CreateContext();
-            var curso = context.Cursos.Find(id);
+            await using var context = CreateContext();
+            var curso = await context.Cursos.FindAsync(id);
             if (curso != null)
             {
                 context.Cursos.Remove(curso);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public Curso? Get(int id)
+        public async Task<Curso?> Get(int id)
         {
-            using var context = CreateContext();
-            return context.Cursos
+            await using var context = CreateContext();
+            return await context.Cursos
                 .Include(c => c.Comision)
                 .Include(c => c.Materia)
-                .FirstOrDefault(c => c.IdCurso == id);
+                .FirstOrDefaultAsync(c => c.IdCurso == id);
         }
 
-        public IEnumerable<Curso> GetAll()
+        public async Task<IEnumerable<Curso>> GetAll()
         {
-            using var context = CreateContext();
-            return context.Cursos
+            await using var context = CreateContext();
+            return await context.Cursos
                 .Include(c => c.Comision)
                 .Include(c => c.Materia)
-                .ToList();
+                .ToListAsync();
         }
 
-        public bool Update(Curso curso)
+        public async Task<bool> Update(Curso curso)
         {
-            using var context = CreateContext();
-            var existingCurso = context.Cursos.Find(curso.IdCurso);
+            await using var context = CreateContext();
+            var existingCurso = await context.Cursos.FindAsync(curso.IdCurso);
             if (existingCurso != null)
             {
                 existingCurso.SetMateriaId(curso.IdMateria);
@@ -63,16 +95,16 @@ namespace Data
                 existingCurso.Descripcion = curso.Descripcion;
                 existingCurso.Cupo = curso.Cupo;
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public bool BajarCupo(Curso curso)
+        public async Task<bool> BajarCupo(Curso curso)
         {
-            using var context = CreateContext();
-            var existingCurso = context.Cursos.Find(curso.IdCurso);
+            await using var context = CreateContext();
+            var existingCurso = await context.Cursos.FindAsync(curso.IdCurso);
             if (existingCurso != null)
             {
                 existingCurso.SetMateriaId(curso.IdMateria);
@@ -81,25 +113,13 @@ namespace Data
                 existingCurso.Descripcion = curso.Descripcion;
                 existingCurso.Cupo = curso.Cupo;
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-
-        /*public bool EmailExists(string email, int? excludeId = null)
-        {
-            using var context = CreateContext();
-            var query = context.Clientes.Where(c => c.Email.ToLower() == email.ToLower());
-            if (excludeId.HasValue)
-            {
-                query = query.Where(c => c.Id != excludeId.Value);
-            }
-            return query.Any();
-        }*/
-
-        public IEnumerable<Curso> GetByCriteria(CursoCriteria criteria)
+        public async Task<IEnumerable<Curso>> GetByCriteria(CursoCriteria criteria)
         {
             const string sql = @"
                 SELECT c.IdCurso, c.IdMateria, c.IdComision, c.Descripcion, c.AnioCalendario, c.Cupo, 
@@ -112,20 +132,19 @@ namespace Data
                    OR c.Cupo LIKE @SearchTerm
                 ORDER BY c.AnioCalendario, c.Cupo";
 
-
             var cursos = new List<Curso>();
             string connectionString = new TPIContext().Database.GetConnectionString();
             string searchPattern = $"%{criteria.Texto}%";
 
-            using var connection = new SqlConnection(connectionString);
-            using var command = new SqlCommand(sql, connection);
+            await using var connection = new SqlConnection(connectionString);
+            await using var command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@SearchTerm", searchPattern);
 
-            connection.Open();
-            using var reader = command.ExecuteReader();
+            await connection.OpenAsync();
+            await using var reader = await command.ExecuteReaderAsync();
 
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 var curso = new Curso(
                     reader.GetInt32(0),    // IdCurso
@@ -143,7 +162,7 @@ namespace Data
                     reader.GetString(7) // Descripcion
                     );
                 comision.SetPlanId(reader.GetInt32(8));
-                
+
                 curso.SetComision(comision);
 
                 // Crear y asignar la materia
@@ -161,6 +180,5 @@ namespace Data
 
             return cursos;
         }
-
     }
 }

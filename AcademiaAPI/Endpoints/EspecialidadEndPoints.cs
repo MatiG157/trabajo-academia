@@ -1,138 +1,132 @@
 ﻿using DTOs;
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 
 namespace EspecialidadAPI.Endpoints
 {
-    public static class EspecilidadEndpoints
+    public static class EspecialidadEndpoints
     {
         public static void MapEspecialidadEndpoints(this WebApplication app)
         {
+            app.MapGet("/especialidades/{id}", async (int id) =>
             {
-                app.MapGet("/especialidades/{id}", (int id) =>
+                EspecialidadService especialidadService = new EspecialidadService();
+
+                EspecialidadDTO dto = await especialidadService.Get(id);
+
+                if (dto == null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(dto);
+            })
+            .WithName("GetEspecialidad")
+            .Produces<EspecialidadDTO>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithOpenApi();
+
+
+            app.MapGet("/especialidades", async () =>
+            {
+                EspecialidadService especialidadService = new EspecialidadService();
+
+                var dtos = await especialidadService.GetAll();
+
+                return Results.Ok(dtos);
+            })
+            .WithName("GetAllEspecialidad")
+            .Produces<List<EspecialidadDTO>>(StatusCodes.Status200OK)
+            .WithOpenApi();
+
+
+            app.MapPost("/especialidades", async (EspecialidadDTO dto) =>
+            {
+                try
                 {
                     EspecialidadService especialidadService = new EspecialidadService();
 
-                    EspecialidadDTO dto = especialidadService.Get(id);
+                    EspecialidadDTO especialidadDTO = await especialidadService.Add(dto);
 
-                    if (dto == null)
+                    return Results.Created($"/especialidades/{especialidadDTO.IdEspecialidad}", especialidadDTO);
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("AddEspecialidad")
+            .Produces<EspecialidadDTO>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithOpenApi();
+
+
+            app.MapPut("/especialidades/{id}", async (EspecialidadDTO dto) =>
+            {
+                try
+                {
+                    EspecialidadService especialidadService = new EspecialidadService();
+
+                    var found = await especialidadService.Update(dto);
+
+                    if (!found)
                     {
                         return Results.NotFound();
                     }
 
-                    return Results.Ok(dto);
-                })
-                .WithName("GetEspecialidad")
-                .Produces<EspecialidadDTO>(StatusCodes.Status200OK)
-                .Produces(StatusCodes.Status404NotFound)
-                .WithOpenApi();
+                    return Results.NoContent();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("UpdateEspecialidad")
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithOpenApi();
 
 
-                app.MapGet("/especialidades", () =>
+            app.MapDelete("/especialidades/{id}", async (int id) =>
+            {
+                try
                 {
                     EspecialidadService especialidadService = new EspecialidadService();
+                    var deleted = await especialidadService.Delete(id);
 
-                    var dtos = especialidadService.GetAll();
+                    if (!deleted)
+                        return Results.NotFound();
 
-                    return Results.Ok(dtos);
-                })
-                .WithName("GetAllEspecialidad")
-                .Produces<List<EspecialidadDTO>>(StatusCodes.Status200OK)
-                .WithOpenApi();
-
-
-                app.MapPost("/especialidades", (EspecialidadDTO dto) =>
+                    return Results.NoContent();
+                }
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        EspecialidadService especialidadService = new EspecialidadService();
-
-                        EspecialidadDTO especialidadDTO = especialidadService.Add(dto);
-
-                        return Results.Created($"/especialidades/{especialidadDTO.IdEspecialidad}", especialidadDTO);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        return Results.BadRequest(new { error = ex.Message });
-                    }
-                })
-                .WithName("AddEspecialidad")
-                .Produces<EspecialidadDTO>(StatusCodes.Status201Created)
-                .Produces(StatusCodes.Status400BadRequest)
-                .WithOpenApi();
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("DeleteEspecialidad")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithOpenApi();
 
 
-                app.MapPut("/especialidades/{id}", (EspecialidadDTO dto) =>
+            app.MapGet("/especialidades/criteria", async (string texto) =>
+            {
+                try
                 {
-                    try
-                    {
-                        EspecialidadService especialidadService = new EspecialidadService();
-
-                        var found = especialidadService.Update(dto);
-
-                        if (!found)
-                        {
-                            return Results.NotFound();
-                        }
-
-                        return Results.NoContent();
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        return Results.BadRequest(new { error = ex.Message });
-                    }
-                })
-                .WithName("UpdateEspecialidad")
-                .Produces(StatusCodes.Status404NotFound)
-                .Produces(StatusCodes.Status400BadRequest)
-                .WithOpenApi();
-
-
-
-                app.MapDelete("/especialidades/{id}", (int id) =>
+                    EspecialidadService especialidadService = new EspecialidadService();
+                    var criteria = new EspecialidadCriteriaDTO { Texto = texto };
+                    var especialidades = await especialidadService.GetByCriteria(criteria);
+                    return Results.Ok(especialidades);
+                }
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        EspecialidadService especialidadService = new EspecialidadService();
-                        var deleted = especialidadService.Delete(id);
-
-                        if (!deleted)
-                            return Results.NotFound();
-
-                        return Results.NoContent();
-                    }
-                    catch (Exception ex)
-                    {
-                        return Results.BadRequest(new { error = ex.Message });
-                    }
-                })
-                .WithName("DeleteEspecialidad")
-                .Produces(StatusCodes.Status204NoContent)
-                .Produces(StatusCodes.Status400BadRequest)
-                .Produces(StatusCodes.Status404NotFound)
-                .WithOpenApi();
-
-
-
-                app.MapGet("/especialidades/criteria", (string texto) =>
-                {
-                    try
-                    {
-                        EspecialidadService especialidadService = new EspecialidadService();
-                        var criteria = new EspecialidadCriteriaDTO { Texto = texto };
-                        var especialidades = especialidadService.GetByCriteria(criteria);
-                        return Results.Ok(especialidades);
-                    }
-                    catch (Exception ex)
-                    {
-                        return Results.BadRequest(new { error = ex.Message });
-                    }
-                })
-                    .WithName("GetEspecialidadByCriteria")
-                    .WithOpenApi();
-
-            }
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("GetEspecialidadByCriteria")
+            .WithOpenApi();
         }
     }
 }

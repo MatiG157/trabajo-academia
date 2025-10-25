@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsCurso", "Window
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Clients", "API.Clients\API.Clients.csproj", "{C98D8B93-8F79-8FE1-2BCF-053EB00E0A74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reportes", "Reportes\Reportes.csproj", "{752A8D86-60C1-4195-AFDD-B023BF978D34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C98D8B93-8F79-8FE1-2BCF-053EB00E0A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C98D8B93-8F79-8FE1-2BCF-053EB00E0A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C98D8B93-8F79-8FE1-2BCF-053EB00E0A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{752A8D86-60C1-4195-AFDD-B023BF978D34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{752A8D86-60C1-4195-AFDD-B023BF978D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{752A8D86-60C1-4195-AFDD-B023BF978D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{752A8D86-60C1-4195-AFDD-B023BF978D34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

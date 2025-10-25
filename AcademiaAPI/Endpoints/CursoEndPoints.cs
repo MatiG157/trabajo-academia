@@ -2,18 +2,16 @@ using DTOs;
 using Domain.Services;
 using Microsoft.AspNetCore.Http;
 
-
-
 namespace AcademiaAPI.Endpoints;
 public static class CursoEndpoints
 {
     public static void MapCursoEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/cursos/{id}", (int id) =>
+        app.MapGet("/cursos/{id}", async (int id) =>
         {
             CursoService cursoService = new CursoService();
 
-            CursoDTO dto = cursoService.Get(id);
+            CursoDTO dto = await cursoService.Get(id);
 
             if (dto == null)
             {
@@ -27,12 +25,11 @@ public static class CursoEndpoints
         .Produces(StatusCodes.Status404NotFound)
         .WithOpenApi();
 
-
-        app.MapGet("/cursos", () =>
+        app.MapGet("/cursos", async () =>
         {
             CursoService cursoService = new CursoService();
 
-            var dtos = cursoService.GetAll();
+            var dtos = await cursoService.GetAll();
 
             return Results.Ok(dtos);
         })
@@ -40,14 +37,13 @@ public static class CursoEndpoints
         .Produces<List<CursoDTO>>(StatusCodes.Status200OK)
         .WithOpenApi();
 
-
-        app.MapPost("/cursos", (CursoDTO dto) =>
+        app.MapPost("/cursos", async (CursoDTO dto) =>
         {
             try
             {
                 CursoService cursoService = new CursoService();
 
-                CursoDTO cursoDTO = cursoService.Add(dto);
+                CursoDTO cursoDTO = await cursoService.Add(dto);
 
                 return Results.Created($"/cursos/{cursoDTO.IdCurso}", cursoDTO);
             }
@@ -61,14 +57,13 @@ public static class CursoEndpoints
         .Produces(StatusCodes.Status400BadRequest)
         .WithOpenApi();
 
-
-        app.MapPut("/cursos/{id}", (CursoDTO dto) =>
+        app.MapPut("/cursos/{id}", async (CursoDTO dto) =>
         {
             try
             {
                 CursoService cursoService = new CursoService();
 
-                var found = cursoService.Update(dto);
+                var found = await cursoService.Update(dto);
 
                 if (!found)
                 {
@@ -87,14 +82,13 @@ public static class CursoEndpoints
         .Produces(StatusCodes.Status400BadRequest)
         .WithOpenApi();
 
-
-        app.MapPut("/cursos/bajarCupo/{id}", (CursoDTO dto) =>
+        app.MapPut("/cursos/bajarCupo/{id}", async (CursoDTO dto) =>
         {
             try
             {
                 CursoService cursoService = new CursoService();
 
-                var found = cursoService.BajarCupo(dto);
+                var found = await cursoService.BajarCupo(dto);
 
                 if (!found)
                 {
@@ -113,12 +107,11 @@ public static class CursoEndpoints
         .Produces(StatusCodes.Status400BadRequest)
         .WithOpenApi();
 
-
-        app.MapDelete("/cursos/{id}", (int id) =>
+        app.MapDelete("/cursos/{id}", async (int id) =>
         {
             CursoService cursoService = new CursoService();
 
-            var deleted = cursoService.Delete(id);
+            var deleted = await cursoService.Delete(id);
 
             if (!deleted)
             {
@@ -133,13 +126,13 @@ public static class CursoEndpoints
         .Produces(StatusCodes.Status404NotFound)
         .WithOpenApi();
 
-        app.MapGet("/cursos/criteria", (string texto) =>
+        app.MapGet("/cursos/criteria", async (string texto) =>
         {
             try
             {
                 CursoService cursoService = new CursoService();
                 var criteria = new CursoCriteriaDTO { Texto = texto };
-                var cursos = cursoService.GetByCriteria(criteria);
+                var cursos = await cursoService.GetByCriteria(criteria);
                 return Results.Ok(cursos);
             }
             catch (Exception ex)
@@ -149,6 +142,5 @@ public static class CursoEndpoints
         })
         .WithName("GetCursosByCriteria")
         .WithOpenApi();
-
     }
 }

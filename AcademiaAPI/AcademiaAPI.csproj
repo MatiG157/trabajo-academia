@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Compile Remove="Endpoints\AlumnoInscripcion.cs" />
-    <Compile Remove="Endpoints\Class.cs" />
     <Compile Remove="Endpoints\Class1.cs" />
     <Compile Remove="Endpoints\Class2.cs" />
     <Compile Remove="Endpoints\ComisionEndPoint.cs" />
@@ -19,7 +18,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.18" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
+	  <PackageReference Include="QuestPDF" Version="2025.7.3" />
 
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.4" />
   </ItemGroup>

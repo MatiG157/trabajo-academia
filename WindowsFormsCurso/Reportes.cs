@@ -1,43 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-
-
+using Data;
+using ReporteCursos;
+using QuestPDF.Fluent;
+using Reportes;
 
 namespace WindowsFormsCurso
 {
     public partial class Reportes : Form
-    {/*
+    {
+
         public Reportes()
         {
             InitializeComponent();
         }
 
-        // Método para obtener los datos
-        private DataTable ObtenerCursos()
+        private async void reporteCursosButton_Click(object sender, EventArgs e)
         {
-            var dt = new DataTable();
-            string connectionString = "TU_CONEXION_SQL";
-            using (var conn = new SqlConnection(connectionString))
-            using (var cmd = new SqlCommand("SELECT Id, Nombre, Descripcion FROM Cursos", conn))
-            using (var da = new SqlDataAdapter(cmd))
+            try
             {
-                conn.Open();
-                da.Fill(dt);
+                reporteCursosButton.Enabled = false;
+
+                var repo = new CursoRepository();
+                var data = await repo.GetCursosConCantidadAlumnosAsync();
+
+                using (var sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "PDF (*.pdf)|*.pdf";
+                    sfd.FileName = $"Reporte_Cursos_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+
+                    if (sfd.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    var doc = new ReporteCursosDocument(data);
+                    doc.GeneratePdf(sfd.FileName);
+
+                    MessageBox.Show($"Reporte generado:\n{sfd.FileName}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            return dt;
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar el reporte: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                reporteCursosButton.Enabled = true;
+            }
         }
 
-        private void reporteCursosButton_Click(object sender, EventArgs e)
+        private async void reportePlanesButton_Click(object sender, EventArgs e)
         {
-            // Aquí puedes llamar a ObtenerCursos()
+            try
+            {
+                reportePlanesButton.Enabled = false;
+
+                // Obtener los datos desde el repositorio
+                var repo = new PlanRepository(); // <- ajustá el nombre según tu clase real
+                var data = await repo.GetPlanesConMateriasAsync(); // <- ajustá según tu método real
+
+                using (var sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "PDF (*.pdf)|*.pdf";
+                    sfd.FileName = $"Reporte_Planes_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+
+                    if (sfd.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    // Generar el documento PDF
+                    var doc = new ReportePlanesMateriasDocument(data); // <- ajustá el nombre de tu clase
+                    doc.GeneratePdf(sfd.FileName);
+
+                    MessageBox.Show($"Reporte generado:\n{sfd.FileName}",
+                                    "Éxito",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar el reporte: " + ex.Message,
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            finally
+            {
+                reportePlanesButton.Enabled = true;
+            }
         }
-    */}
+
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Data
 {
@@ -11,46 +11,46 @@ namespace Data
             return new TPIContext();
         }
 
-        public void Add(Usuario usuario)
+        public async Task Add(Usuario usuario)
         {
-            using var context = CreateContext();
-            context.Usuarios.Add(usuario);
-            context.SaveChanges();
+            await using var context = CreateContext();
+            await context.Usuarios.AddAsync(usuario);
+            await context.SaveChangesAsync();
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            using var context = CreateContext();
-            var cliente = context.Usuarios.Find(id);
+            await using var context = CreateContext();
+            var cliente = await context.Usuarios.FindAsync(id);
             if (cliente != null)
             {
                 context.Usuarios.Remove(cliente);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public Usuario? Get(int id)
+        public async Task<Usuario?> Get(int id)
         {
-            using var context = CreateContext();
-            return context.Usuarios
+            await using var context = CreateContext();
+            return await context.Usuarios
                 .Include(u => u.Persona)
-                .FirstOrDefault(u => u.IdUsuario == id);
+                .FirstOrDefaultAsync(u => u.IdUsuario == id);
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public async Task<IEnumerable<Usuario>> GetAll()
         {
-            using var context = CreateContext();
-            return context.Usuarios
+            await using var context = CreateContext();
+            return await context.Usuarios
                 .Include(u => u.Persona)
-                .ToList();
+                .ToListAsync();
         }
 
-        public bool Update(Usuario usuario)
+        public async Task<bool> Update(Usuario usuario)
         {
-            using var context = CreateContext();
-            var existingUsuario = context.Usuarios.Find(usuario.IdUsuario);
+            await using var context = CreateContext();
+            var existingUsuario = await context.Usuarios.FindAsync(usuario.IdUsuario);
             if (existingUsuario != null)
             {
                 existingUsuario.Nombre = usuario.Nombre;
@@ -60,25 +60,24 @@ namespace Data
                 existingUsuario.NombreUsuario = usuario.NombreUsuario;
                 existingUsuario.SetPersonaId(usuario.IdPersona);
 
-
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public bool EmailExists(string email, int? excludeId = null)
+        public async Task<bool> EmailExists(string email, int? excludeId = null)
         {
-            using var context = CreateContext();
+            await using var context = CreateContext();
             var query = context.Usuarios.Where(u => u.Email.ToLower() == email.ToLower());
             if (excludeId.HasValue)
             {
                 query = query.Where(u => u.IdUsuario != excludeId.Value);
             }
-            return query.Any();
+            return await query.AnyAsync();
         }
 
-        public IEnumerable<Usuario> GetByCriteria(UsuarioCriteria criteria)
+        public async Task<IEnumerable<Usuario>> GetByCriteria(UsuarioCriteria criteria)
         {
             const string sql = @"
                 SELECT  u.IdUsuario, u.NombreUsuario, u.Clave, u.Habilitado, u.Nombre, u.Apellido, u.Email, u.CambiaClave, u.IdPersona,
@@ -96,15 +95,15 @@ namespace Data
             string connectionString = new TPIContext().Database.GetConnectionString();
             string searchPattern = $"%{criteria.Texto}%";
 
-            using var connection = new SqlConnection(connectionString);
-            using var command = new SqlCommand(sql, connection);
+            await using var connection = new SqlConnection(connectionString);
+            await using var command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@SearchTerm", searchPattern);
 
-            connection.Open();
-            using var reader = command.ExecuteReader();
+            await connection.OpenAsync();
+            await using var reader = await command.ExecuteReaderAsync();
 
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 var usuario = new Usuario(
                     reader.GetInt32(0),    // IdUsuario
@@ -135,9 +134,10 @@ namespace Data
 
             return usuarios;
         }
+
         public async Task<Usuario?> FindByCriteria(UsuarioCriteria criteria)
         {
-            using var context = CreateContext();
+            await using var context = CreateContext();
 
             var query = context.Usuarios.AsQueryable();
 

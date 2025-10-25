@@ -1,6 +1,6 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Data
 {
@@ -11,47 +11,47 @@ namespace Data
             return new TPIContext();
         }
 
-        public void Add(Materia materia)
+        public async Task Add(Materia materia)
         {
-            using var context = CreateContext();
-            context.Materias.Add(materia);
-            context.SaveChanges();
+            await using var context = CreateContext();
+            await context.Materias.AddAsync(materia);
+            await context.SaveChangesAsync();
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            using var context = CreateContext();
+            await using var context = CreateContext();
             Console.WriteLine("entro al repository");
-            var cliente = context.Materias.Find(id);
+            var cliente = await context.Materias.FindAsync(id);
             if (cliente != null)
             {
                 context.Materias.Remove(cliente);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public Materia? Get(int id)
+        public async Task<Materia?> Get(int id)
         {
-            using var context = CreateContext();
-            return context.Materias
+            await using var context = CreateContext();
+            return await context.Materias
                 .Include(m => m.Plan)
-                .FirstOrDefault(u => u.IdMateria == id);
+                .FirstOrDefaultAsync(u => u.IdMateria == id);
         }
 
-        public IEnumerable<Materia> GetAll()
+        public async Task<IEnumerable<Materia>> GetAll()
         {
-            using var context = CreateContext();
-            return context.Materias
+            await using var context = CreateContext();
+            return await context.Materias
                 .Include(m => m.Plan)
-                .ToList();
+                .ToListAsync();
         }
 
-        public bool Update(Materia materia)
+        public async Task<bool> Update(Materia materia)
         {
-            using var context = CreateContext();
-            var existingMateria = context.Materias.Find(materia.IdMateria);
+            await using var context = CreateContext();
+            var existingMateria = await context.Materias.FindAsync(materia.IdMateria);
             if (existingMateria != null)
             {
                 existingMateria.IdMateria = materia.IdMateria;
@@ -60,16 +60,13 @@ namespace Data
                 existingMateria.HsTotales = materia.HsTotales;
                 existingMateria.SetPlanId(materia.IdPlan);
 
-
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-    
-
-        public IEnumerable<Materia> GetByCriteria(MateriaCriteria criteria)
+        public async Task<IEnumerable<Materia>> GetByCriteria(MateriaCriteria criteria)
         {
             const string sql = @"
                 SELECT  m.IdMateria, m.Descripcion, m.HsSemanales, m.HsTotales, m.IdPlan,
@@ -83,15 +80,15 @@ namespace Data
             string connectionString = new TPIContext().Database.GetConnectionString();
             string searchPattern = $"%{criteria.Texto}%";
 
-            using var connection = new SqlConnection(connectionString);
-            using var command = new SqlCommand(sql, connection);
+            await using var connection = new SqlConnection(connectionString);
+            await using var command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@SearchTerm", searchPattern);
 
-            connection.Open();
-            using var reader = command.ExecuteReader();
+            await connection.OpenAsync();
+            await using var reader = await command.ExecuteReaderAsync();
 
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 var materia = new Materia(
                     reader.GetInt32(0),    // IdMateria
@@ -100,12 +97,11 @@ namespace Data
                     reader.GetInt32(3)  // HsTotales
                 );
 
-
                 // Crear y asignar el Plan
                 var plan = new Plan(
                     reader.GetInt32(4),    //IdPlan 
                     reader.GetString(5)  // Descripcion
-                   );
+                );
                 plan.SetEspecialidadId(reader.GetInt32(6));
 
                 //materia.SetMateria(materia);
@@ -114,6 +110,5 @@ namespace Data
 
             return materias;
         }
-
     }
 }
