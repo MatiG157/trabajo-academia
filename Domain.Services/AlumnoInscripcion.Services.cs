@@ -27,10 +27,10 @@ namespace Domain.Services
             return alumnoInscripcionRepository.Delete(id);
         }
 
-        public AlumnoInscripcionDTO Get(int id)
+        public AlumnoInscripcionDTO Get(int id, int idCurso)
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
-            AlumnoInscripcion? alumnoInscripcion = alumnoInscripcionRepository.Get(id);
+            AlumnoInscripcion? alumnoInscripcion = alumnoInscripcionRepository.Get(id, idCurso);
 
             if (alumnoInscripcion == null)
                 return null;
@@ -64,7 +64,7 @@ namespace Domain.Services
         {
             var alumnoInscripcionRepository = new AlumnoInscripcionRepository();
 
-            if (dto.Nota is null || dto.Nota < 0 || dto.Nota > 10) { 
+            if (dto.Nota == null || dto.Nota < 0 || dto.Nota > 10) { 
                 throw new ArgumentException("La nota debe estar entre 0 y 10.");
             }
 

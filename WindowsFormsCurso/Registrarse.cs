@@ -23,5 +23,10 @@ namespace WindowsFormsCurso
             form.Show();
             this.Close();
         }
+
+       //tipoPersonaDropDown.Items.Add("Alumno");
+        //tipoPersonaDropDown.Items.Add("Docente");
+
+
     }
 }

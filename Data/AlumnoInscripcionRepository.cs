@@ -34,13 +34,13 @@ namespace Data
             return false;
         }
 
-        public AlumnoInscripcion? Get(int id)
+        public AlumnoInscripcion? Get(int id, int idCurso)
         {
             using var context = CreateContext();
             return context.AlumnosInscripciones
                 .Include(c => c.Alumno)
                 .Include(c => c.Curso)
-                .FirstOrDefault(c => c.IdInscripcion == id);
+                .FirstOrDefault(c => c.IdInscripcion == id && c.IdCurso == idCurso);
         }
 
         public IEnumerable<AlumnoInscripcion> GetAll()

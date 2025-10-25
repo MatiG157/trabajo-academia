@@ -82,7 +82,7 @@ namespace Data
         {
             const string sql = @"
                 SELECT  u.IdUsuario, u.NombreUsuario, u.Clave, u.Habilitado, u.Nombre, u.Apellido, u.Email, u.CambiaClave, u.IdPersona,
-                      p.Apellido, p.Direccion, p.Email, p.FechaNacimiento, p.IdPlan, p.Legajo, p.Telefono, p.TipoPersona
+                      p.Direccion, p.FechaNacimiento, p.IdPlan, p.Legajo, p.Telefono, p.TipoPersona
                 FROM Usuarios u
                 INNER JOIN Personas p ON u.IdPersona = p.IdPersona
                 WHERE u.Nombre LIKE @SearchTerm 
@@ -121,15 +121,13 @@ namespace Data
                 // Crear y asignar el Persona
                 var persona = new Persona(
                     reader.GetInt32(8),    // IdPersona
-                    reader.GetString(10),  // Apellido
-                    reader.GetString(11),  // Direccion
-                    reader.GetString(12),  // Email
-                    reader.GetDateTime(13),// FechaNacimiento
-                    reader.GetInt32(15),   // Legajo
-                    reader.GetString(16),  // Telefono
-                    reader.GetString(17)   // TipoPersona
+                    reader.GetString(9),  // Direccion
+                    reader.GetDateTime(10),// FechaNacimiento
+                    reader.GetInt32(12),   // Legajo
+                    reader.GetString(13),  // Telefono
+                    reader.GetString(14)   // TipoPersona
                    );
-                persona.SetPlanId(reader.GetInt32(14));
+                persona.SetPlanId(reader.GetInt32(11));
 
                 usuario.SetPersona(persona);
                 usuarios.Add(usuario);

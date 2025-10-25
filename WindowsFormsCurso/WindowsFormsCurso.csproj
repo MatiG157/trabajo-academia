@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="QuestPDF" Version="2025.7.3" />
+	<PackageReference Include="System.Windows.Forms.DataVisualization" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

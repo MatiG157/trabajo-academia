@@ -36,6 +36,8 @@
             textBox3 = new TextBox();
             RegistrarButton = new Button();
             iniciarSesionLinkLabel = new LinkLabel();
+            comboBox1 = new ComboBox();
+            label1 = new Label();
             SuspendLayout();
             // 
             // usuarioLabel
@@ -88,7 +90,7 @@
             // 
             // RegistrarButton
             // 
-            RegistrarButton.Location = new Point(106, 201);
+            RegistrarButton.Location = new Point(107, 228);
             RegistrarButton.Name = "RegistrarButton";
             RegistrarButton.Size = new Size(164, 38);
             RegistrarButton.TabIndex = 6;
@@ -98,7 +100,7 @@
             // iniciarSesionLinkLabel
             // 
             iniciarSesionLinkLabel.AutoSize = true;
-            iniciarSesionLinkLabel.Location = new Point(134, 172);
+            iniciarSesionLinkLabel.Location = new Point(135, 199);
             iniciarSesionLinkLabel.Name = "iniciarSesionLinkLabel";
             iniciarSesionLinkLabel.Size = new Size(115, 15);
             iniciarSesionLinkLabel.TabIndex = 7;
@@ -106,11 +108,30 @@
             iniciarSesionLinkLabel.Text = "Ya tengo una cuenta";
             iniciarSesionLinkLabel.LinkClicked += iniciarSesionLinkLabel_LinkClicked;
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(160, 159);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(213, 23);
+            comboBox1.TabIndex = 8;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(29, 162);
+            label1.Name = "label1";
+            label1.Size = new Size(76, 15);
+            label1.TabIndex = 9;
+            label1.Text = "Tipo Persona";
+            // 
             // Registrarse
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(423, 272);
+            ClientSize = new Size(423, 278);
+            Controls.Add(label1);
+            Controls.Add(comboBox1);
             Controls.Add(iniciarSesionLinkLabel);
             Controls.Add(RegistrarButton);
             Controls.Add(textBox3);
@@ -135,5 +156,7 @@
         private TextBox textBox3;
         private Button RegistrarButton;
         private LinkLabel iniciarSesionLinkLabel;
+        private ComboBox comboBox1;
+        private Label label1;
     }
 }

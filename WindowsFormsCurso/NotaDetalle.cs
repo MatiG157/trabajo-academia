@@ -14,9 +14,9 @@ namespace WindowsFormsCurso
 {
     public partial class NotaDetalle : Form
     {
-        private PersonaDTO alumno;
+        private AlumnoNotaDTO alumno;
 
-        public PersonaDTO Alumno
+        public AlumnoNotaDTO Alumno
         {
             get { return alumno; }
             set
@@ -24,6 +24,7 @@ namespace WindowsFormsCurso
                 alumno = value;
             }
         }
+
         public NotaDetalle()
         {
             InitializeComponent();
@@ -36,7 +37,8 @@ namespace WindowsFormsCurso
 
         private async void buttonAceptar_Click(object sender, EventArgs e)
         {
-            await AlumnoInscripcionApiClient.PonerNotaAsync(alumno.IdPersona, (int)this.numericUpDownNota.Value);
+            await AlumnoInscripcionApiClient.PonerNotaAsync(alumno.IdInscripcion, alumno.IdCurso, (int)this.numericUpDownNota.Value);
+            this.Close();
         }
     }
 }

@@ -125,15 +125,7 @@ namespace Data
                 entity.HasIndex(e => e.IdPersona)
                    .IsUnique();
 
-                entity.Property(e => e.Apellido)
-                    .IsRequired()
-                    .HasMaxLength(30);
-
                 entity.Property(e => e.Direccion)
-                   .IsRequired()
-                   .HasMaxLength(30);
-
-                entity.Property(e => e.Email)
                    .IsRequired()
                    .HasMaxLength(30);
 

@@ -9,11 +9,11 @@ public static class AlumnoInscripcionEndpoints
 {
     public static void MapAlumnoInscripcionEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/alumnosInscripciones/{id}", (int id) =>
+        app.MapGet("/alumnosInscripciones/{id}/{idCurso}", (int id, int idCurso) =>
         {
             AlumnoInscripcionService alumnoInscripcionService = new AlumnoInscripcionService();
 
-            AlumnoInscripcionDTO dto = alumnoInscripcionService.Get(id);
+            AlumnoInscripcionDTO dto = alumnoInscripcionService.Get(id,idCurso);
 
             if (dto == null)
             {
@@ -41,7 +41,7 @@ public static class AlumnoInscripcionEndpoints
         .WithOpenApi();
 
 
-        app.MapPost("/alumnosinscripciones", (AlumnoInscripcionDTO dto) =>
+        app.MapPost("/alumnosInscripciones", (AlumnoInscripcionDTO dto) =>
         {
             try
             {
@@ -61,13 +61,14 @@ public static class AlumnoInscripcionEndpoints
         .Produces(StatusCodes.Status400BadRequest)
         .WithOpenApi();
 
-        app.MapPut("/alumnosInscripciones/{id}", (int id, AlumnoInscripcionDTO dto) =>
+        app.MapPut("/alumnosInscripciones/{idInscripcion}/{idCurso}", (int idInscripcion, int idCurso, AlumnoInscripcionDTO dto) =>
         {
             try
             {
                 AlumnoInscripcionService alumnoInscripcionService = new AlumnoInscripcionService();
 
-                dto.IdInscripcion = id;
+                dto.IdInscripcion = idInscripcion;
+                dto.IdCurso = idCurso;
 
                 var found = alumnoInscripcionService.Update(dto);
 

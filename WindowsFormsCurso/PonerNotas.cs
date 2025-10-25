@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using API.AlumnosInscripciones;
 using API.Cursos;
 using API.DocentesCursos;
+using API.Usuarios;
 using API.Materias;
 using API.Personas;
 using DTOs;
@@ -21,6 +22,7 @@ namespace WindowsFormsCurso
     public partial class PonerNotas : Form
     {
         private UsuarioDTO usuario;
+        private List<AlumnoNotaDTO> alumnosNota;
 
         public UsuarioDTO Usuario
         {
@@ -69,27 +71,14 @@ namespace WindowsFormsCurso
         {
             var personas = await PersonaApiClient.GetAllAsync();
             var alumnoInscripcion = await AlumnoInscripcionApiClient.GetAllAsync();
-
-            var alumnos = (from persona in personas
-                           join alumnoInscripcionItem in alumnoInscripcion on persona.IdPersona equals alumnoInscripcionItem.IdAlumno
-                           where alumnoInscripcionItem.IdCurso == (int)this.comboBoxCursos.SelectedValue
-                           select new
-                           {
-                               IdPersona = persona.IdPersona,
-                               NombreCompleto = $"{usuario.NombreUsuario} {usuario.Apellido}",
-                               Nota = alumnoInscripcionItem.Nota
-
-                           }).ToList();
-
-            dataGridViewAlumnos.DataSource = null;
-            dataGridViewAlumnos.DataSource = alumnos;
+            this.GetAllAndLoad();
         }
 
-        private void buttonPonerNota_Click(object sender, EventArgs e)
+        private async void buttonPonerNota_Click(object sender, EventArgs e)
         {
             NotaDetalle notaDetalle = new NotaDetalle();
 
-            var alumno = SelectedItem();
+            AlumnoNotaDTO alumno = SelectedItem();
 
             notaDetalle.Alumno = alumno;
 
@@ -102,9 +91,30 @@ namespace WindowsFormsCurso
         {
             try
             {
+                var personas = await PersonaApiClient.GetAllAsync();
+                var alumnoInscripcion = await AlumnoInscripcionApiClient.GetAllAsync();
+                var usuarios = await UsuarioApiClient.GetAllAsync();
+
+                var alumnos = (from persona in personas
+                               join alumnoInscripcionItem in alumnoInscripcion on persona.IdPersona equals alumnoInscripcionItem.IdAlumno
+                               join usuario in usuarios on persona.IdPersona equals usuario.IdPersona
+                               where alumnoInscripcionItem.IdCurso == (int)this.comboBoxCursos.SelectedValue
+                               select new AlumnoNotaDTO
+                               {
+                                   IdInscripcion = alumnoInscripcionItem.IdInscripcion,
+                                   IdCurso = alumnoInscripcionItem.IdCurso,
+                                   Legajo = persona.Legajo,
+                                   NombreCompleto = $"{usuario.Apellido}",
+                                   Nota = alumnoInscripcionItem.Nota,
+                                   Condicion = alumnoInscripcionItem.Condicion
+
+                               }).ToList();
+
+                Console.WriteLine($"{alumnos}");
+
                 this.dataGridViewAlumnos.DataSource = null;
-                this.dataGridViewAlumnos.DataSource = await MateriaApiClient.GetAllAsync();
-            
+                this.dataGridViewAlumnos.DataSource = alumnos;
+
             }
             catch (Exception ex)
             {
@@ -113,14 +123,13 @@ namespace WindowsFormsCurso
         }
 
 
-        private dynamic SelectedItem()
+        private AlumnoNotaDTO SelectedItem()
         {
-            if (dataGridViewAlumnos.SelectedRows.Count > 0)
-            {
-                return dataGridViewAlumnos.SelectedRows[0].DataBoundItem;
-            }
-            return null;
-        }
+            AlumnoNotaDTO alumnoNota;
 
+            alumnoNota = (AlumnoNotaDTO)dataGridViewAlumnos.SelectedRows[0].DataBoundItem;
+
+            return alumnoNota;
+        }
     }
 }

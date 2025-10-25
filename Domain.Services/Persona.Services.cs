@@ -10,13 +10,8 @@ namespace Domain.Services
         {
             var personaRepository = new PersonaRepository();
 
-            // Validar que el email no esté duplicado
-            if (personaRepository.EmailExists(dto.Email))
-            {
-                throw new ArgumentException($"Ya existe una persona con el Email '{dto.Email}'.");
-            }
 
-            Persona persona = new Persona(0, dto.Apellido, dto.Direccion, dto.Email, dto.FechaNacimiento, dto.Legajo, dto.Telefono, dto.TipoPersona);
+            Persona persona = new Persona(0, dto.Direccion, dto.FechaNacimiento, dto.Legajo, dto.Telefono, dto.TipoPersona);
             persona.SetPlanId(dto.IdPlan);
 
             personaRepository.Add(persona);
@@ -47,9 +42,7 @@ namespace Domain.Services
             {
 
                 IdPersona = persona.IdPersona,
-                Apellido = persona.Apellido,
                 Direccion = persona.Direccion,
-                Email = persona.Email,
                 FechaNacimiento = persona.FechaNacimiento,
                 IdPlan = persona.IdPlan,
                 Legajo = persona.Legajo,
@@ -66,9 +59,7 @@ namespace Domain.Services
             return personas.Select(persona => new PersonaDTO
             {
                 IdPersona = persona.IdPersona,
-                Apellido = persona.Apellido,
                 Direccion = persona.Direccion,
-                Email = persona.Email,
                 FechaNacimiento = persona.FechaNacimiento,
                 IdPlan = persona.IdPlan,
                 Legajo = persona.Legajo,
@@ -79,15 +70,9 @@ namespace Domain.Services
 
         public bool Update(PersonaDTO dto)
         {
-            var personaRepository = new PersonaRepository();
+            var personaRepository = new PersonaRepository(); 
 
-            // Validar que el email no esté duplicado (excluyendo el usuario actual)
-            if (personaRepository.EmailExists(dto.Email, dto.IdPersona))
-            {
-                throw new ArgumentException($"Ya existe otro persona con el Email '{dto.Email}'.");
-            }
-
-            Persona persona = new Persona(0, dto.Apellido, dto.Direccion, dto.Email, dto.FechaNacimiento, dto.Legajo, dto.Telefono, dto.TipoPersona);
+            Persona persona = new Persona(0, dto.Direccion, dto.FechaNacimiento, dto.Legajo, dto.Telefono, dto.TipoPersona);
             persona.SetPlanId(dto.IdPlan);
             return personaRepository.Update(persona);
         }
@@ -108,9 +93,7 @@ namespace Domain.Services
             return personas.Select(u => new PersonaDTO
             {
                 IdPersona = u.IdPersona,
-                Apellido = u.Apellido,
                 Direccion = u.Direccion,
-                Email = u.Email,
                 FechaNacimiento = u.FechaNacimiento,
                 IdPlan = u.IdPlan,
                 Legajo = u.Legajo,

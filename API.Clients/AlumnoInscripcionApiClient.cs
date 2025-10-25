@@ -21,11 +21,12 @@ namespace API.AlumnosInscripciones
         }
 
 
-        public static async Task<AlumnoInscripcionDTO> GetAsync(int id)
+        public static async Task<AlumnoInscripcionDTO> GetAsync(int id, int idCurso)
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync("alumnosInscripciones/" + id);
+                HttpResponseMessage response = await client.GetAsync("alumnosInscripciones/" + id 
+                    + "/" + idCurso);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -140,30 +141,30 @@ namespace API.AlumnosInscripciones
             }
         }
 
-        public static async Task PonerNotaAsync(int id, int nota)
+        public static async Task PonerNotaAsync(int idInscripcion, int idCurso, int nota)
         {
             try
             {
 
-                AlumnoInscripcionDTO alumnoInscripcion = await GetAsync(id);
-                alumnoInscripcion.Nota = nota;
-                await UpdateAsync(alumnoInscripcion);
+                AlumnoInscripcionDTO alumnoInscripcion = await GetAsync(idInscripcion, idCurso);
 
-                HttpResponseMessage response = await client.PutAsJsonAsync($"alumnosInscripciones/{id}", alumnoInscripcion);
+                alumnoInscripcion.Nota = nota;
+
+                HttpResponseMessage response = await client.PutAsJsonAsync($"alumnosInscripciones/{idInscripcion}/{idCurso}", alumnoInscripcion);
 
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error al actualizar inscripcion con Id {id}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                    throw new Exception($"Error al actualizar inscripcion con Id {idInscripcion}. Status: {response.StatusCode}, Detalle: {errorContent}");
                 }
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception($"Error de conexión al actualizar inscripcion con Id {id}: {ex.Message}", ex);
+                throw new Exception($"Error de conexión al actualizar inscripcion con Id {idInscripcion}: {ex.Message}", ex);
             }
             catch (TaskCanceledException ex)
             {
-                throw new Exception($"Timeout al actualizar inscripcion con Id {id}: {ex.Message}", ex);
+                throw new Exception($"Timeout al actualizar inscripcion con Id {idInscripcion}: {ex.Message}", ex);
             }
         }
 
