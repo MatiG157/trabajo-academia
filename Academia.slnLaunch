@@ -9,6 +9,10 @@
       {
         "Path": "WindowsFormsCurso\\WindowsFormsCurso.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "BlazorWebAssembly\\BlazorWebAssembly.csproj",
+        "Action": "Start"
       }
     ]
   }

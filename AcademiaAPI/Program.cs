@@ -16,6 +16,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpLogging(o => { });
 
+
+builder.WebHost.UseUrls(
+    "http://localhost:5077",
+    "https://localhost:7238",
+    "http://localhost:5210",
+    "https://localhost:7254"
+);
+
 var app = builder.Build();
 
 

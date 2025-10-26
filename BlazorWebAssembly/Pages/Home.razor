@@ -1,0 +1,203 @@
+﻿@page "/"
+@using System.Linq
+@using DTOs
+@using API.Usuarios
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@inject UsuarioApiClient UsuarioApiClient
+
+<PageTitle>Sistema Académico</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            @if (isLoading)
+            {
+                <div class="d-flex justify-content-center align-items-center" style="height: 70vh;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!-- Hero Section -->
+                <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+                    <div class="container-fluid py-5">
+                        <h1 class="display-4">Sistema de Gestión Académica</h1>
+                        <p class="lead">Bienvenido al sistema integral de gestión educativa</p>
+                        @if (!string.IsNullOrEmpty(welcomeMessage))
+                        {
+                            <hr class="my-4">
+                            <p class="h5">@welcomeMessage</p>
+                        }
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h3>Accesos Rápidos</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Usuarios Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Usuarios</h5>
+                                <p class="card-text">Gestionar usuarios del sistema</p>
+                                <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/usuarios")'>
+                                    Ir a Usuarios
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personas Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Personas</h5>
+                                <p class="card-text">Gestionar personas del sistema</p>
+                                <button class="btn btn-success" @onclick='() => Navigation.NavigateTo("/personas")'>
+                                    Ir a Personas
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cursos Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Cursos</h5>
+                                <p class="card-text">Administrar cursos académicos</p>
+                                <button class="btn btn-warning" @onclick='() => Navigation.NavigateTo("/cursos")'>
+                                    Ir a Cursos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Materias Card -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Materias</h5>
+                                <p class="card-text">Gestionar materias del plan</p>
+                                <button class="btn btn-info" @onclick='() => Navigation.NavigateTo("/materias")'>
+                                    Ir a Materias
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                @if (stats != null)
+                {
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <h3>Estadísticas del Sistema</h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Total Usuarios</h6>
+                                    <h2 class="mb-0">@stats.TotalUsuarios</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Total Personas</h6>
+                                    <h2 class="mb-0">@stats.TotalPersonas</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Total Cursos</h6>
+                                    <h2 class="mb-0">@stats.TotalCursos</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body">
+                                    <h6 class="card-title">Total Materias</h6>
+                                    <h2 class="mb-0">@stats.TotalMaterias</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-warning">@errorMessage</div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool isLoading = true;
+    private string welcomeMessage = "";
+    private string errorMessage = "";
+    private SystemStats? stats;
+
+    public class SystemStats
+    {
+        public int TotalUsuarios { get; set; }
+        public int TotalPersonas { get; set; }
+        public int TotalCursos { get; set; }
+        public int TotalMaterias { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await Task.Delay(500);
+            welcomeMessage = "¡Sistema cargado correctamente!";
+            await LoadSystemStats();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar la página: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task LoadSystemStats()
+    {
+        try
+        {
+            stats = new SystemStats();
+            var usuarios = await UsuarioApiClient.GetAllAsync();
+            stats.TotalUsuarios = usuarios?.Count() ?? 0;
+            stats.TotalPersonas = 0;
+            stats.TotalCursos = 0;
+            stats.TotalMaterias = 0;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"No se pudieron cargar las estadísticas del sistema: {ex.Message}";
+        }
+    }
+}
