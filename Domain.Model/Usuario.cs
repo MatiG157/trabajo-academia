@@ -20,7 +20,6 @@ namespace Domain.Model
         public bool CambiaClave { get; set; }
 
         private int _personaId;
-        //public int IdPersona { get; private set; }
         private Persona? _persona;
         public Usuario() { }
 
@@ -67,10 +66,9 @@ namespace Domain.Model
 
             _personaId = idPersona;
 
-            // Solo invalidar si hay inconsistencia
             if (_persona != null && _persona.IdPersona != idPersona)
             {
-                _persona = null; // Invalidar navigation property
+                _persona = null; 
             }
         }
 

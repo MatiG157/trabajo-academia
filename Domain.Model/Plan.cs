@@ -32,7 +32,7 @@ namespace Domain.Model
                 _especialidad = value;
                 if (value != null && _especialidadId != value.IdEspecialidad)
                 {
-                    _especialidadId = value.IdEspecialidad; // Sincronizar automáticamente
+                    _especialidadId = value.IdEspecialidad; 
                 }
             }
         }
@@ -50,10 +50,9 @@ namespace Domain.Model
 
             _especialidadId = idEspecialidad;
 
-            // Solo invalidar si hay inconsistencia
             if (_especialidad != null && _especialidad.IdEspecialidad != idEspecialidad)
             {
-                _especialidad = null; // Invalidar navigation property
+                _especialidad = null; 
             }
         }
 

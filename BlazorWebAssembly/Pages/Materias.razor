@@ -193,10 +193,10 @@
         materiaDetalle = new MateriaDTO();
         isEditMode = false;
         showDetalle = true;
-        StateHasChanged(); // AGREGADO
+        StateHasChanged(); 
     }
 
-    private async Task ModificarMateria() // CAMBIADO de async void a async Task
+    private async Task ModificarMateria() 
     {
         if (selectedMateria == null) return;
         try
@@ -207,7 +207,7 @@
                 materiaDetalle = materia;
                 isEditMode = true;
                 showDetalle = true;
-                StateHasChanged(); // AGREGADO
+                StateHasChanged(); 
             }
         }
         catch (Exception ex)

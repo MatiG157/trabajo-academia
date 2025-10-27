@@ -80,7 +80,7 @@
                             </table>
                         </div>
 
-                        <!-- Botones de acción -->
+        
                         <div class="d-flex justify-content-start gap-2 mt-3 border-top pt-3">
                             <button class="btn btn-outline-primary" @onclick="RefreshEspecialidades">
                                 <i class="fas fa-sync-alt me-2"></i>
@@ -227,7 +227,7 @@
                 especialidadDetalle = esp;
                 isEditMode = true;
                 showDetalle = true;
-                StateHasChanged(); // AGREGAR SOLO ESTO
+                StateHasChanged();
             }
         }
         catch (Exception ex)

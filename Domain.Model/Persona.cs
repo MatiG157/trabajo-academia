@@ -33,7 +33,7 @@ namespace Domain.Model
                 _plan = value;
                 if (value != null && _planId != value.IdPlan)
                 {
-                    _planId = value.IdPlan; // Sincronizar automáticamente
+                    _planId = value.IdPlan; 
                 }
             }
         }
@@ -56,10 +56,9 @@ namespace Domain.Model
 
             _planId = idPlan;
 
-            // Solo invalidar si hay inconsistencia
             if (_plan != null && _plan.IdPlan != idPlan)
             {
-                _plan = null; // Invalidar navigation property
+                _plan = null; 
             }
         }
 

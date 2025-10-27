@@ -76,13 +76,10 @@ namespace Domain.Services
         {
             var personaRepository = new PersonaRepository();
 
-            // Mapear DTO a Domain Model
             var criteria = new PersonaCriteria(criteriaDTO.Texto);
 
-            // Llamar al repositorio
             var personas = await personaRepository.GetByCriteria(criteria);
 
-            // Mapear Domain Model a DTO
             return personas.Select(u => new PersonaDTO
             {
                 IdPersona = u.IdPersona,

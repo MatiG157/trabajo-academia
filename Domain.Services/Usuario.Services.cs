@@ -10,7 +10,6 @@ namespace Domain.Services
         {
             var usuarioRepository = new UsuarioRepository();
 
-            // Validar que el email no esté duplicado
             if (await usuarioRepository.EmailExists(dto.Email))
             {
                 throw new ArgumentException($"Ya existe un usuario con el Email '{dto.Email}'.");
@@ -76,7 +75,6 @@ namespace Domain.Services
         {
             var usuarioRepository = new UsuarioRepository();
 
-            // Validar que el email no esté duplicado (excluyendo el usuario actual)
             if (await usuarioRepository.EmailExists(dto.Email, dto.IdUsuario))
             {
                 throw new ArgumentException($"Ya existe otro usuario con el Email '{dto.Email}'.");
@@ -91,13 +89,10 @@ namespace Domain.Services
         {
             var usuarioRepository = new UsuarioRepository();
 
-            // Mapear DTO a Domain Model
             var criteria = new UsuarioCriteria(criteriaDTO.Texto);
 
-            // Llamar al repositorio
             var usuarios = await usuarioRepository.GetByCriteria(criteria);
 
-            // Mapear Domain Model a DTO
             return usuarios.Select(u => new UsuarioDTO
             {
                 IdUsuario = u.IdUsuario,

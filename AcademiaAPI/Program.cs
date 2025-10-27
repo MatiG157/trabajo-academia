@@ -3,7 +3,6 @@ using Domain.Services;
 using Domain.Model;
 using DTOs;
 using AcademiaAPI.Endpoints;
-//using WebAPI;
 using Data;
 using MateriaAPI.Endpoints;
 using EspecialidadAPI.Endpoints;
@@ -18,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpLogging(o => { });
 
-// Configurar CORS para permitir solicitudes desde Blazor WebAssembly
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowBlazorClient", policy =>
@@ -32,8 +31,6 @@ builder.Services.AddCors(options =>
 builder.WebHost.UseUrls(
     "http://localhost:5077",
     "https://localhost:7238"
-    //"http://localhost:5277",
-    //"https://localhost:7238"
 );
 
 var app = builder.Build();
@@ -46,7 +43,7 @@ if (app.Environment.IsDevelopment())
     app.UseHttpLogging();
 }
 
-// Habilitar CORS
+
 app.UseCors("AllowBlazorClient");
 
 

@@ -71,13 +71,10 @@ namespace Domain.Services
         {
             var planRepository = new PlanRepository();
 
-            // Mapear DTO a Domain Model
             var criteria = new PlanCriteria(criteriaDTO.Texto);
 
-            // Llamar al repositorio
             var planes = await planRepository.GetByCriteria(criteria);
 
-            // Mapear Domain Model a DTO
             return planes.Select(p => new PlanDTO
             {
                 IdPlan = p.IdPlan,

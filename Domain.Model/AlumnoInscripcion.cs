@@ -27,7 +27,7 @@
                 _curso = value;
                 if (value != null && _cursoId != value.IdCurso)
                 {
-                    _cursoId = value.IdCurso; // Sincronizar automáticamente
+                    _cursoId = value.IdCurso; 
                 }
             }
         }
@@ -52,7 +52,7 @@
                 _alumno = value;
                 if (value != null && _alumnoId != value.IdPersona)
                 {
-                    _alumnoId = value.IdPersona; // Sincronizar automáticamente
+                    _alumnoId = value.IdPersona; 
                 }
             }
         }
@@ -71,10 +71,9 @@
 
             _cursoId = idCurso;
 
-            // Solo invalidar si hay inconsistencia
             if (_curso != null && _curso.IdCurso != idCurso)
             {
-                _curso = null; // Invalidar navigation property
+                _curso = null; 
             }
         }
         public void SetCurso(Curso curso)
@@ -91,10 +90,9 @@
 
             _alumnoId = idAlumno;
 
-            // Solo invalidar si hay inconsistencia
             if (_alumno != null && _alumno.IdPersona != idAlumno)
             {
-                _alumno = null; // Invalidar navigation property
+                _alumno = null; 
             }
         }
         public void SetAlumno(Persona alumno)

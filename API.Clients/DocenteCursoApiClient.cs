@@ -54,5 +54,28 @@ namespace API.DocentesCursos
                 throw new Exception($"Timeout al crear docenteCurso: {ex.Message}", ex);
             }
         }
+
+        public static async Task UpdateAsync(DocenteCursoDTO docenteCurso)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync($"docentesCursos/{docenteCurso.IdAsignacion}", docenteCurso);
+
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al actualizar asignacion con Id {docenteCurso.IdAsignacion}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al actualizar asignacion con Id {docenteCurso.IdAsignacion}: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al actualizar asignacion con Id {docenteCurso.IdAsignacion}: {ex.Message}", ex);
+            }
+        }
     }
 }

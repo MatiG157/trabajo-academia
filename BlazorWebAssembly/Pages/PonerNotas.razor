@@ -228,8 +228,7 @@
             nombreUsuario = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "nombreUsuario");
             var userIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "usuarioId");
             var personaIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "personaId");
-
-            // Verificar que sea docente
+            
             if (tipoPersona != "Docente")
             {
                 Navigation.NavigateTo("/login");
@@ -264,8 +263,7 @@
         {
             loading = true;
             errorMessage = "";
-
-            // Obtener los cursos del docente
+            
             var docenteCursos = await DocenteCursoApiClient.GetDocenteCursoByCriteria(personaId.Value);
 
             if (docenteCursos != null && docenteCursos.Any())
@@ -383,8 +381,7 @@
                 alumnoSeleccionado.IdCurso,
                 notaIngresada.Value
             );
-
-            // Recargar la lista de alumnos
+            
             await CargarAlumnosPorCurso();
 
             CerrarModal();

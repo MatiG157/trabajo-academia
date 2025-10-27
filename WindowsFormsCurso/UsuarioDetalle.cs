@@ -56,7 +56,6 @@ namespace WindowsForms
 
         private async void aceptarButton_Click(object sender, EventArgs e)
         {
-            //if (this.ValidateCurso())
 
             try
             {
@@ -69,10 +68,6 @@ namespace WindowsForms
                 this.Usuario.Email = emailTextBox.Text;
                 this.Usuario.CambiaClave = cambiaClaveCheckBox.Checked;
                 this.Usuario.IdPersona = (int)idPersonaNumericUpDown.Value;
-
-
-
-
 
                 if (this.Mode2 == FormMode2.Update)
                 {
@@ -120,45 +115,5 @@ namespace WindowsForms
 
         }
 
-
-        //private void AnioCalendarioNumericUpDown_TextChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void cupoNumericUpDown_TextChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        private void UsuarioDetalle_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        //private void cupoNumericUpDown_ValueChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        private void nombreLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void claveLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        //private void AnioCalendarioNumericUpDown_ValueChanged(object sender, EventArgs e)
-        //{
-
-        //}
     }
 }

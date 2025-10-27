@@ -104,7 +104,6 @@ namespace Data
                 );
                 plan.SetEspecialidadId(reader.GetInt32(6));
 
-                //materia.SetMateria(materia);
                 materias.Add(materia);
             }
 

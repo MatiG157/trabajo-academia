@@ -49,13 +49,11 @@ namespace WindowsFormsCurso
                 int idAlumnoActual = usuario.IdPersona; 
 
 
-                // 1. Obtener los IDs de los cursos donde el alumno ya está inscripto
                 var cursosInscriptoIds = inscripciones
                     .Where(i => i.IdAlumno == idAlumnoActual)
                     .Select(i => i.IdCurso)
                     .ToList();
 
-                // 2. Filtrar los cursos con cupo > 0 y que NO estén en la lista de inscriptos
                 var cursosDisponibles = cursos
                     .Where(c => c.Cupo > 0 && !cursosInscriptoIds.Contains(c.IdCurso))
                     .ToList();

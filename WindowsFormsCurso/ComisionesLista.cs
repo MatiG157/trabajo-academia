@@ -31,6 +31,7 @@ namespace WindowsFormsCurso
             try
             {
                 this.comisionesDataGridView.DataSource = null;
+
                 this.comisionesDataGridView.DataSource = await ComisionApiClient.GetAllAsync();
 
                 if (this.comisionesDataGridView.Rows.Count > 0)

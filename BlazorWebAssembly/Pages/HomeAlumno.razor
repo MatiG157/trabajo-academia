@@ -44,7 +44,6 @@
             var tipoPersona = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "tipoPersona");
             nombreUsuario = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "nombreUsuario");
 
-            // Verificar que sea alumno
             if (tipoPersona != "Alumno")
             {
                 Navigation.NavigateTo("/login");

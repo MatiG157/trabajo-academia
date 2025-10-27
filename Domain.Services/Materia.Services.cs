@@ -73,13 +73,10 @@ namespace Domain.Services
         {
             var materiaRepository = new MateriaRepository();
 
-            // Mapear DTO a Domain Model
             var criteria = new MateriaCriteria(criteriaDTO.Texto);
 
-            // Llamar al repositorio
             var materias = await materiaRepository.GetByCriteria(criteria);
 
-            // Mapear Domain Model a DTO
             return materias.Select(m => new MateriaDTO
             {
                 IdMateria = m.IdMateria,

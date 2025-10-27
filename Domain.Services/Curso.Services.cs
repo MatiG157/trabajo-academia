@@ -81,13 +81,10 @@ namespace Domain.Services
         {
             var cursoRepository = new CursoRepository();
 
-            // Mapear DTO a Domain Model
             var criteria = new CursoCriteria(criteriaDTO.Texto);
 
-            // Llamar al repositorio
             var cursos = await cursoRepository.GetByCriteria(criteria);
 
-            // Mapear Domain Model a DTO
             return cursos.Select(c => new CursoDTO
             {
                 IdCurso = c.IdCurso,

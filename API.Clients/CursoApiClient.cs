@@ -81,7 +81,6 @@ namespace API.Cursos
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Deserializa el objeto creado que devuelve la API
                     var cursoCreado = await response.Content.ReadFromJsonAsync<CursoDTO>();
                     return cursoCreado;
                 }

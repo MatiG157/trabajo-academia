@@ -3,6 +3,7 @@
     public class DocenteCurso
     {
 
+        public int IdAsignacion {  get; set; }
         public string Cargo { get; set; }
 
         // Atributos para la relacion con curso
@@ -24,7 +25,7 @@
                 _curso = value;
                 if (value != null && _cursoId != value.IdCurso)
                 {
-                    _cursoId = value.IdCurso; // Sincronizar automáticamente
+                    _cursoId = value.IdCurso; 
                 }
             }
         }
@@ -49,7 +50,7 @@
                 _docente = value;
                 if (value != null && _docenteId != value.IdPersona)
                 {
-                    _docenteId = value.IdPersona; // Sincronizar automáticamente
+                    _docenteId = value.IdPersona; 
                 }
             }
         }
@@ -70,10 +71,9 @@
 
             _cursoId = idCurso;
 
-            // Solo invalidar si hay inconsistencia
             if (_curso != null && _curso.IdCurso != idCurso)
             {
-                _curso = null; // Invalidar navigation property
+                _curso = null; 
             }
         }
 
@@ -91,10 +91,9 @@
 
             _docenteId = idDocente;
 
-            // Solo invalidar si hay inconsistencia
             if (_docente != null && _docente.IdPersona != idDocente)
             {
-                _docente = null; // Invalidar navigation property
+                _docente = null; 
             }
         }
 

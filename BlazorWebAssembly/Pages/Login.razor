@@ -96,23 +96,21 @@
                 return;
             }
 
-            // 1. Validar credenciales y obtener usuario
             var usuario = await UsuarioApiClient.Login(loginModel.Email, loginModel.Password);
 
             if (usuario != null)
             {
-                // 2. Obtener la persona asociada al usuario
+
                 var persona = await PersonaApiClient.GetAsync(usuario.IdPersona);
 
                 if (persona != null)
                 {
-                    // 3. Guardar datos en localStorage
+                    // Guardar datos en localStorage
                     await JSRuntime.InvokeVoidAsync("localStorage.setItem", "usuarioId", usuario.IdUsuario.ToString());
                     await JSRuntime.InvokeVoidAsync("localStorage.setItem", "personaId", persona.IdPersona.ToString());
                     await JSRuntime.InvokeVoidAsync("localStorage.setItem", "tipoPersona", persona.TipoPersona);
                     await JSRuntime.InvokeVoidAsync("localStorage.setItem", "nombreUsuario", $"{usuario.Nombre} {usuario.Apellido}");
 
-                    // 4. Redirigir según el tipo de persona
                     if (persona.TipoPersona == "Docente")
                     {
                         Navigation.NavigateTo("/home-docente", true);
@@ -123,7 +121,7 @@
                     }
                     else
                     {
-                        // Admin u otro tipo
+
                         Navigation.NavigateTo("/home", true);
                     }
                 }

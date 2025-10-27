@@ -17,7 +17,6 @@ namespace Data
         {
         }
 
-        // Constructor sin parámetros para que EF pueda instanciar en tiempo de diseño
         
 
         public DbSet<Curso> Cursos { get; set; }
@@ -322,19 +321,6 @@ namespace Data
                     .OnDelete(DeleteBehavior.Cascade);
 
 
-           //     entity.HasData(new Curso
-           //     {
-           //         IdCurso = 1,
-           //         Descripcion = "Curso 1",
-           //         AnioCalendario = new DateTime(2004, 3, 3),
-           //         Cupo = 20,
-           //         Email = "profe@gmail.com",
-           //         Habilitado = true,
-           //         NombreUsuario = "profe",
-           //         IdPersona = 1
-           //     }
-           //);
-
             });
 
             modelBuilder.Entity<Materia>(entity =>
@@ -462,7 +448,7 @@ namespace Data
 
             modelBuilder.Entity<DocenteCurso>(entity =>
             {
-                entity.HasKey(e => new { e.IdDocente, e.IdCurso }); // Clave primaria compuesta
+                entity.HasKey(e => new { e.IdDocente, e.IdCurso }); 
 
 
                 // Relación con Persona (Docente)
@@ -493,15 +479,7 @@ namespace Data
 
 
 
-                // Datos iniciales
 
-                //entity.HasData(new DocenteCurso
-                //{
-                //    Cargo = "Teoría",
-                //    IdCurso = "1",
-                //    IdDocente = "2",
-                //}
-                //);
 
             });
 

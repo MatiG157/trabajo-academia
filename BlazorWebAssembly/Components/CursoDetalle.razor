@@ -2,6 +2,9 @@
 @using API.Cursos
 @using API.Materias
 @using API.Comisiones
+@using API.Personas
+@using API.Usuarios
+@using API.DocentesCursos
 
 <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
     <div class="modal-dialog modal-dialog-centered">
@@ -49,12 +52,9 @@
                             <label class="form-label">Materia</label>
                             <InputSelect class="form-select" @bind-Value="Curso.IdMateria">
                                 <option value="0">-- Seleccione una materia --</option>
-                                @if (materias != null)
+                                @foreach (var materia in materias ?? Enumerable.Empty<MateriaDTO>())
                                 {
-                                    @foreach (var materia in materias)
-                                    {
-                                        <option value="@materia.IdMateria">@materia.Descripcion</option>
-                                    }
+                                    <option value="@materia.IdMateria">@materia.Descripcion</option>
                                 }
                             </InputSelect>
                             <ValidationMessage For="@(() => Curso.IdMateria)" class="text-danger" />
@@ -64,15 +64,31 @@
                             <label class="form-label">Comisión</label>
                             <InputSelect class="form-select" @bind-Value="Curso.IdComision">
                                 <option value="0">-- Seleccione una comisión --</option>
-                                @if (comisiones != null)
+                                @foreach (var comision in comisiones ?? Enumerable.Empty<ComisionDTO>())
                                 {
-                                    @foreach (var comision in comisiones)
-                                    {
-                                        <option value="@comision.IdComision">@comision.Descripcion</option>
-                                    }
+                                    <option value="@comision.IdComision">@comision.Descripcion</option>
                                 }
                             </InputSelect>
                             <ValidationMessage For="@(() => Curso.IdComision)" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Docente</label>
+                            <InputSelect class="form-select" @bind-Value="IdDocente">
+                                <option value="0">-- Seleccione un docente --</option>
+                                @foreach (var docente in docentes ?? Enumerable.Empty<DocenteItem>())
+                                {
+                                    <option value="@docente.IdPersona">@docente.NombreCompleto</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cargo</label>
+                            <InputSelect class="form-select" @bind-Value="Cargo">
+                                <option value="Teoría">Teoría</option>
+                                <option value="Práctica">Práctica</option>
+                            </InputSelect>
                         </div>
 
                         @if (!string.IsNullOrEmpty(ErrorMessage))
@@ -119,10 +135,25 @@
     private string ErrorMessage = string.Empty;
     private List<MateriaDTO>? materias;
     private List<ComisionDTO>? comisiones;
+    private List<DocenteItem>? docentes;
+    private int IdDocente = 0;
+    private string Cargo = "Teoría";
+    private DocenteCursoDTO? docenteCursoActual;
 
     protected override async Task OnInitializedAsync()
     {
         await CargarDatos();
+
+        if (IsEditMode)
+        {
+            // Cargar el DocenteCurso actual si existe
+            docenteCursoActual = await DocenteCursoApiClient.GetByCursoAsync(Curso.IdCurso);
+            if (docenteCursoActual != null)
+            {
+                IdDocente = docenteCursoActual.IdDocente;
+                Cargo = docenteCursoActual.Cargo;
+            }
+        }
     }
 
     private async Task CargarDatos()
@@ -131,14 +162,27 @@
         {
             loadingData = true;
 
-            // Cargar materias y comisiones en paralelo
             var materiasTask = MateriaApiClient.GetAllAsync();
             var comisionesTask = ComisionApiClient.GetAllAsync();
+            var personasTask = PersonaApiClient.GetAllAsync();
+            var usuariosTask = UsuarioApiClient.GetAllAsync();
 
-            await Task.WhenAll(materiasTask, comisionesTask);
+            await Task.WhenAll(materiasTask, comisionesTask, personasTask, usuariosTask);
 
             materias = materiasTask.Result?.ToList();
             comisiones = comisionesTask.Result?.ToList();
+
+            var personas = personasTask.Result?.ToList() ?? new List<PersonaDTO>();
+            var usuarios = usuariosTask.Result?.ToList() ?? new List<UsuarioDTO>();
+
+            docentes = (from persona in personas
+                        join usuario in usuarios on persona.IdPersona equals usuario.IdPersona
+                        where persona.TipoPersona == "Docente"
+                        select new DocenteItem
+                            {
+                                IdPersona = persona.IdPersona,
+                                NombreCompleto = $"{usuario.NombreUsuario} {usuario.Apellido}"
+                            }).ToList();
         }
         catch (Exception ex)
         {
@@ -157,24 +201,66 @@
             IsSaving = true;
             ErrorMessage = string.Empty;
 
+            // Validaciones
             if (Curso.IdMateria == 0)
             {
                 ErrorMessage = "Debe seleccionar una materia";
                 IsSaving = false;
                 return;
             }
-
             if (Curso.IdComision == 0)
             {
                 ErrorMessage = "Debe seleccionar una comisión";
                 IsSaving = false;
                 return;
             }
+            if (IdDocente == 0)
+            {
+                ErrorMessage = "Debe seleccionar un docente";
+                IsSaving = false;
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(Cargo))
+            {
+                ErrorMessage = "Debe seleccionar un cargo";
+                IsSaving = false;
+                return;
+            }
 
             if (IsEditMode)
+            {
                 await CursoApiClient.UpdateAsync(Curso);
+
+                // Actualizar o crear DocenteCurso
+                if (docenteCursoActual != null)
+                {
+                    docenteCursoActual.IdDocente = IdDocente;
+                    docenteCursoActual.Cargo = Cargo;
+                    await DocenteCursoApiClient.UpdateAsync(docenteCursoActual);
+                }
+                else
+                {
+                    var nuevoDocenteCurso = new DocenteCursoDTO
+                        {
+                            IdCurso = Curso.IdCurso,
+                            IdDocente = IdDocente,
+                            Cargo = Cargo
+                        };
+                    await DocenteCursoApiClient.AddAsync(nuevoDocenteCurso);
+                }
+            }
             else
-                await CursoApiClient.AddAsync(Curso);
+            {
+                var cursoCreado = await CursoApiClient.AddAsync(Curso);
+
+                var docenteCurso = new DocenteCursoDTO
+                    {
+                        IdCurso = cursoCreado.IdCurso,
+                        IdDocente = IdDocente,
+                        Cargo = Cargo
+                    };
+                await DocenteCursoApiClient.AddAsync(docenteCurso);
+            }
 
             await OnSave.InvokeAsync();
         }
@@ -186,5 +272,11 @@
         {
             IsSaving = false;
         }
+    }
+
+    private class DocenteItem
+    {
+        public int IdPersona { get; set; }
+        public string NombreCompleto { get; set; } = "";
     }
 }

@@ -189,7 +189,7 @@
             var userIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "usuarioId");
             var personaIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "personaId");
 
-            // Verificar que sea alumno
+    
             if (tipoPersona != "Alumno")
             {
                 Navigation.NavigateTo("/login");
@@ -225,19 +225,15 @@
             loading = true;
             errorMessage = "";
 
-            // 1. Obtener todos los cursos
             var todosCursos = (await CursoApiClient.GetAllAsync())?.ToList() ?? new List<CursoDTO>();
 
-            // 2. Obtener todas las inscripciones
             var todasInscripciones = (await AlumnoInscripcionApiClient.GetAllAsync())?.ToList() ?? new List<AlumnoInscripcionDTO>();
 
-            // 3. Obtener los IDs de los cursos donde el alumno ya está inscripto
             var cursosInscriptoIds = todasInscripciones
                 .Where(i => i.IdAlumno == personaId.Value)
                 .Select(i => i.IdCurso)
                 .ToList();
 
-            // 4. Filtrar cursos: con cupo > 0 y que NO estén en la lista de inscriptos
             cursosDisponibles = todosCursos
                 .Where(c => c.Cupo > 0 && !cursosInscriptoIds.Contains(c.IdCurso))
                 .OrderBy(c => c.Descripcion)
@@ -270,7 +266,6 @@
             errorMessage = "";
             mensajeExito = null;
 
-            // Verificar que haya cupo
             if (cursoSeleccionado.Cupo <= 0)
             {
                 errorMessage = "No hay cupos disponibles para este curso.";
@@ -278,7 +273,6 @@
                 return;
             }
 
-            // 1. Crear la inscripción
             AlumnoInscripcionDTO nuevaInscripcion = new AlumnoInscripcionDTO
                 {
                     Condicion = "Cursando",
@@ -289,12 +283,10 @@
 
             await AlumnoInscripcionApiClient.AddAsync(nuevaInscripcion);
 
-            // 2. Bajar el cupo del curso
             await CursoApiClient.BajarCupoAsync(cursoSeleccionado);
 
             mensajeExito = $"¡Inscripción exitosa al curso: {cursoSeleccionado.Descripcion}!";
 
-            // 3. Recargar la lista de cursos disponibles
             await CargarCursosDisponibles();
 
             CerrarModal();

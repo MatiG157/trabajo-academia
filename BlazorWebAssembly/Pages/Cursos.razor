@@ -1,6 +1,9 @@
 ﻿@page "/cursos"
 @using DTOs
 @using API.Cursos
+@using API.DocentesCursos
+@using API.Usuarios
+
 @using BlazorWebAssembly.Components
 @inject IJSRuntime JSRuntime
 
@@ -150,6 +153,9 @@
 
 @code {
     private List<CursoDTO>? cursos;
+    private List<DocenteCursoDTO>? docentesCursos;
+    private List<PersonaDTO>? personas;
+    private List<UsuarioDTO>? usuarios;
     private CursoDTO? selectedCurso;
     private CursoDTO cursoDetalle = new();
     private bool loading = true;

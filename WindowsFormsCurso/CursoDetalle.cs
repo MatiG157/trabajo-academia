@@ -76,6 +76,14 @@ namespace WindowsForms
                 if (this.Mode == FormMode.Update)
                 {
                     await CursoApiClient.UpdateAsync(this.Curso);
+
+                    var docenteCurso = new DocenteCursoDTO();
+                    docenteCurso.IdCurso = cursoCreado.IdCurso;
+                    docenteCurso.IdDocente = (int)this.profesorDropDown.SelectedValue;
+                    docenteCurso.Cargo = (string)this.cargosDropDown.SelectedItem;
+                    await DocenteCursoApiClient.UpdateAsync(docenteCurso);
+
+
                 }
                 else
                 {

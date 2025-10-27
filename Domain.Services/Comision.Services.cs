@@ -73,13 +73,10 @@ namespace Domain.Services
         {
             var comisionRepository = new ComisionRepository();
 
-            // Mapear DTO a Domain Model
             var criteria = new ComisionCriteria(criteriaDTO.Texto);
 
-            // Llamar al repositorio
             var comisiones = await comisionRepository.GetByCriteria(criteria);
 
-            // Mapear Domain Model a DTO
             return comisiones.Select(c => new ComisionDTO
             {
                 IdComision = c.IdComision,

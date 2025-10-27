@@ -43,5 +43,15 @@ namespace Domain.Services
 
             return dtos;
         }
+
+        public async Task<bool> Update(DocenteCursoDTO dto)
+        {
+            var docenteCursoRepository = new DocenteCursoRepository();
+
+            DocenteCurso docenteCurso = new DocenteCurso(dto.IdAsignacion, dto.Cargo);
+            docenteCurso.SetCursoId(dto.IdCurso);
+            docenteCurso.SetDocenteId(dto.IdDocente);
+            return await docenteCursoRepository.Update(docenteCurso);
+        }
     }
 }

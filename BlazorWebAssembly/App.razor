@@ -22,7 +22,6 @@
 @code {
     protected override void OnInitialized()
     {
-        // Si estamos en la raíz, redirigir a login
         if (Navigation.Uri == Navigation.BaseUri || Navigation.Uri == Navigation.BaseUri.TrimEnd('/'))
         {
             Navigation.NavigateTo("/login", replace: true);

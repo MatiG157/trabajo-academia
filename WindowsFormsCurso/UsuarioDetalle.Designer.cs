@@ -98,7 +98,6 @@
             claveLabel.Size = new Size(34, 15);
             claveLabel.TabIndex = 5;
             claveLabel.Text = "clave";
-            claveLabel.Click += claveLabel_Click;
             // 
             // claveTextBox
             // 
@@ -136,7 +135,6 @@
             nombreLabel.Size = new Size(51, 15);
             nombreLabel.TabIndex = 7;
             nombreLabel.Text = "Nombre";
-            nombreLabel.Click += nombreLabel_Click;
             // 
             // nombreTextBox
             // 
@@ -242,7 +240,6 @@
             Margin = new Padding(2);
             Name = "UsuarioDetalle";
             Text = "Detalle usuario";
-            Load += UsuarioDetalle_Load;
             ((System.ComponentModel.ISupportInitialize)idPersonaNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();

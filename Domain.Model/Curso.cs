@@ -28,7 +28,7 @@
                 _materia = value;
                 if (value != null && _materiaId != value.IdMateria)
                 {
-                    _materiaId = value.IdMateria; // Sincronizar automáticamente
+                    _materiaId = value.IdMateria; 
                 }
             }
         }
@@ -53,7 +53,7 @@
                 _comision = value;
                 if (value != null && _comisionId != value.IdComision)
                 {
-                    _comisionId = value.IdComision; // Sincronizar automáticamente
+                    _comisionId = value.IdComision; 
                 }
             }
         }
@@ -78,7 +78,7 @@
             // Solo invalidar si hay inconsistencia
             if (_comision != null && _comision.IdComision != idComision)
             {
-                _comision = null; // Invalidar navigation property
+                _comision = null; 
             }
         }
 
@@ -96,10 +96,9 @@
 
             _materiaId = idMateria;
 
-            // Solo invalidar si hay inconsistencia
             if (_materia != null && _materia.IdMateria != idMateria)
             {
-                _materia = null; // Invalidar navigation property
+                _materia = null; 
             }
         }
 

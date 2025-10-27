@@ -67,13 +67,10 @@ namespace Domain.Services
         {
             var especialidadRepository = new EspecialidadRepository();
 
-            // Mapear DTO a Domain Model
             var criteria = new EspecialidadCriteria(criteriaDTO.Texto);
 
-            // Llamar al repositorio
             var especialidades = await especialidadRepository.GetByCriteria(criteria);
 
-            // Mapear Domain Model a DTO
             return especialidades.Select(e => new EspecialidadDTO
             {
                 IdEspecialidad = e.IdEspecialidad,
