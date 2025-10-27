@@ -94,26 +94,29 @@ namespace WindowsFormsCurso
                 var personas = await PersonaApiClient.GetAllAsync();
                 var alumnoInscripcion = await AlumnoInscripcionApiClient.GetAllAsync();
                 var usuarios = await UsuarioApiClient.GetAllAsync();
+                
+                // Obtener el curso seleccionado
+                var cursoSeleccionado = (CursoDTO)this.comboBoxCursos.SelectedItem;
 
                 var alumnos = (from persona in personas
-                               join alumnoInscripcionItem in alumnoInscripcion on persona.IdPersona equals alumnoInscripcionItem.IdAlumno
-                               join usuario in usuarios on persona.IdPersona equals usuario.IdPersona
-                               where alumnoInscripcionItem.IdCurso == (int)this.comboBoxCursos.SelectedValue
-                               select new AlumnoNotaDTO
-                               {
-                                   IdInscripcion = alumnoInscripcionItem.IdInscripcion,
-                                   IdCurso = alumnoInscripcionItem.IdCurso,
-                                   Legajo = persona.Legajo,
-                                   NombreCompleto = $"{usuario.Apellido}",
-                                   Nota = alumnoInscripcionItem.Nota,
-                                   Condicion = alumnoInscripcionItem.Condicion
+                           join alumnoInscripcionItem in alumnoInscripcion on persona.IdPersona equals alumnoInscripcionItem.IdAlumno
+                           join usuario in usuarios on persona.IdPersona equals usuario.IdPersona
+                           where alumnoInscripcionItem.IdCurso == (int)this.comboBoxCursos.SelectedValue
+                           select new AlumnoNotaDTO
+                           {
+                               Curso = cursoSeleccionado.Descripcion,
+                               Legajo = persona.Legajo,
+                               NombreCompleto = $"{usuario.Apellido}, {usuario.Nombre}",
+                               Nota = alumnoInscripcionItem.Nota,
+                               Condicion = alumnoInscripcionItem.Condicion
 
-                               }).ToList();
+                           }).ToList();
 
                 Console.WriteLine($"{alumnos}");
 
                 this.dataGridViewAlumnos.DataSource = null;
                 this.dataGridViewAlumnos.DataSource = alumnos;
+                
 
             }
             catch (Exception ex)
