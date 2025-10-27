@@ -1,0 +1,251 @@
+﻿@page "/materias"
+@using DTOs
+@using API.Materias
+@inject IJSRuntime JSRuntime
+@using BlazorWebAssembly.Components
+@inject NavigationManager Navigation
+
+<PageTitle>Materias</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-book me-2"></i>
+                        Materias
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>@errorMessage
+                            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(successMessage))
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>@successMessage
+                            <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    @if (loading)
+                    {
+                        <div class="d-flex justify-content-center align-items-center" style="min-height: 300px;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead class="table-dark sticky-top">
+                                    <tr>
+                                        <th>IdMateria</th>
+                                        <th>Descripción</th>
+                                        <th>HsSemanales</th>
+                                        <th>HsTotales</th>
+                                        <th>IdPlan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (materias != null && materias.Any())
+                                    {
+                                        @foreach (var materia in materias)
+                                        {
+                                            <tr @onclick="() => SelectMateria(materia)"
+                                                class="@(selectedMateria?.IdMateria == materia.IdMateria ? "table-active" : "")"
+                                                style="cursor: pointer;">
+                                                <td>@materia.IdMateria</td>
+                                                <td>@materia.Descripcion</td>
+                                                <td>@materia.HsSemanales</td>
+                                                <td>@materia.HsTotales</td>
+                                                <td>@materia.IdPlan</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted py-4">
+                                                <i class="fas fa-inbox fa-2x mb-2"></i>
+                                                <p class="mb-0">No hay materias registradas</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-start gap-2 mt-3 border-top pt-3">
+                            <button class="btn btn-outline-primary" @onclick="RefreshMaterias">
+                                <i class="fas fa-sync-alt me-2"></i>Refrescar
+                            </button>
+                            <button class="btn btn-outline-success" @onclick="AgregarMateria">
+                                <i class="fas fa-plus me-2"></i>Agregar
+                            </button>
+                            <button class="btn btn-outline-warning" disabled="@(selectedMateria == null)" @onclick="ModificarMateria">
+                                <i class="fas fa-edit me-2"></i>Modificar
+                            </button>
+                            <button class="btn btn-outline-danger" disabled="@(selectedMateria == null)" @onclick="EliminarMateria">
+                                <i class="fas fa-trash-alt me-2"></i>Eliminar
+                            </button>
+                        </div>
+
+                        @if (selectedMateria != null)
+                        {
+                            <div class="alert alert-info mt-3">
+                                <strong>Materia seleccionada:</strong> @selectedMateria.Descripcion (@selectedMateria.IdMateria)
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (showDetalle)
+{
+    <MateriaDetalle Materia="@materiaDetalle"
+                    IsEditMode="@isEditMode"
+                    OnSave="@HandleSave"
+                    OnCancel="@HandleCancel" />
+}
+
+@if (showDeleteConfirm)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Confirmar eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CancelDelete"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de eliminar la materia <strong>@selectedMateria?.Descripcion</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CancelDelete" disabled="@isDeleting">Cancelar</button>
+                    <button type="button" class="btn btn-danger" @onclick="ConfirmDelete" disabled="@isDeleting">
+                        @if (isDeleting)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<MateriaDTO>? materias;
+    private MateriaDTO? selectedMateria;
+    private MateriaDTO materiaDetalle = new();
+    private bool loading = true;
+    private bool showDetalle = false;
+    private bool isEditMode = false;
+    private bool showDeleteConfirm = false;
+    private bool isDeleting = false;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync() => await LoadMaterias();
+
+    private async Task LoadMaterias()
+    {
+        try
+        {
+            loading = true;
+            materias = (await MateriaApiClient.GetAllAsync())?.ToList();
+            selectedMateria = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar materias: {ex.Message}";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void SelectMateria(MateriaDTO materia) =>
+        selectedMateria = selectedMateria?.IdMateria == materia.IdMateria ? null : materia;
+
+    private async Task RefreshMaterias()
+    {
+        await LoadMaterias();
+        successMessage = "Lista actualizada correctamente";
+    }
+
+    private void AgregarMateria()
+    {
+        materiaDetalle = new MateriaDTO();
+        isEditMode = false;
+        showDetalle = true;
+        StateHasChanged(); // AGREGADO
+    }
+
+    private async Task ModificarMateria() // CAMBIADO de async void a async Task
+    {
+        if (selectedMateria == null) return;
+        try
+        {
+            var materia = await MateriaApiClient.GetAsync(selectedMateria.IdMateria);
+            if (materia != null)
+            {
+                materiaDetalle = materia;
+                isEditMode = true;
+                showDetalle = true;
+                StateHasChanged(); // AGREGADO
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar materia: {ex.Message}";
+        }
+    }
+
+    private void EliminarMateria() => showDeleteConfirm = true;
+
+    private async Task ConfirmDelete()
+    {
+        try
+        {
+            isDeleting = true;
+            await MateriaApiClient.DeleteAsync(selectedMateria!.IdMateria);
+            successMessage = "Materia eliminada correctamente";
+            showDeleteConfirm = false;
+            await LoadMaterias();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al eliminar materia: {ex.Message}";
+        }
+        finally
+        {
+            isDeleting = false;
+        }
+    }
+
+    private void CancelDelete() => showDeleteConfirm = false;
+
+    private async Task HandleSave()
+    {
+        showDetalle = false;
+        successMessage = isEditMode ? "Materia modificada correctamente" : "Materia agregada correctamente";
+        await LoadMaterias();
+    }
+
+    private void HandleCancel() => showDetalle = false;
+}

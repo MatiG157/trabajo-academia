@@ -1,0 +1,58 @@
+﻿@page "/home-alumno"
+@layout MainLayoutAlumno
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+
+<PageTitle>Portal Alumno</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron bg-info text-white p-5 rounded mb-4">
+                <div class="container-fluid py-5">
+                    <h1 class="display-4">
+                        <i class="fas fa-user-graduate me-3"></i>
+                        Bienvenido @nombreUsuario
+                    </h1>
+                    <p class="lead">Portal Alumno - Sistema Académico</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-clipboard-check fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">Inscribirse a Cursos</h5>
+                            <p class="card-text">Inscribirse a cursos disponibles</p>
+                            <a href="/inscribirse" class="btn btn-info">Inscribirse a un curso</a>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string? nombreUsuario;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var tipoPersona = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "tipoPersona");
+            nombreUsuario = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "nombreUsuario");
+
+            // Verificar que sea alumno
+            if (tipoPersona != "Alumno")
+            {
+                Navigation.NavigateTo("/login");
+            }
+        }
+        catch
+        {
+            Navigation.NavigateTo("/login");
+        }
+    }
+}

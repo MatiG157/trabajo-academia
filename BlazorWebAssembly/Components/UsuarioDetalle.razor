@@ -1,0 +1,130 @@
+﻿@using DTOs
+@using API.Usuarios
+
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-user me-2"></i>
+                    @(IsEditMode ? "Modificar Usuario" : "Agregar Usuario")
+                </h5>
+                <button type="button" class="btn-close btn-close-white" @onclick="OnCancel"></button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@Usuario" OnValidSubmit="@HandleSubmit">
+                    <DataAnnotationsValidator />
+
+                    <div class="mb-3">
+                        <label class="form-label">nombreUsuario</label>
+                        <InputText class="form-control" @bind-Value="Usuario.NombreUsuario" />
+                        <ValidationMessage For="@(() => Usuario.NombreUsuario)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">clave</label>
+                        <InputText type="password" class="form-control" @bind-Value="Usuario.Clave" />
+                        <ValidationMessage For="@(() => Usuario.Clave)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <InputCheckbox class="form-check-input" @bind-Value="Usuario.Habilitado" id="habilitadoCheck" />
+                        <label class="form-check-label" for="habilitadoCheck">Habilitado</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <InputText class="form-control" @bind-Value="Usuario.Nombre" />
+                        <ValidationMessage For="@(() => Usuario.Nombre)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">apellido</label>
+                        <InputText class="form-control" @bind-Value="Usuario.Apellido" />
+                        <ValidationMessage For="@(() => Usuario.Apellido)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">email</label>
+                        <InputText type="email" class="form-control" @bind-Value="Usuario.Email" />
+                        <ValidationMessage For="@(() => Usuario.Email)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <InputCheckbox class="form-check-input" @bind-Value="Usuario.CambiaClave" id="cambiaClaveCheck" />
+                        <label class="form-check-label" for="cambiaClaveCheck">cambiaClave</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">idPersona</label>
+                        <InputNumber class="form-control" @bind-Value="Usuario.IdPersona" />
+                        <ValidationMessage For="@(() => Usuario.IdPersona)" class="text-danger" />
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            @ErrorMessage
+                        </div>
+                    }
+
+                    <div class="modal-footer border-0 px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" @onclick="OnCancel" disabled="@IsSaving">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary" disabled="@IsSaving">
+                            @if (IsSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                            }
+                            Aceptar
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public UsuarioDTO Usuario { get; set; } = new UsuarioDTO();
+
+    [Parameter]
+    public bool IsEditMode { get; set; } = false;
+
+    [Parameter]
+    public EventCallback OnSave { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private bool IsSaving = false;
+    private string ErrorMessage = string.Empty;
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            IsSaving = true;
+            ErrorMessage = string.Empty;
+
+            if (IsEditMode)
+            {
+                await UsuarioApiClient.UpdateAsync(Usuario);
+            }
+            else
+            {
+                await UsuarioApiClient.AddAsync(Usuario);
+            }
+
+            await OnSave.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al guardar: {ex.Message}";
+            IsSaving = false;
+        }
+    }
+}

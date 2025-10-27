@@ -38,9 +38,10 @@
             // 
             // refrescarButton
             // 
-            refrescarButton.Location = new Point(401, 294);
+            refrescarButton.Location = new Point(458, 392);
+            refrescarButton.Margin = new Padding(3, 4, 3, 4);
             refrescarButton.Name = "refrescarButton";
-            refrescarButton.Size = new Size(80, 23);
+            refrescarButton.Size = new Size(91, 31);
             refrescarButton.TabIndex = 13;
             refrescarButton.Text = "Refrescar";
             refrescarButton.UseVisualStyleBackColor = true;
@@ -48,10 +49,10 @@
             // 
             // modificarButton
             // 
-            modificarButton.Location = new Point(588, 294);
-            modificarButton.Margin = new Padding(2);
+            modificarButton.Location = new Point(672, 392);
+            modificarButton.Margin = new Padding(2, 3, 2, 3);
             modificarButton.Name = "modificarButton";
-            modificarButton.Size = new Size(80, 22);
+            modificarButton.Size = new Size(91, 29);
             modificarButton.TabIndex = 12;
             modificarButton.Text = "Modificar";
             modificarButton.UseVisualStyleBackColor = true;
@@ -59,10 +60,10 @@
             // 
             // eliminarButton
             // 
-            eliminarButton.Location = new Point(496, 294);
-            eliminarButton.Margin = new Padding(2);
+            eliminarButton.Location = new Point(567, 392);
+            eliminarButton.Margin = new Padding(2, 3, 2, 3);
             eliminarButton.Name = "eliminarButton";
-            eliminarButton.Size = new Size(80, 22);
+            eliminarButton.Size = new Size(91, 29);
             eliminarButton.TabIndex = 11;
             eliminarButton.Text = "Eliminar";
             eliminarButton.UseVisualStyleBackColor = true;
@@ -70,10 +71,10 @@
             // 
             // agregarButton
             // 
-            agregarButton.Location = new Point(681, 294);
-            agregarButton.Margin = new Padding(2);
+            agregarButton.Location = new Point(778, 392);
+            agregarButton.Margin = new Padding(2, 3, 2, 3);
             agregarButton.Name = "agregarButton";
-            agregarButton.Size = new Size(80, 22);
+            agregarButton.Size = new Size(91, 29);
             agregarButton.TabIndex = 10;
             agregarButton.Text = "Agregar";
             agregarButton.UseVisualStyleBackColor = true;
@@ -83,29 +84,31 @@
             // 
             planesDataGridView.AllowUserToOrderColumns = true;
             planesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            planesDataGridView.Location = new Point(11, 11);
-            planesDataGridView.Margin = new Padding(2);
+            planesDataGridView.Location = new Point(13, 15);
+            planesDataGridView.Margin = new Padding(2, 3, 2, 3);
             planesDataGridView.MultiSelect = false;
             planesDataGridView.Name = "planesDataGridView";
             planesDataGridView.ReadOnly = true;
             planesDataGridView.RowHeadersWidth = 82;
             planesDataGridView.RowTemplate.Height = 41;
             planesDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            planesDataGridView.Size = new Size(751, 270);
+            planesDataGridView.Size = new Size(858, 360);
             planesDataGridView.TabIndex = 9;
             // 
             // PlanesLista
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(775, 326);
+            ClientSize = new Size(886, 435);
             Controls.Add(refrescarButton);
             Controls.Add(modificarButton);
             Controls.Add(eliminarButton);
             Controls.Add(agregarButton);
             Controls.Add(planesDataGridView);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "PlanesLista";
             Text = "Plan Lista";
+            Load += planes_load;
             ((System.ComponentModel.ISupportInitialize)planesDataGridView).EndInit();
             ResumeLayout(false);
         }

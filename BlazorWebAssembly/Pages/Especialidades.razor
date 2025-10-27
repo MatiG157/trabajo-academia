@@ -1,11 +1,11 @@
-﻿@page "/usuarios"
+﻿@page "/especialidades"
 @using DTOs
-@using API.Usuarios
+@using API.Especialidades
 @using BlazorWebAssembly.Components
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 
-<PageTitle>Usuarios</PageTitle>
+<PageTitle>Especialidades</PageTitle>
 
 <div class="container-fluid">
     <div class="row">
@@ -13,8 +13,8 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">
-                        <i class="fas fa-users me-2"></i>
-                        Usuarios
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        Especialidades
                     </h4>
                 </div>
                 <div class="card-body">
@@ -50,61 +50,29 @@
                             <table class="table table-striped table-hover table-bordered">
                                 <thead class="table-dark sticky-top">
                                     <tr>
-                                        <th style="width: 80px;">IdUsuario</th>
-                                        <th>NombreUsuario</th>
-                                        <th style="width: 100px;">Clave</th>
-                                        <th style="width: 120px;">Habilitado</th>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Email</th>
-                                        <th style="width: 120px;">CambiaClave</th>
-                                        <th style="width: 100px;">IdPersona</th>
+                                        <th style="width: 150px;">ID</th>
+                                        <th>Descripción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (usuarios != null && usuarios.Any())
+                                    @if (especialidades != null && especialidades.Any())
                                     {
-                                        @foreach (var usuario in usuarios)
+                                        @foreach (var especialidad in especialidades)
                                         {
-                                            <tr @onclick="() => SelectUsuario(usuario)"
-                                                class="@(selectedUsuario?.IdUsuario == usuario.IdUsuario ? "table-active" : "")"
+                                            <tr @onclick="() => SelectEspecialidad(especialidad)"
+                                                class="@(selectedEspecialidad?.IdEspecialidad == especialidad.IdEspecialidad ? "table-active" : "")"
                                                 style="cursor: pointer;">
-                                                <td>@usuario.IdUsuario</td>
-                                                <td>@usuario.NombreUsuario</td>
-                                                <td>@usuario.Clave</td>
-                                                <td class="text-center">
-                                                    @if (usuario.Habilitado)
-                                                    {
-                                                        <i class="fas fa-check-circle text-success"></i>
-                                                    }
-                                                    else
-                                                    {
-                                                        <i class="fas fa-times-circle text-danger"></i>
-                                                    }
-                                                </td>
-                                                <td>@usuario.Nombre</td>
-                                                <td>@usuario.Apellido</td>
-                                                <td>@usuario.Email</td>
-                                                <td class="text-center">
-                                                    @if (usuario.CambiaClave)
-                                                    {
-                                                        <i class="fas fa-check-circle text-warning"></i>
-                                                    }
-                                                    else
-                                                    {
-                                                        <i class="fas fa-times-circle text-secondary"></i>
-                                                    }
-                                                </td>
-                                                <td>@usuario.IdPersona</td>
+                                                <td>@especialidad.IdEspecialidad</td>
+                                                <td>@especialidad.Descripcion</td>
                                             </tr>
                                         }
                                     }
                                     else
                                     {
                                         <tr>
-                                            <td colspan="9" class="text-center text-muted py-4">
+                                            <td colspan="2" class="text-center text-muted py-4">
                                                 <i class="fas fa-inbox fa-2x mb-2"></i>
-                                                <p class="mb-0">No hay usuarios registrados</p>
+                                                <p class="mb-0">No hay especialidades registradas</p>
                                             </td>
                                         </tr>
                                     }
@@ -114,33 +82,33 @@
 
                         <!-- Botones de acción -->
                         <div class="d-flex justify-content-start gap-2 mt-3 border-top pt-3">
-                            <button class="btn btn-outline-primary" @onclick="RefreshUsuarios">
+                            <button class="btn btn-outline-primary" @onclick="RefreshEspecialidades">
                                 <i class="fas fa-sync-alt me-2"></i>
                                 Refrescar
                             </button>
                             <button class="btn btn-outline-danger"
-                                    disabled="@(selectedUsuario == null)"
-                                    @onclick="EliminarUsuario">
+                                    disabled="@(selectedEspecialidad == null)"
+                                    @onclick="EliminarEspecialidad">
                                 <i class="fas fa-trash-alt me-2"></i>
                                 Eliminar
                             </button>
                             <button class="btn btn-outline-warning"
-                                    disabled="@(selectedUsuario == null)"
-                                    @onclick="ModificarUsuario">
+                                    disabled="@(selectedEspecialidad == null)"
+                                    @onclick="ModificarEspecialidad">
                                 <i class="fas fa-edit me-2"></i>
                                 Modificar
                             </button>
-                            <button class="btn btn-outline-success" @onclick="AgregarUsuario">
+                            <button class="btn btn-outline-success" @onclick="AgregarEspecialidad">
                                 <i class="fas fa-plus me-2"></i>
                                 Agregar
                             </button>
                         </div>
 
-                        @if (selectedUsuario != null)
+                        @if (selectedEspecialidad != null)
                         {
                             <div class="alert alert-info mt-3">
-                                <strong>Usuario seleccionado:</strong>
-                                @selectedUsuario.Nombre @selectedUsuario.Apellido (@selectedUsuario.Email)
+                                <strong>Especialidad seleccionada:</strong>
+                                @selectedEspecialidad.Descripcion (ID: @selectedEspecialidad.IdEspecialidad)
                             </div>
                         }
                     }
@@ -152,10 +120,10 @@
 
 @if (showDetalle)
 {
-    <UsuarioDetalle Usuario="@usuarioDetalle"
-                    IsEditMode="@isEditMode"
-                    OnSave="@HandleSave"
-                    OnCancel="@HandleCancel" />
+    <EspecialidadDetalle Especialidad="@especialidadDetalle"
+                         IsEditMode="@isEditMode"
+                         OnSave="@HandleSave"
+                         OnCancel="@HandleCancel" />
 }
 
 @if (showDeleteConfirm)
@@ -172,9 +140,9 @@
                 </div>
                 <div class="modal-body">
                     <p class="mb-0">
-                        ¿Está seguro que desea eliminar el usuario
-                        <strong>@selectedUsuario?.Nombre @selectedUsuario?.Apellido</strong>
-                        (ID: @selectedUsuario?.IdUsuario)?
+                        ¿Está seguro que desea eliminar la especialidad
+                        <strong>@selectedEspecialidad?.Descripcion</strong>
+                        (ID: @selectedEspecialidad?.IdEspecialidad)?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -195,9 +163,9 @@
 }
 
 @code {
-    private List<UsuarioDTO>? usuarios;
-    private UsuarioDTO? selectedUsuario;
-    private UsuarioDTO usuarioDetalle = new UsuarioDTO();
+    private List<EspecialidadDTO>? especialidades;
+    private EspecialidadDTO? selectedEspecialidad;
+    private EspecialidadDTO especialidadDetalle = new EspecialidadDTO();
     private bool loading = true;
     private bool showDetalle = false;
     private bool isEditMode = false;
@@ -208,21 +176,21 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadUsuarios();
+        await LoadEspecialidades();
     }
 
-    private async Task LoadUsuarios()
+    private async Task LoadEspecialidades()
     {
         try
         {
             loading = true;
             errorMessage = string.Empty;
-            usuarios = (await UsuarioApiClient.GetAllAsync())?.ToList();
-            selectedUsuario = null;
+            especialidades = (await EspecialidadApiClient.GetAllAsync())?.ToList();
+            selectedEspecialidad = null;
         }
         catch (Exception ex)
         {
-            errorMessage = $"Error al cargar usuarios: {ex.Message}";
+            errorMessage = $"Error al cargar especialidades: {ex.Message}";
         }
         finally
         {
@@ -230,56 +198,47 @@
         }
     }
 
-    private void SelectUsuario(UsuarioDTO usuario)
+    private void SelectEspecialidad(EspecialidadDTO especialidad)
     {
-        selectedUsuario = selectedUsuario?.IdUsuario == usuario.IdUsuario ? null : usuario;
+        selectedEspecialidad = selectedEspecialidad?.IdEspecialidad == especialidad.IdEspecialidad ? null : especialidad;
     }
 
-    private async Task RefreshUsuarios()
+    private async Task RefreshEspecialidades()
     {
-        await LoadUsuarios();
+        await LoadEspecialidades();
         successMessage = "Lista actualizada correctamente";
     }
 
-    // LÓGICA AGREGAR
-    private void AgregarUsuario()
+    private void AgregarEspecialidad()
     {
-        usuarioDetalle = new UsuarioDTO
-            {
-                Habilitado = true,
-                CambiaClave = false,
-                IdPersona = 0
-            };
+        especialidadDetalle = new EspecialidadDTO();
         isEditMode = false;
         showDetalle = true;
     }
 
-    // LÓGICA MODIFICAR
-    private async void ModificarUsuario()
+    private async void ModificarEspecialidad()
     {
-        if (selectedUsuario == null) return;
-
+        if (selectedEspecialidad == null) return;
         try
         {
-            var usuario = await UsuarioApiClient.GetAsync(selectedUsuario.IdUsuario);
-            if (usuario != null)
+            var esp = await EspecialidadApiClient.GetAsync(selectedEspecialidad.IdEspecialidad);
+            if (esp != null)
             {
-                usuarioDetalle = usuario;
+                especialidadDetalle = esp;
                 isEditMode = true;
                 showDetalle = true;
-                StateHasChanged();
+                StateHasChanged(); // AGREGAR SOLO ESTO
             }
         }
         catch (Exception ex)
         {
-            errorMessage = $"Error al cargar usuario: {ex.Message}";
+            errorMessage = $"Error al cargar especialidad: {ex.Message}";
         }
     }
 
-    // LÓGICA ELIMINAR
-    private void EliminarUsuario()
+    private void EliminarEspecialidad()
     {
-        if (selectedUsuario == null) return;
+        if (selectedEspecialidad == null) return;
         showDeleteConfirm = true;
     }
 
@@ -288,15 +247,15 @@
         try
         {
             isDeleting = true;
-            await UsuarioApiClient.DeleteAsync(selectedUsuario!.IdUsuario);
-            successMessage = $"Usuario {selectedUsuario.Nombre} {selectedUsuario.Apellido} eliminado correctamente";
+            await EspecialidadApiClient.DeleteAsync(selectedEspecialidad!.IdEspecialidad);
+            successMessage = $"Especialidad '{selectedEspecialidad.Descripcion}' eliminada correctamente";
             showDeleteConfirm = false;
-            selectedUsuario = null;
-            await LoadUsuarios();
+            selectedEspecialidad = null;
+            await LoadEspecialidades();
         }
         catch (Exception ex)
         {
-            errorMessage = $"Error al eliminar usuario: {ex.Message}";
+            errorMessage = $"Error al eliminar especialidad: {ex.Message}";
         }
         finally
         {
@@ -309,12 +268,11 @@
         showDeleteConfirm = false;
     }
 
-    // CALLBACKS DEL MODAL
     private async Task HandleSave()
     {
         showDetalle = false;
-        successMessage = isEditMode ? "Usuario modificado correctamente" : "Usuario agregado correctamente";
-        await LoadUsuarios();
+        successMessage = isEditMode ? "Especialidad modificada correctamente" : "Especialidad agregada correctamente";
+        await LoadEspecialidades();
     }
 
     private void HandleCancel()

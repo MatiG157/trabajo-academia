@@ -25,7 +25,7 @@ namespace API.Especialidades
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync("especialidad/" + id);
+                HttpResponseMessage response = await client.GetAsync("especialidades/" + id);
 
                 if (response.IsSuccessStatusCode)
                 {

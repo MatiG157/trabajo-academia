@@ -1,0 +1,146 @@
+﻿@using DTOs
+@using API.Planes
+@using API.Especialidades
+
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-scroll me-2"></i>
+                    @(IsEditMode ? "Modificar Plan" : "Agregar Plan")
+                </h5>
+                <button type="button" class="btn-close btn-close-white" @onclick="OnCancel"></button>
+            </div>
+            <div class="modal-body">
+                @if (loadingEspecialidades)
+                {
+                    <div class="text-center p-3">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando especialidades...</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <EditForm Model="@Plan" OnValidSubmit="@HandleSubmit">
+                        <DataAnnotationsValidator />
+
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <InputText class="form-control" @bind-Value="Plan.Descripcion" />
+                            <ValidationMessage For="@(() => Plan.Descripcion)" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Especialidad</label>
+                            <InputSelect class="form-select" @bind-Value="Plan.IdEspecialidad">
+                                <option value="0">-- Seleccione una especialidad --</option>
+                                @if (especialidades != null)
+                                {
+                                    @foreach (var especialidad in especialidades)
+                                    {
+                                        <option value="@especialidad.IdEspecialidad">@especialidad.Descripcion</option>
+                                    }
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => Plan.IdEspecialidad)" class="text-danger" />
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(ErrorMessage))
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>@ErrorMessage
+                            </div>
+                        }
+
+                        <div class="modal-footer border-0 px-0 pb-0">
+                            <button type="button" class="btn btn-secondary" @onclick="OnCancel" disabled="@IsSaving">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary" disabled="@IsSaving">
+                                @if (IsSaving)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                Aceptar
+                            </button>
+                        </div>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public PlanDTO Plan { get; set; } = new PlanDTO();
+
+    [Parameter]
+    public bool IsEditMode { get; set; } = false;
+
+    [Parameter]
+    public EventCallback OnSave { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private bool IsSaving = false;
+    private bool loadingEspecialidades = true;
+    private string ErrorMessage = string.Empty;
+    private List<EspecialidadDTO>? especialidades;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarEspecialidades();
+    }
+
+    private async Task CargarEspecialidades()
+    {
+        try
+        {
+            loadingEspecialidades = true;
+            especialidades = (await EspecialidadApiClient.GetAllAsync())?.ToList();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al cargar especialidades: {ex.Message}";
+        }
+        finally
+        {
+            loadingEspecialidades = false;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            IsSaving = true;
+            ErrorMessage = string.Empty;
+
+            if (Plan.IdEspecialidad == 0)
+            {
+                ErrorMessage = "Debe seleccionar una especialidad";
+                IsSaving = false;
+                return;
+            }
+
+            if (IsEditMode)
+                await PlanApiClient.UpdateAsync(Plan);
+            else
+                await PlanApiClient.AddAsync(Plan);
+
+            await OnSave.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al guardar: {ex.Message}";
+        }
+        finally
+        {
+            IsSaving = false;
+        }
+    }
+}

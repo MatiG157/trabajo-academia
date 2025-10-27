@@ -21,19 +21,22 @@ namespace Data
                 ORDER BY Alumnos DESC, c.Descripcion;
             ";
 
-            await using var conn = new SqlConnection("Server=DESKTOP-U0T0E2H\\SQLEXPRESS;Database=puto;Trusted_Connection=True;TrustServerCertificate=True;");
+            using var context = CreateContext();
+            var conn = context.Database.GetDbConnection();
             await conn.OpenAsync();
 
-            await using var cmd = new SqlCommand(sql, conn);
+            await using var cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
                 result.Add(new CursoCountDTO
                 {
-                    IdCursoCount = reader.GetInt32(reader.GetOrdinal("IdCurso")),
-                    Descripcion = reader.GetString(reader.GetOrdinal("Descripcion")),
-                    Cantidad = reader.GetInt32(reader.GetOrdinal("Alumnos"))
+                    IdCursoCount = reader.GetInt32(0),
+                    Descripcion = reader.GetString(1),
+                    Cantidad = reader.GetInt32(2)
                 });
             }
 

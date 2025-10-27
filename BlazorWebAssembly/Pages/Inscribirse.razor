@@ -1,0 +1,324 @@
+﻿@page "/inscribirse"
+@layout MainLayoutAlumno
+@using API.Cursos
+@using API.AlumnosInscripciones
+@using DTOs
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+
+<PageTitle>Inscribirse a Curso</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-clipboard-check me-2"></i>
+                        Inscribirse a Curso
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            @errorMessage
+                            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    @if (mensajeExito != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            @mensajeExito
+                            <button type="button" class="btn-close" @onclick="() => mensajeExito = null"></button>
+                        </div>
+                    }
+
+                    @if (loading)
+                    {
+                        <div class="text-center p-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <p class="mt-3">Cargando cursos disponibles...</p>
+                        </div>
+                    }
+                    else if (cursosDisponibles != null && cursosDisponibles.Any())
+                    {
+                        <div class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Información:</strong> Seleccione un curso de la tabla para inscribirse. Solo se muestran cursos con cupos disponibles y en los que aún no está inscripto.
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Descripción</th>
+                                        <th>Año Calendario</th>
+                                        <th>Cupo Disponible</th>
+                                        <th class="text-center">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var curso in cursosDisponibles)
+                                    {
+                                        <tr>
+                                            <td>@curso.IdCurso</td>
+                                            <td>@curso.Descripcion</td>
+                                            <td>@curso.AnioCalendario</td>
+                                            <td>
+                                                <span class="badge @ObtenerBadgeCupo(curso.Cupo)">
+                                                    @curso.Cupo cupo(s)
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-success"
+                                                        @onclick="() => InscribirseACurso(curso)"
+                                                        disabled="@inscribiendo">
+                                                    @if (inscribiendo && cursoSeleccionado?.IdCurso == curso.IdCurso)
+                                                    {
+                                                        <span class="spinner-border spinner-border-sm me-1"></span>
+                                                        <span>Inscribiendo...</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-user-plus me-1"></i>
+                                                        <span>Inscribirse</span>
+                                                    }
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-3">
+                            <p class="text-muted">
+                                <small>
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Total de cursos disponibles: <strong>@cursosDisponibles.Count</strong>
+                                </small>
+                            </p>
+                        </div>
+                    }
+                    else if (!loading)
+                    {
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            No hay cursos disponibles para inscribirse en este momento.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmación -->
+@if (mostrarModalConfirmacion && cursoSeleccionado != null)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-question-circle me-2"></i>Confirmar Inscripción
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea inscribirse al siguiente curso?</p>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <p><strong>Curso:</strong> @cursoSeleccionado.Descripcion</p>
+                            <p><strong>Año:</strong> @cursoSeleccionado.AnioCalendario</p>
+                            <p><strong>Cupo disponible:</strong> @cursoSeleccionado.Cupo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CerrarModal" disabled="@inscribiendo">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="ConfirmarInscripcion" disabled="@inscribiendo">
+                        @if (inscribiendo)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            <span>Inscribiendo...</span>
+                        }
+                        else
+                        {
+                            <i class="fas fa-check me-2"></i>
+                            <span>Confirmar Inscripción</span>
+                        }
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private int? usuarioId;
+    private int? personaId;
+    private string? nombreUsuario;
+    private string? tipoPersona;
+    private string errorMessage = "";
+    private string? mensajeExito = null;
+
+    private bool loading = true;
+    private bool inscribiendo = false;
+    private bool mostrarModalConfirmacion = false;
+
+    private List<CursoDTO> cursosDisponibles = new();
+    private CursoDTO? cursoSeleccionado = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Obtener datos del usuario desde localStorage
+            tipoPersona = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "tipoPersona");
+            nombreUsuario = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "nombreUsuario");
+            var userIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "usuarioId");
+            var personaIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "personaId");
+
+            // Verificar que sea alumno
+            if (tipoPersona != "Alumno")
+            {
+                Navigation.NavigateTo("/login");
+                return;
+            }
+
+            if (int.TryParse(userIdStr, out int uid))
+                usuarioId = uid;
+
+            if (int.TryParse(personaIdStr, out int pid))
+                personaId = pid;
+
+            if (!personaId.HasValue)
+            {
+                errorMessage = "No se pudo obtener la información del alumno.";
+                loading = false;
+                return;
+            }
+
+            await CargarCursosDisponibles();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al inicializar: {ex.Message}";
+            loading = false;
+        }
+    }
+
+    private async Task CargarCursosDisponibles()
+    {
+        try
+        {
+            loading = true;
+            errorMessage = "";
+
+            // 1. Obtener todos los cursos
+            var todosCursos = (await CursoApiClient.GetAllAsync())?.ToList() ?? new List<CursoDTO>();
+
+            // 2. Obtener todas las inscripciones
+            var todasInscripciones = (await AlumnoInscripcionApiClient.GetAllAsync())?.ToList() ?? new List<AlumnoInscripcionDTO>();
+
+            // 3. Obtener los IDs de los cursos donde el alumno ya está inscripto
+            var cursosInscriptoIds = todasInscripciones
+                .Where(i => i.IdAlumno == personaId.Value)
+                .Select(i => i.IdCurso)
+                .ToList();
+
+            // 4. Filtrar cursos: con cupo > 0 y que NO estén en la lista de inscriptos
+            cursosDisponibles = todosCursos
+                .Where(c => c.Cupo > 0 && !cursosInscriptoIds.Contains(c.IdCurso))
+                .OrderBy(c => c.Descripcion)
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar cursos disponibles: {ex.Message}";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void InscribirseACurso(CursoDTO curso)
+    {
+        cursoSeleccionado = curso;
+        mostrarModalConfirmacion = true;
+    }
+
+    private async Task ConfirmarInscripcion()
+    {
+        if (cursoSeleccionado == null || !personaId.HasValue)
+            return;
+
+        try
+        {
+            inscribiendo = true;
+            errorMessage = "";
+            mensajeExito = null;
+
+            // Verificar que haya cupo
+            if (cursoSeleccionado.Cupo <= 0)
+            {
+                errorMessage = "No hay cupos disponibles para este curso.";
+                CerrarModal();
+                return;
+            }
+
+            // 1. Crear la inscripción
+            AlumnoInscripcionDTO nuevaInscripcion = new AlumnoInscripcionDTO
+                {
+                    Condicion = "Cursando",
+                    Nota = null,
+                    IdAlumno = personaId.Value,
+                    IdCurso = cursoSeleccionado.IdCurso
+                };
+
+            await AlumnoInscripcionApiClient.AddAsync(nuevaInscripcion);
+
+            // 2. Bajar el cupo del curso
+            await CursoApiClient.BajarCupoAsync(cursoSeleccionado);
+
+            mensajeExito = $"¡Inscripción exitosa al curso: {cursoSeleccionado.Descripcion}!";
+
+            // 3. Recargar la lista de cursos disponibles
+            await CargarCursosDisponibles();
+
+            CerrarModal();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al inscribirse: {ex.Message}";
+        }
+        finally
+        {
+            inscribiendo = false;
+        }
+    }
+
+    private void CerrarModal()
+    {
+        mostrarModalConfirmacion = false;
+        cursoSeleccionado = null;
+    }
+
+    private string ObtenerBadgeCupo(int cupo)
+    {
+        if (cupo > 10) return "bg-success";
+        if (cupo > 5) return "bg-warning";
+        return "bg-danger";
+    }
+}

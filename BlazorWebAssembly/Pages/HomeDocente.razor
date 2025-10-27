@@ -1,0 +1,59 @@
+﻿@page "/home-docente"
+@layout MainLayoutDocente
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+
+<PageTitle>Portal Docente</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron bg-success text-white p-5 rounded mb-4">
+                <div class="container-fluid py-5">
+                    <h1 class="display-4">
+                        <i class="fas fa-chalkboard-teacher me-3"></i>
+                        Bienvenido @nombreUsuario
+                    </h1>
+                    <p class="lead">Portal Docente - Sistema Académico</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-pencil-alt fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Poner Notas</h5>
+                            <p class="card-text">Registrar calificaciones de los alumnos</p>
+                            <a href="/poner-notas" class="btn btn-success">Ir a Poner Notas</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string? nombreUsuario;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var tipoPersona = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "tipoPersona");
+            nombreUsuario = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "nombreUsuario");
+
+            // Verificar que sea docente
+            if (tipoPersona != "Docente")
+            {
+                Navigation.NavigateTo("/login");
+            }
+        }
+        catch
+        {
+            Navigation.NavigateTo("/login");
+        }
+    }
+}

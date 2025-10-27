@@ -21,7 +21,7 @@ namespace ReporteCursos
             new DocumentMetadata
             {
                 Title = "Reporte - Cantidad de Alumnos por Curso"
-            }; //esto esta distinto 
+            }; 
 
         public void Compose(IDocumentContainer container)
         {
@@ -56,14 +56,14 @@ namespace ReporteCursos
             {
                 column.Spacing(20);
 
-                // 🔹 Tabla de datos
+                
                 column.Item().Element(tableContainer =>
                 {
                     tableContainer.Column(tabla =>
                     {
                         tabla.Spacing(5);
 
-                        // Encabezado
+                        
                         tabla.Item().Row(row =>
                         {
                             row.RelativeItem().Text("ID").Bold();
@@ -73,7 +73,7 @@ namespace ReporteCursos
 
                         tabla.Item().LineHorizontal(1);
 
-                        // Filas de datos
+                       
                         foreach (var d in _data)
                         {
                             tabla.Item().Row(row =>
@@ -84,31 +84,31 @@ namespace ReporteCursos
                             });
                         }
 
-                        // Sin datos
+                       
                         if (!_data.Any())
                             tabla.Item().PaddingTop(20).AlignCenter().Text("No hay cursos para mostrar.");
                     });
                 });
 
-                // 🔹 Título del gráfico
+               
                 column.Item()
                     .AlignCenter()
                     .Text("Cantidad de alumnos por curso (Gráfico de barras vertical)")
                     .FontSize(12)
                     .Bold();
 
-                // 🔹 Gráfico de columnas
+            
                 column.Item().AlignCenter().Height(300).Element(chart =>
                 {
                     chart.Row(row =>
                     {
-                        row.Spacing(10); // espacio entre columnas
+                        row.Spacing(10); 
 
                         foreach (var d in _data)
                         {
-                            float porcentaje = (float)d.Cantidad / maxAlumnos; // 0..1
+                            float porcentaje = (float)d.Cantidad / maxAlumnos; 
 
-                            // 🎨 Color según cantidad
+                        
                             var color = porcentaje > 0.7 ? Colors.Green.Medium :
                                         porcentaje > 0.4 ? Colors.Orange.Medium :
                                         Colors.Red.Medium;

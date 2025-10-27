@@ -1,0 +1,101 @@
+﻿@using DTOs
+@using API.Especialidades
+
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-graduation-cap me-2"></i>
+                    @(IsEditMode ? "Modificar Especialidad" : "Agregar Especialidad")
+                </h5>
+                <button type="button" class="btn-close btn-close-white" @onclick="OnCancel"></button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@Especialidad" OnValidSubmit="@HandleSubmit">
+                    <DataAnnotationsValidator />
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <InputText class="form-control" @bind-Value="Especialidad.Descripcion" />
+                        <ValidationMessage For="@(() => Especialidad.Descripcion)" class="text-danger" />
+                    </div>
+
+                    @if (IsEditMode)
+                    {
+                        <div class="mb-3">
+                            <label class="form-label">ID Especialidad</label>
+                            <InputNumber class="form-control" @bind-Value="Especialidad.IdEspecialidad" disabled />
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            @ErrorMessage
+                        </div>
+                    }
+
+                    <div class="modal-footer border-0 px-0 pb-0">
+                        <button type="button" class="btn btn-secondary" @onclick="OnCancel" disabled="@IsSaving">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary" disabled="@IsSaving">
+                            @if (IsSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                            }
+                            Aceptar
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public EspecialidadDTO Especialidad { get; set; } = new EspecialidadDTO();
+
+    [Parameter]
+    public bool IsEditMode { get; set; } = false;
+
+    [Parameter]
+    public EventCallback OnSave { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private bool IsSaving = false;
+    private string ErrorMessage = string.Empty;
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            IsSaving = true;
+            ErrorMessage = string.Empty;
+
+            if (IsEditMode)
+            {
+                await EspecialidadApiClient.UpdateAsync(Especialidad);
+            }
+            else
+            {
+                await EspecialidadApiClient.AddAsync(Especialidad);
+            }
+
+            await OnSave.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al guardar: {ex.Message}";
+        }
+        finally
+        {
+            IsSaving = false;
+        }
+    }
+}

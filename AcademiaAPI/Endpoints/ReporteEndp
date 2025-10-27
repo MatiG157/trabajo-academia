@@ -1,0 +1,6 @@
+﻿namespace AcademiaAPI.Endpoints
+{
+    public class Class
+    {
+    }
+}

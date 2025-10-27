@@ -7,13 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Component2.razor" />
+    <Content Remove="Components\Component3.razor" />
+    <Content Remove="Components\Especialidad.razor" />
+    <Content Remove="Pages\Component3.razor" />
+    <Content Remove="Pages\Persona.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.20" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\API.Clients\API.Clients.csproj" />
+    <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
+    <ProjectReference Include="..\Reportes\Reportes.csproj" />
   </ItemGroup>
 
 </Project>

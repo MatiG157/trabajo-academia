@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using DTOs;
 
-namespace Reportes
+namespace ReportePlanes
 {
     public class ReportePlanesMateriasDocument : IDocument
     {
@@ -19,7 +19,7 @@ namespace Reportes
         public DocumentMetadata GetMetadata() =>
             new DocumentMetadata
             {
-                Title = "Reporte - Planes y Materias"
+                Title = "Reporte - Planes con Materias"
             };
 
         public void Compose(IDocumentContainer container)
@@ -52,30 +52,30 @@ namespace Reportes
             {
                 column.Spacing(15);
 
-                // 🧩 Si no hay datos
+
                 if (_data.Count == 0)
                 {
                     column.Item().AlignCenter().Text("No hay datos para mostrar.").FontSize(12);
                     return;
                 }
 
-                // 🧩 Agrupar por Plan
+
                 var planesAgrupados = _data.GroupBy(x => new { x.IdPlan, x.PlanDescripcion });
 
                 foreach (var plan in planesAgrupados)
                 {
-                    // Título del Plan
+
                     column.Item().Text($"{plan.Key.PlanDescripcion}")
                         .FontSize(13)
                         .Bold()
                         .Underline();
 
-                    // Tabla de materias de ese plan
+
                     column.Item().Element(tableContainer =>
                     {
                         tableContainer.Column(tabla =>
                         {
-                            // Encabezado
+
                             tabla.Item().Row(row =>
                             {
                                 row.RelativeItem().Text("ID Materia").Bold();
@@ -86,7 +86,7 @@ namespace Reportes
 
                             tabla.Item().LineHorizontal(1);
 
-                            // Filas
+
                             foreach (var m in plan)
                             {
                                 tabla.Item().Row(row =>
@@ -100,7 +100,6 @@ namespace Reportes
                         });
                     });
 
-                    // Separador entre planes
                     column.Item().PaddingTop(10).LineHorizontal(1);
                 }
             });

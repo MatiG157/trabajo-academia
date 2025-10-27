@@ -32,22 +32,25 @@ namespace Data
                 ORDER BY p.IdPlan, m.Descripcion;
             ";
 
-            await using var conn = new SqlConnection("Server=DESKTOP-U0T0E2H\\SQLEXPRESS;Database=puto;Trusted_Connection=True;TrustServerCertificate=True;");
+            using var context = CreateContext();
+            var conn = context.Database.GetDbConnection();
             await conn.OpenAsync();
 
-            await using var cmd = new SqlCommand(sql, conn);
+            await using var cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            
             await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
                 result.Add(new PlanMateriaDTO
                 {
-                    IdPlan = reader.GetInt32(reader.GetOrdinal("IdPlan")),
-                    PlanDescripcion = reader.GetString(reader.GetOrdinal("PlanDescripcion")),
-                    IdMateria = reader.GetInt32(reader.GetOrdinal("IdMateria")),
-                    MateriaDescripcion = reader.GetString(reader.GetOrdinal("MateriaDescripcion")),
-                    HsSemanales = reader.GetInt32(reader.GetOrdinal("HsSemanales")),
-                    HsTotales = reader.GetInt32(reader.GetOrdinal("HsTotales"))
+                    IdPlan = reader.GetInt32(0),
+                    PlanDescripcion = reader.GetString(1),
+                    IdMateria = reader.GetInt32(2),
+                    MateriaDescripcion = reader.GetString(3),
+                    HsSemanales = reader.GetInt32(4),
+                    HsTotales = reader.GetInt32(5)
                 });
             }
 

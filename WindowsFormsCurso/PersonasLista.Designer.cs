@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsCurso
 {
-    partial class AlumnosLista
+    partial class PersonasLista
     {
         /// <summary>
         /// Required designer variable.
@@ -32,78 +32,84 @@
             modificarButton = new Button();
             eliminarButton = new Button();
             agregarButton = new Button();
-            comisionesDataGridView = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)comisionesDataGridView).BeginInit();
+            personasDataGridView = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)personasDataGridView).BeginInit();
             SuspendLayout();
             // 
             // refrescarButton
             // 
-            refrescarButton.Location = new Point(401, 294);
+            refrescarButton.Location = new Point(458, 392);
+            refrescarButton.Margin = new Padding(3, 4, 3, 4);
             refrescarButton.Name = "refrescarButton";
-            refrescarButton.Size = new Size(80, 23);
+            refrescarButton.Size = new Size(91, 31);
             refrescarButton.TabIndex = 15;
             refrescarButton.Text = "Refrescar";
             refrescarButton.UseVisualStyleBackColor = true;
+            refrescarButton.Click += refrescarButton_Click;
             // 
             // modificarButton
             // 
-            modificarButton.Location = new Point(588, 294);
-            modificarButton.Margin = new Padding(2);
+            modificarButton.Location = new Point(672, 392);
+            modificarButton.Margin = new Padding(2, 3, 2, 3);
             modificarButton.Name = "modificarButton";
-            modificarButton.Size = new Size(80, 22);
+            modificarButton.Size = new Size(91, 29);
             modificarButton.TabIndex = 14;
             modificarButton.Text = "Modificar";
             modificarButton.UseVisualStyleBackColor = true;
+            modificarButton.Click += modificarButton_Click;
             // 
             // eliminarButton
             // 
-            eliminarButton.Location = new Point(496, 294);
-            eliminarButton.Margin = new Padding(2);
+            eliminarButton.Location = new Point(567, 392);
+            eliminarButton.Margin = new Padding(2, 3, 2, 3);
             eliminarButton.Name = "eliminarButton";
-            eliminarButton.Size = new Size(80, 22);
+            eliminarButton.Size = new Size(91, 29);
             eliminarButton.TabIndex = 13;
             eliminarButton.Text = "Eliminar";
             eliminarButton.UseVisualStyleBackColor = true;
+            eliminarButton.Click += eliminarButton_Click;
             // 
             // agregarButton
             // 
-            agregarButton.Location = new Point(681, 294);
-            agregarButton.Margin = new Padding(2);
+            agregarButton.Location = new Point(778, 392);
+            agregarButton.Margin = new Padding(2, 3, 2, 3);
             agregarButton.Name = "agregarButton";
-            agregarButton.Size = new Size(80, 22);
+            agregarButton.Size = new Size(91, 29);
             agregarButton.TabIndex = 12;
             agregarButton.Text = "Agregar";
             agregarButton.UseVisualStyleBackColor = true;
+            agregarButton.Click += agregarButton_Click;
             // 
-            // comisionesDataGridView
+            // personasDataGridView
             // 
-            comisionesDataGridView.AllowUserToOrderColumns = true;
-            comisionesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            comisionesDataGridView.Location = new Point(11, 11);
-            comisionesDataGridView.Margin = new Padding(2);
-            comisionesDataGridView.MultiSelect = false;
-            comisionesDataGridView.Name = "comisionesDataGridView";
-            comisionesDataGridView.ReadOnly = true;
-            comisionesDataGridView.RowHeadersWidth = 82;
-            comisionesDataGridView.RowTemplate.Height = 41;
-            comisionesDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            comisionesDataGridView.Size = new Size(751, 270);
-            comisionesDataGridView.TabIndex = 11;
+            personasDataGridView.AllowUserToOrderColumns = true;
+            personasDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            personasDataGridView.Location = new Point(13, 15);
+            personasDataGridView.Margin = new Padding(2, 3, 2, 3);
+            personasDataGridView.MultiSelect = false;
+            personasDataGridView.Name = "personasDataGridView";
+            personasDataGridView.ReadOnly = true;
+            personasDataGridView.RowHeadersWidth = 82;
+            personasDataGridView.RowTemplate.Height = 41;
+            personasDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            personasDataGridView.Size = new Size(858, 360);
+            personasDataGridView.TabIndex = 11;
             // 
-            // Form1
+            // PersonasLista
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(777, 327);
+            ClientSize = new Size(888, 436);
             Controls.Add(refrescarButton);
             Controls.Add(modificarButton);
             Controls.Add(eliminarButton);
             Controls.Add(agregarButton);
-            Controls.Add(comisionesDataGridView);
-            Name = "AlumnosLista";
-            Text = "AlumnosLista";
-            Load += Alumnos_Load;
-            ((System.ComponentModel.ISupportInitialize)comisionesDataGridView).EndInit();
+            Controls.Add(personasDataGridView);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "PersonasLista";
+            Text = "Personas Lista";
+            Load += Personas_Load;
+            ((System.ComponentModel.ISupportInitialize)personasDataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -113,6 +119,6 @@
         private Button modificarButton;
         private Button eliminarButton;
         private Button agregarButton;
-        private DataGridView comisionesDataGridView;
+        private DataGridView personasDataGridView;
     }
 }

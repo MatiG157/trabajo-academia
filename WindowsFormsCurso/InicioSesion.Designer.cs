@@ -33,32 +33,32 @@
             iniciarSesionButton = new Button();
             usuarioTextBox = new TextBox();
             contraseñaTextBox = new TextBox();
-            registroLinkLabel = new LinkLabel();
             SuspendLayout();
             // 
             // usuarioLabel
             // 
             usuarioLabel.AutoSize = true;
-            usuarioLabel.Location = new Point(46, 53);
+            usuarioLabel.Location = new Point(53, 71);
             usuarioLabel.Name = "usuarioLabel";
-            usuarioLabel.Size = new Size(47, 15);
+            usuarioLabel.Size = new Size(59, 20);
             usuarioLabel.TabIndex = 0;
             usuarioLabel.Text = "Usuario";
             // 
             // contraseñaLabel
             // 
             contraseñaLabel.AutoSize = true;
-            contraseñaLabel.Location = new Point(46, 96);
+            contraseñaLabel.Location = new Point(53, 128);
             contraseñaLabel.Name = "contraseñaLabel";
-            contraseñaLabel.Size = new Size(67, 15);
+            contraseñaLabel.Size = new Size(83, 20);
             contraseñaLabel.TabIndex = 1;
             contraseñaLabel.Text = "Contraseña";
             // 
             // iniciarSesionButton
             // 
-            iniciarSesionButton.Location = new Point(99, 168);
+            iniciarSesionButton.Location = new Point(113, 224);
+            iniciarSesionButton.Margin = new Padding(3, 4, 3, 4);
             iniciarSesionButton.Name = "iniciarSesionButton";
-            iniciarSesionButton.Size = new Size(185, 44);
+            iniciarSesionButton.Size = new Size(211, 59);
             iniciarSesionButton.TabIndex = 2;
             iniciarSesionButton.Text = "Iniciar Sesion";
             iniciarSesionButton.UseVisualStyleBackColor = true;
@@ -66,40 +66,31 @@
             // 
             // usuarioTextBox
             // 
-            usuarioTextBox.Location = new Point(151, 50);
+            usuarioTextBox.Location = new Point(173, 67);
+            usuarioTextBox.Margin = new Padding(3, 4, 3, 4);
             usuarioTextBox.Name = "usuarioTextBox";
-            usuarioTextBox.Size = new Size(183, 23);
+            usuarioTextBox.Size = new Size(209, 27);
             usuarioTextBox.TabIndex = 3;
             // 
             // contraseñaTextBox
             // 
-            contraseñaTextBox.Location = new Point(151, 93);
+            contraseñaTextBox.Location = new Point(173, 124);
+            contraseñaTextBox.Margin = new Padding(3, 4, 3, 4);
             contraseñaTextBox.Name = "contraseñaTextBox";
-            contraseñaTextBox.Size = new Size(183, 23);
+            contraseñaTextBox.Size = new Size(209, 27);
             contraseñaTextBox.TabIndex = 4;
-            // 
-            // registroLinkLabel
-            // 
-            registroLinkLabel.AutoSize = true;
-            registroLinkLabel.Location = new Point(138, 141);
-            registroLinkLabel.Name = "registroLinkLabel";
-            registroLinkLabel.Size = new Size(97, 15);
-            registroLinkLabel.TabIndex = 5;
-            registroLinkLabel.TabStop = true;
-            registroLinkLabel.Text = "Crear una cuenta";
-            registroLinkLabel.LinkClicked += registroLinkLabel_LinkClicked;
             // 
             // InicioSesion
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(397, 224);
-            Controls.Add(registroLinkLabel);
+            ClientSize = new Size(454, 299);
             Controls.Add(contraseñaTextBox);
             Controls.Add(usuarioTextBox);
             Controls.Add(iniciarSesionButton);
             Controls.Add(contraseñaLabel);
             Controls.Add(usuarioLabel);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "InicioSesion";
             Text = "Inicio de sesión";
             ResumeLayout(false);
@@ -113,6 +104,5 @@
         private Button iniciarSesionButton;
         private TextBox usuarioTextBox;
         private TextBox contraseñaTextBox;
-        private LinkLabel registroLinkLabel;
     }
 }

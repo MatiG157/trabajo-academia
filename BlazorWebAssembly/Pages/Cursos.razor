@@ -1,0 +1,250 @@
+﻿@page "/cursos"
+@using DTOs
+@using API.Cursos
+@using BlazorWebAssembly.Components
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Cursos</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-book me-2"></i>
+                        Cursos
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>@errorMessage
+                            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(successMessage))
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>@successMessage
+                            <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    @if (loading)
+                    {
+                        <div class="d-flex justify-content-center align-items-center" style="min-height: 300px;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead class="table-dark sticky-top">
+                                    <tr>
+                                        <th>IdCurso</th>
+                                        <th>Descripcion</th>
+                                        <th>AnioCalendario</th>
+                                        <th>Cupo</th>
+                                        <th>IdMateria</th>
+                                        <th>IdComision</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (cursos != null && cursos.Any())
+                                    {
+                                        @foreach (var curso in cursos)
+                                        {
+                                            <tr @onclick="() => SelectCurso(curso)"
+                                                class="@(selectedCurso?.IdCurso == curso.IdCurso ? "table-active" : "")"
+                                                style="cursor: pointer;">
+                                                <td>@curso.IdCurso</td>
+                                                <td>@curso.Descripcion</td>
+                                                <td>@curso.AnioCalendario</td>
+                                                <td>@curso.Cupo</td>
+                                                <td>@curso.IdMateria</td>
+                                                <td>@curso.IdComision</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="6" class="text-center text-muted py-4">
+                                                <i class="fas fa-inbox fa-2x mb-2"></i>
+                                                <p class="mb-0">No hay cursos registrados</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-start gap-2 mt-3 border-top pt-3">
+                            <button class="btn btn-outline-primary" @onclick="RefreshCursos">
+                                <i class="fas fa-sync-alt me-2"></i>Refrescar
+                            </button>
+                            <button class="btn btn-outline-success" @onclick="AgregarCurso">
+                                <i class="fas fa-plus me-2"></i>Agregar
+                            </button>
+                            <button class="btn btn-outline-warning" disabled="@(selectedCurso == null)" @onclick="ModificarCurso">
+                                <i class="fas fa-edit me-2"></i>Modificar
+                            </button>
+                            <button class="btn btn-outline-danger" disabled="@(selectedCurso == null)" @onclick="EliminarCurso">
+                                <i class="fas fa-trash-alt me-2"></i>Eliminar
+                            </button>
+                        </div>
+
+                        @if (selectedCurso != null)
+                        {
+                            <div class="alert alert-info mt-3">
+                                <strong>Curso seleccionado:</strong> @selectedCurso.Descripcion (@selectedCurso.IdCurso)
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (showDetalle)
+{
+    <CursoDetalle Curso="@cursoDetalle"
+                  IsEditMode="@isEditMode"
+                  OnSave="@HandleSave"
+                  OnCancel="@HandleCancel" />
+}
+
+@if (showDeleteConfirm)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Confirmar eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CancelDelete"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de eliminar el curso <strong>@selectedCurso?.Descripcion</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CancelDelete" disabled="@isDeleting">Cancelar</button>
+                    <button type="button" class="btn btn-danger" @onclick="ConfirmDelete" disabled="@isDeleting">
+                        @if (isDeleting)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<CursoDTO>? cursos;
+    private CursoDTO? selectedCurso;
+    private CursoDTO cursoDetalle = new();
+    private bool loading = true;
+    private bool showDetalle = false;
+    private bool isEditMode = false;
+    private bool showDeleteConfirm = false;
+    private bool isDeleting = false;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync() => await LoadCursos();
+
+    private async Task LoadCursos()
+    {
+        try
+        {
+            loading = true;
+            cursos = (await CursoApiClient.GetAllAsync())?.ToList();
+            selectedCurso = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar cursos: {ex.Message}";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void SelectCurso(CursoDTO curso) =>
+        selectedCurso = selectedCurso?.IdCurso == curso.IdCurso ? null : curso;
+
+    private async Task RefreshCursos()
+    {
+        await LoadCursos();
+        successMessage = "Lista actualizada correctamente";
+    }
+
+    private void AgregarCurso()
+    {
+        cursoDetalle = new();
+        isEditMode = false;
+        showDetalle = true;
+    }
+
+    private async void ModificarCurso()
+    {
+        if (selectedCurso == null) return;
+        try
+        {
+            var curso = await CursoApiClient.GetAsync(selectedCurso.IdCurso);
+            if (curso != null)
+            {
+                cursoDetalle = curso;
+                isEditMode = true;
+                showDetalle = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar curso: {ex.Message}";
+        }
+    }
+
+    private void EliminarCurso() => showDeleteConfirm = true;
+
+    private async Task ConfirmDelete()
+    {
+        try
+        {
+            isDeleting = true;
+            await CursoApiClient.DeleteAsync(selectedCurso!.IdCurso);
+            successMessage = "Curso eliminado correctamente";
+            showDeleteConfirm = false;
+            await LoadCursos();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al eliminar curso: {ex.Message}";
+        }
+        finally
+        {
+            isDeleting = false;
+        }
+    }
+
+    private void CancelDelete() => showDeleteConfirm = false;
+
+    private async Task HandleSave()
+    {
+        showDetalle = false;
+        successMessage = isEditMode ? "Curso modificado correctamente" : "Curso agregado correctamente";
+        await LoadCursos();
+    }
+
+    private void HandleCancel() => showDetalle = false;
+}

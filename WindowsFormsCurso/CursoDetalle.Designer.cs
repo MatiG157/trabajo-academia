@@ -52,19 +52,19 @@
             // idComisionLabel
             // 
             idComisionLabel.AutoSize = true;
-            idComisionLabel.Location = new Point(23, 108);
+            idComisionLabel.Location = new Point(26, 144);
             idComisionLabel.Margin = new Padding(2, 0, 2, 0);
             idComisionLabel.Name = "idComisionLabel";
-            idComisionLabel.Size = new Size(58, 15);
+            idComisionLabel.Size = new Size(71, 20);
             idComisionLabel.TabIndex = 1;
             idComisionLabel.Text = "Comision";
             // 
             // aceptarButton
             // 
-            aceptarButton.Location = new Point(247, 292);
-            aceptarButton.Margin = new Padding(2);
+            aceptarButton.Location = new Point(282, 389);
+            aceptarButton.Margin = new Padding(2, 3, 2, 3);
             aceptarButton.Name = "aceptarButton";
-            aceptarButton.Size = new Size(80, 22);
+            aceptarButton.Size = new Size(91, 29);
             aceptarButton.TabIndex = 2;
             aceptarButton.Text = "Aceptar";
             aceptarButton.UseVisualStyleBackColor = true;
@@ -72,10 +72,10 @@
             // 
             // cancelarButton
             // 
-            cancelarButton.Location = new Point(339, 292);
-            cancelarButton.Margin = new Padding(2);
+            cancelarButton.Location = new Point(387, 389);
+            cancelarButton.Margin = new Padding(2, 3, 2, 3);
             cancelarButton.Name = "cancelarButton";
-            cancelarButton.Size = new Size(80, 22);
+            cancelarButton.Size = new Size(91, 29);
             cancelarButton.TabIndex = 3;
             cancelarButton.Text = "Cancelar";
             cancelarButton.UseVisualStyleBackColor = true;
@@ -84,123 +84,128 @@
             // materiaLabel
             // 
             materiaLabel.AutoSize = true;
-            materiaLabel.Location = new Point(23, 76);
+            materiaLabel.Location = new Point(26, 101);
             materiaLabel.Margin = new Padding(2, 0, 2, 0);
             materiaLabel.Name = "materiaLabel";
-            materiaLabel.Size = new Size(47, 15);
+            materiaLabel.Size = new Size(60, 20);
             materiaLabel.TabIndex = 5;
             materiaLabel.Text = "Materia";
             // 
             // AnioCalendarioLabel
             // 
             AnioCalendarioLabel.AutoSize = true;
-            AnioCalendarioLabel.Location = new Point(23, 195);
+            AnioCalendarioLabel.Location = new Point(26, 260);
             AnioCalendarioLabel.Margin = new Padding(2, 0, 2, 0);
             AnioCalendarioLabel.Name = "AnioCalendarioLabel";
-            AnioCalendarioLabel.Size = new Size(90, 15);
+            AnioCalendarioLabel.Size = new Size(114, 20);
             AnioCalendarioLabel.TabIndex = 9;
             AnioCalendarioLabel.Text = "Anio calendario";
             // 
             // AnioCalendarioNumericUpDown
             // 
-            AnioCalendarioNumericUpDown.Location = new Point(130, 193);
-            AnioCalendarioNumericUpDown.Margin = new Padding(2);
+            AnioCalendarioNumericUpDown.Location = new Point(149, 257);
+            AnioCalendarioNumericUpDown.Margin = new Padding(2, 3, 2, 3);
             AnioCalendarioNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             AnioCalendarioNumericUpDown.Name = "AnioCalendarioNumericUpDown";
-            AnioCalendarioNumericUpDown.Size = new Size(250, 23);
+            AnioCalendarioNumericUpDown.Size = new Size(286, 27);
             AnioCalendarioNumericUpDown.TabIndex = 0;
             AnioCalendarioNumericUpDown.TabStop = false;
             // 
             // cupoLabel
             // 
             cupoLabel.AutoSize = true;
-            cupoLabel.Location = new Point(23, 227);
+            cupoLabel.Location = new Point(26, 303);
             cupoLabel.Margin = new Padding(2, 0, 2, 0);
             cupoLabel.Name = "cupoLabel";
-            cupoLabel.Size = new Size(36, 15);
+            cupoLabel.Size = new Size(44, 20);
             cupoLabel.TabIndex = 7;
             cupoLabel.Text = "Cupo";
             // 
             // cupoNumericUpDown
             // 
-            cupoNumericUpDown.Location = new Point(130, 225);
-            cupoNumericUpDown.Margin = new Padding(2);
+            cupoNumericUpDown.Location = new Point(149, 300);
+            cupoNumericUpDown.Margin = new Padding(2, 3, 2, 3);
             cupoNumericUpDown.Name = "cupoNumericUpDown";
-            cupoNumericUpDown.Size = new Size(250, 23);
+            cupoNumericUpDown.Size = new Size(286, 27);
             cupoNumericUpDown.TabIndex = 2;
             // 
             // comisionesDropDown
             // 
             comisionesDropDown.FormattingEnabled = true;
-            comisionesDropDown.Location = new Point(130, 105);
+            comisionesDropDown.Location = new Point(149, 140);
+            comisionesDropDown.Margin = new Padding(3, 4, 3, 4);
             comisionesDropDown.Name = "comisionesDropDown";
-            comisionesDropDown.Size = new Size(250, 23);
+            comisionesDropDown.Size = new Size(285, 28);
             comisionesDropDown.TabIndex = 10;
             // 
             // materiaDropDown
             // 
             materiaDropDown.FormattingEnabled = true;
-            materiaDropDown.Location = new Point(130, 73);
+            materiaDropDown.Location = new Point(149, 97);
+            materiaDropDown.Margin = new Padding(3, 4, 3, 4);
             materiaDropDown.Name = "materiaDropDown";
-            materiaDropDown.Size = new Size(250, 23);
+            materiaDropDown.Size = new Size(285, 28);
             materiaDropDown.TabIndex = 11;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(23, 44);
+            label1.Location = new Point(26, 59);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(69, 15);
+            label1.Size = new Size(87, 20);
             label1.TabIndex = 12;
             label1.Text = "Descripcion";
             // 
             // textBoxDescripcion
             // 
-            textBoxDescripcion.Location = new Point(130, 41);
+            textBoxDescripcion.Location = new Point(149, 55);
+            textBoxDescripcion.Margin = new Padding(3, 4, 3, 4);
             textBoxDescripcion.Name = "textBoxDescripcion";
-            textBoxDescripcion.Size = new Size(250, 23);
+            textBoxDescripcion.Size = new Size(285, 27);
             textBoxDescripcion.TabIndex = 13;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(23, 139);
+            label2.Location = new Point(26, 185);
             label2.Name = "label2";
-            label2.Size = new Size(51, 15);
+            label2.Size = new Size(64, 20);
             label2.TabIndex = 14;
             label2.Text = "Profesor";
             // 
             // profesorDropDown
             // 
             profesorDropDown.FormattingEnabled = true;
-            profesorDropDown.Location = new Point(130, 136);
+            profesorDropDown.Location = new Point(149, 181);
+            profesorDropDown.Margin = new Padding(3, 4, 3, 4);
             profesorDropDown.Name = "profesorDropDown";
-            profesorDropDown.Size = new Size(250, 23);
+            profesorDropDown.Size = new Size(285, 28);
             profesorDropDown.TabIndex = 15;
             // 
             // cargosDropDown
             // 
             cargosDropDown.FormattingEnabled = true;
-            cargosDropDown.Location = new Point(130, 165);
+            cargosDropDown.Location = new Point(149, 220);
+            cargosDropDown.Margin = new Padding(3, 4, 3, 4);
             cargosDropDown.Name = "cargosDropDown";
-            cargosDropDown.Size = new Size(250, 23);
+            cargosDropDown.Size = new Size(285, 28);
             cargosDropDown.TabIndex = 16;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(23, 168);
+            label3.Location = new Point(26, 224);
             label3.Name = "label3";
-            label3.Size = new Size(39, 15);
+            label3.Size = new Size(49, 20);
             label3.TabIndex = 17;
             label3.Text = "Cargo";
             // 
             // CursoDetalle
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(430, 325);
+            ClientSize = new Size(513, 433);
             Controls.Add(label3);
             Controls.Add(cargosDropDown);
             Controls.Add(profesorDropDown);
@@ -217,7 +222,7 @@
             Controls.Add(cancelarButton);
             Controls.Add(aceptarButton);
             Controls.Add(idComisionLabel);
-            Margin = new Padding(2);
+            Margin = new Padding(2, 3, 2, 3);
             Name = "CursoDetalle";
             Text = "Detalle curso";
             Load += CursoDetalle_Load;

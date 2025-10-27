@@ -8,7 +8,9 @@ using Data;
 using MateriaAPI.Endpoints;
 using EspecialidadAPI.Endpoints;
 using DocenteCursoAPI.Endpoints;
+using QuestPDF.Infrastructure;
 
+QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +18,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpLogging(o => { });
 
+// Configurar CORS para permitir solicitudes desde Blazor WebAssembly
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorClient", policy =>
+    {
+        policy.WithOrigins("http://localhost:5210", "https://localhost:7254")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 builder.WebHost.UseUrls(
     "http://localhost:5077",
-    "https://localhost:7238",
-    "http://localhost:5210",
-    "https://localhost:7254"
+    "https://localhost:7238"
+    //"http://localhost:5277",
+    //"https://localhost:7238"
 );
 
 var app = builder.Build();
@@ -34,6 +46,9 @@ if (app.Environment.IsDevelopment())
     app.UseHttpLogging();
 }
 
+// Habilitar CORS
+app.UseCors("AllowBlazorClient");
+
 
 
 app.MapCursoEndpoints();
@@ -45,6 +60,7 @@ app.MapPlanEndpoints();
 app.MapEspecialidadEndpoints();
 app.MapAlumnoInscripcionEndpoints();
 app.MapDocenteCursoEndpoints();
+app.MapReporteEndpoints();
 
 
 

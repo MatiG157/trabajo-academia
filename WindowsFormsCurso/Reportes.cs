@@ -1,16 +1,14 @@
-﻿using System;
+﻿
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Data;
-using ReporteCursos;
-using QuestPDF.Fluent;
-using Reportes;
+using API.Reportes;
 
 namespace WindowsFormsCurso
 {
     public partial class Reportes : Form
     {
-
         public Reportes()
         {
             InitializeComponent();
@@ -22,9 +20,6 @@ namespace WindowsFormsCurso
             {
                 reporteCursosButton.Enabled = false;
 
-                var repo = new CursoRepository();
-                var data = await repo.GetCursosConCantidadAlumnosAsync();
-
                 using (var sfd = new SaveFileDialog())
                 {
                     sfd.Filter = "PDF (*.pdf)|*.pdf";
@@ -33,8 +28,8 @@ namespace WindowsFormsCurso
                     if (sfd.ShowDialog() != DialogResult.OK)
                         return;
 
-                    var doc = new ReporteCursosDocument(data);
-                    doc.GeneratePdf(sfd.FileName);
+                    var pdfBytes = await ReportesApiClient.GetReporteCursosAsync();
+                    await File.WriteAllBytesAsync(sfd.FileName, pdfBytes);
 
                     MessageBox.Show($"Reporte generado:\n{sfd.FileName}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -55,10 +50,6 @@ namespace WindowsFormsCurso
             {
                 reportePlanesButton.Enabled = false;
 
-                // Obtener los datos desde el repositorio
-                var repo = new PlanRepository(); // <- ajustá el nombre según tu clase real
-                var data = await repo.GetPlanesConMateriasAsync(); // <- ajustá según tu método real
-
                 using (var sfd = new SaveFileDialog())
                 {
                     sfd.Filter = "PDF (*.pdf)|*.pdf";
@@ -67,9 +58,8 @@ namespace WindowsFormsCurso
                     if (sfd.ShowDialog() != DialogResult.OK)
                         return;
 
-                    // Generar el documento PDF
-                    var doc = new ReportePlanesMateriasDocument(data); // <- ajustá el nombre de tu clase
-                    doc.GeneratePdf(sfd.FileName);
+                    var pdfBytes = await ReportesApiClient.GetReportePlanesAsync();
+                    await File.WriteAllBytesAsync(sfd.FileName, pdfBytes);
 
                     MessageBox.Show($"Reporte generado:\n{sfd.FileName}",
                                     "Éxito",
@@ -89,6 +79,5 @@ namespace WindowsFormsCurso
                 reportePlanesButton.Enabled = true;
             }
         }
-
     }
 }

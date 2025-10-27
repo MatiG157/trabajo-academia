@@ -131,6 +131,7 @@ namespace WindowsForms
 
             this.cargosDropDown.Items.Add("Teoría");
             this.cargosDropDown.Items.Add("Práctica");
+            this.cargosDropDown.SelectedItem = "Teoría";
 
             var materias = await MateriaApiClient.GetAllAsync();
             materiaDropDown.DataSource = materias;

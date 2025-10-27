@@ -1,0 +1,190 @@
+﻿@using DTOs
+@using API.Cursos
+@using API.Materias
+@using API.Comisiones
+
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-book me-2"></i>
+                    @(IsEditMode ? "Modificar Curso" : "Agregar Curso")
+                </h5>
+                <button type="button" class="btn-close btn-close-white" @onclick="OnCancel"></button>
+            </div>
+            <div class="modal-body">
+                @if (loadingData)
+                {
+                    <div class="text-center p-3">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando datos...</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <EditForm Model="@Curso" OnValidSubmit="@HandleSubmit">
+                        <DataAnnotationsValidator />
+
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <InputText class="form-control" @bind-Value="Curso.Descripcion" />
+                            <ValidationMessage For="@(() => Curso.Descripcion)" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Año Calendario</label>
+                            <InputNumber class="form-control" @bind-Value="Curso.AnioCalendario" />
+                            <ValidationMessage For="@(() => Curso.AnioCalendario)" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cupo</label>
+                            <InputNumber class="form-control" @bind-Value="Curso.Cupo" />
+                            <ValidationMessage For="@(() => Curso.Cupo)" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Materia</label>
+                            <InputSelect class="form-select" @bind-Value="Curso.IdMateria">
+                                <option value="0">-- Seleccione una materia --</option>
+                                @if (materias != null)
+                                {
+                                    @foreach (var materia in materias)
+                                    {
+                                        <option value="@materia.IdMateria">@materia.Descripcion</option>
+                                    }
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => Curso.IdMateria)" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Comisión</label>
+                            <InputSelect class="form-select" @bind-Value="Curso.IdComision">
+                                <option value="0">-- Seleccione una comisión --</option>
+                                @if (comisiones != null)
+                                {
+                                    @foreach (var comision in comisiones)
+                                    {
+                                        <option value="@comision.IdComision">@comision.Descripcion</option>
+                                    }
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => Curso.IdComision)" class="text-danger" />
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(ErrorMessage))
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>@ErrorMessage
+                            </div>
+                        }
+
+                        <div class="modal-footer border-0 px-0 pb-0">
+                            <button type="button" class="btn btn-secondary" @onclick="OnCancel" disabled="@IsSaving">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary" disabled="@IsSaving">
+                                @if (IsSaving)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                Aceptar
+                            </button>
+                        </div>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public CursoDTO Curso { get; set; } = new CursoDTO();
+
+    [Parameter]
+    public bool IsEditMode { get; set; } = false;
+
+    [Parameter]
+    public EventCallback OnSave { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    private bool IsSaving = false;
+    private bool loadingData = true;
+    private string ErrorMessage = string.Empty;
+    private List<MateriaDTO>? materias;
+    private List<ComisionDTO>? comisiones;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        try
+        {
+            loadingData = true;
+
+            // Cargar materias y comisiones en paralelo
+            var materiasTask = MateriaApiClient.GetAllAsync();
+            var comisionesTask = ComisionApiClient.GetAllAsync();
+
+            await Task.WhenAll(materiasTask, comisionesTask);
+
+            materias = materiasTask.Result?.ToList();
+            comisiones = comisionesTask.Result?.ToList();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al cargar datos: {ex.Message}";
+        }
+        finally
+        {
+            loadingData = false;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            IsSaving = true;
+            ErrorMessage = string.Empty;
+
+            if (Curso.IdMateria == 0)
+            {
+                ErrorMessage = "Debe seleccionar una materia";
+                IsSaving = false;
+                return;
+            }
+
+            if (Curso.IdComision == 0)
+            {
+                ErrorMessage = "Debe seleccionar una comisión";
+                IsSaving = false;
+                return;
+            }
+
+            if (IsEditMode)
+                await CursoApiClient.UpdateAsync(Curso);
+            else
+                await CursoApiClient.AddAsync(Curso);
+
+            await OnSave.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error al guardar: {ex.Message}";
+        }
+        finally
+        {
+            IsSaving = false;
+        }
+    }
+}

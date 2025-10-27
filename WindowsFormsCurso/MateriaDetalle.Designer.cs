@@ -45,19 +45,19 @@
             // descripcionLabel
             // 
             descripcionLabel.AutoSize = true;
-            descripcionLabel.Location = new Point(25, 22);
+            descripcionLabel.Location = new Point(29, 29);
             descripcionLabel.Margin = new Padding(2, 0, 2, 0);
             descripcionLabel.Name = "descripcionLabel";
-            descripcionLabel.Size = new Size(69, 15);
+            descripcionLabel.Size = new Size(87, 20);
             descripcionLabel.TabIndex = 17;
             descripcionLabel.Text = "Descripcion";
             // 
             // cancelarButton
             // 
-            cancelarButton.Location = new Point(212, 201);
-            cancelarButton.Margin = new Padding(2);
+            cancelarButton.Location = new Point(242, 268);
+            cancelarButton.Margin = new Padding(2, 3, 2, 3);
             cancelarButton.Name = "cancelarButton";
-            cancelarButton.Size = new Size(80, 22);
+            cancelarButton.Size = new Size(91, 29);
             cancelarButton.TabIndex = 16;
             cancelarButton.Text = "Cancelar";
             cancelarButton.UseVisualStyleBackColor = true;
@@ -65,10 +65,10 @@
             // 
             // aceptarButton
             // 
-            aceptarButton.Location = new Point(111, 201);
-            aceptarButton.Margin = new Padding(2);
+            aceptarButton.Location = new Point(127, 268);
+            aceptarButton.Margin = new Padding(2, 3, 2, 3);
             aceptarButton.Name = "aceptarButton";
-            aceptarButton.Size = new Size(80, 22);
+            aceptarButton.Size = new Size(91, 29);
             aceptarButton.TabIndex = 15;
             aceptarButton.Text = "Aceptar";
             aceptarButton.UseVisualStyleBackColor = true;
@@ -76,73 +76,75 @@
             // 
             // DescripcionRichTextBox
             // 
-            DescripcionRichTextBox.Location = new Point(125, 19);
+            DescripcionRichTextBox.Location = new Point(154, 26);
+            DescripcionRichTextBox.Margin = new Padding(3, 4, 3, 4);
             DescripcionRichTextBox.Name = "DescripcionRichTextBox";
-            DescripcionRichTextBox.Size = new Size(272, 60);
+            DescripcionRichTextBox.Size = new Size(310, 79);
             DescripcionRichTextBox.TabIndex = 20;
             DescripcionRichTextBox.Text = "";
             // 
             // planLabel
             // 
             planLabel.AutoSize = true;
-            planLabel.Location = new Point(25, 164);
+            planLabel.Location = new Point(29, 219);
             planLabel.Margin = new Padding(2, 0, 2, 0);
             planLabel.Name = "planLabel";
-            planLabel.Size = new Size(30, 15);
+            planLabel.Size = new Size(37, 20);
             planLabel.TabIndex = 13;
             planLabel.Text = "Plan";
             // 
             // planDropDown
             // 
             planDropDown.FormattingEnabled = true;
-            planDropDown.Location = new Point(125, 161);
+            planDropDown.Location = new Point(154, 216);
+            planDropDown.Margin = new Padding(3, 4, 3, 4);
             planDropDown.Name = "planDropDown";
-            planDropDown.Size = new Size(132, 23);
+            planDropDown.Size = new Size(150, 28);
             planDropDown.TabIndex = 22;
             // 
             // horasTotalesNumericUpDown
             // 
-            horasTotalesNumericUpDown.Location = new Point(125, 130);
-            horasTotalesNumericUpDown.Margin = new Padding(2);
+            horasTotalesNumericUpDown.Location = new Point(154, 174);
+            horasTotalesNumericUpDown.Margin = new Padding(2, 3, 2, 3);
             horasTotalesNumericUpDown.Name = "horasTotalesNumericUpDown";
-            horasTotalesNumericUpDown.Size = new Size(132, 23);
+            horasTotalesNumericUpDown.Size = new Size(151, 27);
             horasTotalesNumericUpDown.TabIndex = 14;
             // 
             // horasTotalesLabel
             // 
             horasTotalesLabel.AutoSize = true;
-            horasTotalesLabel.Location = new Point(25, 132);
+            horasTotalesLabel.Location = new Point(29, 176);
             horasTotalesLabel.Margin = new Padding(2, 0, 2, 0);
             horasTotalesLabel.Name = "horasTotalesLabel";
-            horasTotalesLabel.Size = new Size(76, 15);
+            horasTotalesLabel.Size = new Size(97, 20);
             horasTotalesLabel.TabIndex = 18;
             horasTotalesLabel.Text = "Horas totales";
             // 
             // horasSemanalesNumericUpDown
             // 
-            horasSemanalesNumericUpDown.Location = new Point(125, 96);
-            horasSemanalesNumericUpDown.Margin = new Padding(2);
+            horasSemanalesNumericUpDown.Location = new Point(154, 129);
+            horasSemanalesNumericUpDown.Margin = new Padding(2, 3, 2, 3);
             horasSemanalesNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             horasSemanalesNumericUpDown.Name = "horasSemanalesNumericUpDown";
-            horasSemanalesNumericUpDown.Size = new Size(132, 23);
+            horasSemanalesNumericUpDown.Size = new Size(151, 27);
             horasSemanalesNumericUpDown.TabIndex = 10;
             horasSemanalesNumericUpDown.TabStop = false;
             // 
             // HorasSemanalesLabel
             // 
             HorasSemanalesLabel.AutoSize = true;
-            HorasSemanalesLabel.Location = new Point(25, 98);
+            HorasSemanalesLabel.Location = new Point(29, 131);
             HorasSemanalesLabel.Margin = new Padding(2, 0, 2, 0);
             HorasSemanalesLabel.Name = "HorasSemanalesLabel";
-            HorasSemanalesLabel.Size = new Size(96, 15);
+            HorasSemanalesLabel.Size = new Size(121, 20);
             HorasSemanalesLabel.TabIndex = 19;
             HorasSemanalesLabel.Text = "Horas semanales";
             // 
             // MateriaDetalle
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(447, 234);
+            ClientSize = new Size(511, 312);
             Controls.Add(planDropDown);
             Controls.Add(DescripcionRichTextBox);
             Controls.Add(HorasSemanalesLabel);
@@ -153,6 +155,7 @@
             Controls.Add(cancelarButton);
             Controls.Add(aceptarButton);
             Controls.Add(planLabel);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "MateriaDetalle";
             Text = "Detalle materia";
             Load += Materia_Load;

@@ -67,7 +67,7 @@ namespace Domain.Services
         {
             var personaRepository = new PersonaRepository();
 
-            Persona persona = new Persona(0, dto.Direccion, dto.FechaNacimiento, dto.Legajo, dto.Telefono, dto.TipoPersona);
+            Persona persona = new Persona(dto.IdPersona, dto.Direccion, dto.FechaNacimiento, dto.Legajo, dto.Telefono, dto.TipoPersona);
             persona.SetPlanId(dto.IdPlan);
             return await personaRepository.Update(persona);
         }

@@ -1,0 +1,246 @@
+﻿@page "/comisiones"
+@using DTOs
+@using API.Comisiones
+@using BlazorWebAssembly.Components
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Comisiones</PageTitle>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-layer-group me-2"></i>
+                        Comisiones
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>@errorMessage
+                            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(successMessage))
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>@successMessage
+                            <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+                        </div>
+                    }
+
+                    @if (loading)
+                    {
+                        <div class="d-flex justify-content-center align-items-center" style="min-height: 300px;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead class="table-dark sticky-top">
+                                    <tr>
+                                        <th>IdComision</th>
+                                        <th>Descripcion</th>
+                                        <th>AnioEspecialidad</th>
+                                        <th>IdPlan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (comisiones != null && comisiones.Any())
+                                    {
+                                        @foreach (var comision in comisiones)
+                                        {
+                                            <tr @onclick="() => SelectComision(comision)"
+                                                class="@(selectedComision?.IdComision == comision.IdComision ? "table-active" : "")"
+                                                style="cursor: pointer;">
+                                                <td>@comision.IdComision</td>
+                                                <td>@comision.Descripcion</td>
+                                                <td>@comision.AnioEspecialidad</td>
+                                                <td>@comision.IdPlan</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted py-4">
+                                                <i class="fas fa-inbox fa-2x mb-2"></i>
+                                                <p class="mb-0">No hay comisiones registradas</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-start gap-2 mt-3 border-top pt-3">
+                            <button class="btn btn-outline-primary" @onclick="RefreshComisiones">
+                                <i class="fas fa-sync-alt me-2"></i>Refrescar
+                            </button>
+                            <button class="btn btn-outline-success" @onclick="AgregarComision">
+                                <i class="fas fa-plus me-2"></i>Agregar
+                            </button>
+                            <button class="btn btn-outline-warning" disabled="@(selectedComision == null)" @onclick="ModificarComision">
+                                <i class="fas fa-edit me-2"></i>Modificar
+                            </button>
+                            <button class="btn btn-outline-danger" disabled="@(selectedComision == null)" @onclick="EliminarComision">
+                                <i class="fas fa-trash-alt me-2"></i>Eliminar
+                            </button>
+                        </div>
+
+                        @if (selectedComision != null)
+                        {
+                            <div class="alert alert-info mt-3">
+                                <strong>Comisión seleccionada:</strong> @selectedComision.Descripcion (@selectedComision.IdComision)
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (showDetalle)
+{
+    <ComisionDetalle Comision="@comisionDetalle"
+                     IsEditMode="@isEditMode"
+                     OnSave="@HandleSave"
+                     OnCancel="@HandleCancel" />
+}
+
+@if (showDeleteConfirm)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Confirmar eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CancelDelete"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de eliminar la comisión <strong>@selectedComision?.Descripcion</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CancelDelete" disabled="@isDeleting">Cancelar</button>
+                    <button type="button" class="btn btn-danger" @onclick="ConfirmDelete" disabled="@isDeleting">
+                        @if (isDeleting)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<ComisionDTO>? comisiones;
+    private ComisionDTO? selectedComision;
+    private ComisionDTO comisionDetalle = new();
+    private bool loading = true;
+    private bool showDetalle = false;
+    private bool isEditMode = false;
+    private bool showDeleteConfirm = false;
+    private bool isDeleting = false;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync() => await LoadComisiones();
+
+    private async Task LoadComisiones()
+    {
+        try
+        {
+            loading = true;
+            comisiones = (await ComisionApiClient.GetAllAsync())?.ToList();
+            selectedComision = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar comisiones: {ex.Message}";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void SelectComision(ComisionDTO comision) =>
+        selectedComision = selectedComision?.IdComision == comision.IdComision ? null : comision;
+
+    private async Task RefreshComisiones()
+    {
+        await LoadComisiones();
+        successMessage = "Lista actualizada correctamente";
+    }
+
+    private void AgregarComision()
+    {
+        comisionDetalle = new();
+        isEditMode = false;
+        showDetalle = true;
+    }
+
+    private async void ModificarComision()
+    {
+        if (selectedComision == null) return;
+        try
+        {
+            var comision = await ComisionApiClient.GetAsync(selectedComision.IdComision);
+            if (comision != null)
+            {
+                comisionDetalle = comision;
+                isEditMode = true;
+                showDetalle = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al cargar comisión: {ex.Message}";
+        }
+    }
+
+    private void EliminarComision() => showDeleteConfirm = true;
+
+    private async Task ConfirmDelete()
+    {
+        try
+        {
+            isDeleting = true;
+            await ComisionApiClient.DeleteAsync(selectedComision!.IdComision);
+            successMessage = "Comisión eliminada correctamente";
+            showDeleteConfirm = false;
+            await LoadComisiones();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al eliminar comisión: {ex.Message}";
+        }
+        finally
+        {
+            isDeleting = false;
+        }
+    }
+
+    private void CancelDelete() => showDeleteConfirm = false;
+
+    private async Task HandleSave()
+    {
+        showDetalle = false;
+        successMessage = isEditMode ? "Comisión modificada correctamente" : "Comisión agregada correctamente";
+        await LoadComisiones();
+    }
+
+    private void HandleCancel() => showDetalle = false;
+}

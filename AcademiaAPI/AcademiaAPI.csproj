@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pillin\**" />
+    <Content Remove="Pillin\**" />
+    <EmbeddedResource Remove="Pillin\**" />
+    <None Remove="Pillin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Endpoints\AlumnoInscripcion.cs" />
+    <Compile Remove="Endpoints\Class.cs" />
     <Compile Remove="Endpoints\Class1.cs" />
     <Compile Remove="Endpoints\Class2.cs" />
     <Compile Remove="Endpoints\ComisionEndPoint.cs" />
@@ -29,6 +37,7 @@
     <ProjectReference Include="..\Domain.Model\Domain.Model.csproj" />
     <ProjectReference Include="..\Domain.Services\Domain.Services.csproj" />
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
+    <ProjectReference Include="..\Reportes\Reportes.csproj" />
   </ItemGroup>
 
 </Project>
