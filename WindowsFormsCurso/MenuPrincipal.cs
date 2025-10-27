@@ -46,7 +46,7 @@ namespace WindowsFormsCurso
         private void cursoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CursosLista form = new CursosLista();
-            form.MdiParent = this;  
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -55,7 +55,7 @@ namespace WindowsFormsCurso
         private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UsuariosLista form = new UsuariosLista();
-            form.MdiParent = this;   
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -64,7 +64,7 @@ namespace WindowsFormsCurso
         private void comisionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ComisionesLista form = new ComisionesLista();
-            form.MdiParent = this;  
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -73,7 +73,7 @@ namespace WindowsFormsCurso
         private void materiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MateriasLista form = new MateriasLista();
-            form.MdiParent = this;  
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -82,7 +82,7 @@ namespace WindowsFormsCurso
         private void planToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PlanesLista form = new PlanesLista();
-            form.MdiParent = this;  
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -91,7 +91,7 @@ namespace WindowsFormsCurso
         private void especialidadesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EspecialidadesLista form = new EspecialidadesLista();
-            form.MdiParent = this;   
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -101,7 +101,7 @@ namespace WindowsFormsCurso
         {
             InscribirseACurso form = new InscribirseACurso();
             form.Usuario = this.usuario;
-            form.MdiParent = this;   
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -130,7 +130,7 @@ namespace WindowsFormsCurso
         {
             PonerNotas form = new PonerNotas();
             form.Usuario = this.usuario;
-            form.MdiParent = this; 
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -139,7 +139,7 @@ namespace WindowsFormsCurso
         private void reportesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Reportes form = new Reportes();
-            form.MdiParent = this;  
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();
@@ -148,7 +148,17 @@ namespace WindowsFormsCurso
         private void personasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PersonasLista form = new PersonasLista();
-            form.MdiParent = this;   
+            form.MdiParent = this;
+            this.label1.SendToBack();
+            this.pictureBox1.SendToBack();
+            form.Show();
+        }
+
+        private void verNotasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VerNotas form = new VerNotas();
+            form.Usuario = this.usuario;
+            form.MdiParent = this;
             this.label1.SendToBack();
             this.pictureBox1.SendToBack();
             form.Show();

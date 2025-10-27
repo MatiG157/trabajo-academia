@@ -39,6 +39,7 @@
             // usuariosDataGridView
             // 
             usuariosDataGridView.AllowUserToOrderColumns = true;
+            usuariosDataGridView.BackgroundColor = SystemColors.ControlDarkDark;
             usuariosDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             usuariosDataGridView.Location = new Point(21, 18);
             usuariosDataGridView.Margin = new Padding(2);
@@ -99,6 +100,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = WindowsFormsCurso.Properties.Resources.FondoWinForm;
             ClientSize = new Size(789, 337);
             Controls.Add(refrescarButton);
             Controls.Add(modificarButton);

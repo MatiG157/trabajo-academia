@@ -69,7 +69,7 @@
             // 
             // aceptarButton
             // 
-            aceptarButton.Location = new Point(297, 375);
+            aceptarButton.Location = new Point(60, 357);
             aceptarButton.Margin = new Padding(2);
             aceptarButton.Name = "aceptarButton";
             aceptarButton.Size = new Size(80, 22);
@@ -80,7 +80,7 @@
             // 
             // cancelarButton
             // 
-            cancelarButton.Location = new Point(396, 375);
+            cancelarButton.Location = new Point(159, 357);
             cancelarButton.Margin = new Padding(2);
             cancelarButton.Name = "cancelarButton";
             cancelarButton.Size = new Size(80, 22);
@@ -218,7 +218,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(486, 417);
+            ClientSize = new Size(308, 390);
             Controls.Add(idPersonaNumericUpDown);
             Controls.Add(cambiaClaveCheckBox);
             Controls.Add(idPersonaLabel);
