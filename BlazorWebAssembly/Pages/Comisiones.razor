@@ -1,6 +1,7 @@
 ﻿@page "/comisiones"
 @using DTOs
 @using API.Comisiones
+@using API.Planes
 @using BlazorWebAssembly.Components
 @inject IJSRuntime JSRuntime
 
@@ -50,7 +51,7 @@
                                         <th>IdComision</th>
                                         <th>Descripcion</th>
                                         <th>AnioEspecialidad</th>
-                                        <th>IdPlan</th>
+                                        <th>Plan</th> <!-- CAMBIADO -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,13 +59,14 @@
                                     {
                                         @foreach (var comision in comisiones)
                                         {
+                                            var planDesc = planes?.FirstOrDefault(p => p.IdPlan == comision.IdPlan)?.Descripcion ?? "Sin plan";
                                             <tr @onclick="() => SelectComision(comision)"
                                                 class="@(selectedComision?.IdComision == comision.IdComision ? "table-active" : "")"
                                                 style="cursor: pointer;">
                                                 <td>@comision.IdComision</td>
                                                 <td>@comision.Descripcion</td>
                                                 <td>@comision.AnioEspecialidad</td>
-                                                <td>@comision.IdPlan</td>
+                                                <td>@planDesc</td> <!-- CAMBIADO -->
                                             </tr>
                                         }
                                     }
@@ -156,6 +158,8 @@
     private string errorMessage = string.Empty;
     private string successMessage = string.Empty;
 
+    private List<PlanDTO>? planes; // AGREGADO
+
     protected override async Task OnInitializedAsync() => await LoadComisiones();
 
     private async Task LoadComisiones()
@@ -164,6 +168,7 @@
         {
             loading = true;
             comisiones = (await ComisionApiClient.GetAllAsync())?.ToList();
+            planes = (await PlanApiClient.GetAllAsync())?.ToList(); // AGREGADO
             selectedComision = null;
         }
         catch (Exception ex)

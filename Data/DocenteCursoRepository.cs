@@ -28,5 +28,21 @@ namespace Data
                 .Where(u => u.IdDocente == criteria.IdDocente)
                 .ToListAsync();
         }
+
+        public async Task<bool> Update(DocenteCurso docenteCurso)
+        {
+            await using var context = CreateContext();
+            var existingdocenteCurso = await context.DocentesCursos.FindAsync(docenteCurso.IdAsignacion);
+            if (existingdocenteCurso != null)
+            {
+                existingdocenteCurso.SetCursoId(docenteCurso.IdCurso);
+                existingdocenteCurso.SetDocenteId(docenteCurso.IdDocente);
+                existingdocenteCurso.Cargo = docenteCurso.Cargo;
+
+                await context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

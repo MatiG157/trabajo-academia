@@ -3,6 +3,8 @@
 @using API.Cursos
 @using API.DocentesCursos
 @using API.Usuarios
+@using API.Materias
+@using API.Comisiones
 
 @using BlazorWebAssembly.Components
 @inject IJSRuntime JSRuntime
@@ -54,8 +56,8 @@
                                         <th>Descripcion</th>
                                         <th>AnioCalendario</th>
                                         <th>Cupo</th>
-                                        <th>IdMateria</th>
-                                        <th>IdComision</th>
+                                        <th>Materia</th> 
+                                        <th>Comision</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -63,6 +65,8 @@
                                     {
                                         @foreach (var curso in cursos)
                                         {
+                                            var materiaDesc = materias?.FirstOrDefault(m => m.IdMateria == curso.IdMateria)?.Descripcion ?? "Sin materia";
+                                            var comisionDesc = comisiones?.FirstOrDefault(c => c.IdComision == curso.IdComision)?.Descripcion ?? "Sin comisión";
                                             <tr @onclick="() => SelectCurso(curso)"
                                                 class="@(selectedCurso?.IdCurso == curso.IdCurso ? "table-active" : "")"
                                                 style="cursor: pointer;">
@@ -70,8 +74,8 @@
                                                 <td>@curso.Descripcion</td>
                                                 <td>@curso.AnioCalendario</td>
                                                 <td>@curso.Cupo</td>
-                                                <td>@curso.IdMateria</td>
-                                                <td>@curso.IdComision</td>
+                                                <td>@materiaDesc</td> 
+                                                <td>@comisionDesc</td> 
                                             </tr>
                                         }
                                     }
@@ -156,6 +160,8 @@
     private List<DocenteCursoDTO>? docentesCursos;
     private List<PersonaDTO>? personas;
     private List<UsuarioDTO>? usuarios;
+    private List<MateriaDTO>? materias; 
+    private List<ComisionDTO>? comisiones;
     private CursoDTO? selectedCurso;
     private CursoDTO cursoDetalle = new();
     private bool loading = true;
@@ -174,6 +180,8 @@
         {
             loading = true;
             cursos = (await CursoApiClient.GetAllAsync())?.ToList();
+            materias = (await MateriaApiClient.GetAllAsync())?.ToList();
+            comisiones = (await ComisionApiClient.GetAllAsync())?.ToList();
             selectedCurso = null;
         }
         catch (Exception ex)

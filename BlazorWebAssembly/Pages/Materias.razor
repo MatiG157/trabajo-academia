@@ -1,6 +1,7 @@
 ﻿@page "/materias"
 @using DTOs
 @using API.Materias
+@using API.Planes
 @inject IJSRuntime JSRuntime
 @using BlazorWebAssembly.Components
 @inject NavigationManager Navigation
@@ -52,7 +53,7 @@
                                         <th>Descripción</th>
                                         <th>HsSemanales</th>
                                         <th>HsTotales</th>
-                                        <th>IdPlan</th>
+                                        <th>Plan</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,6 +61,7 @@
                                     {
                                         @foreach (var materia in materias)
                                         {
+                                            var planDesc = planes?.FirstOrDefault(p => p.IdPlan == materia.IdPlan)?.Descripcion ?? "Sin plan";
                                             <tr @onclick="() => SelectMateria(materia)"
                                                 class="@(selectedMateria?.IdMateria == materia.IdMateria ? "table-active" : "")"
                                                 style="cursor: pointer;">
@@ -67,7 +69,7 @@
                                                 <td>@materia.Descripcion</td>
                                                 <td>@materia.HsSemanales</td>
                                                 <td>@materia.HsTotales</td>
-                                                <td>@materia.IdPlan</td>
+                                                <td>@planDesc</td> 
                                             </tr>
                                         }
                                     }
@@ -159,6 +161,8 @@
     private string errorMessage = string.Empty;
     private string successMessage = string.Empty;
 
+    private List<PlanDTO>? planes; // AGREGADO
+
     protected override async Task OnInitializedAsync() => await LoadMaterias();
 
     private async Task LoadMaterias()
@@ -167,6 +171,7 @@
         {
             loading = true;
             materias = (await MateriaApiClient.GetAllAsync())?.ToList();
+            planes = (await PlanApiClient.GetAllAsync())?.ToList(); // AGREGADO
             selectedMateria = null;
         }
         catch (Exception ex)
@@ -193,10 +198,10 @@
         materiaDetalle = new MateriaDTO();
         isEditMode = false;
         showDetalle = true;
-        StateHasChanged(); 
+        StateHasChanged();
     }
 
-    private async Task ModificarMateria() 
+    private async Task ModificarMateria()
     {
         if (selectedMateria == null) return;
         try
@@ -207,7 +212,7 @@
                 materiaDetalle = materia;
                 isEditMode = true;
                 showDetalle = true;
-                StateHasChanged(); 
+                StateHasChanged();
             }
         }
         catch (Exception ex)

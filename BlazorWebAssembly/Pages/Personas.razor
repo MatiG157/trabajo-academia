@@ -1,6 +1,7 @@
 ﻿@page "/personas"
 @using DTOs
 @using API.Personas
+@using API.Planes
 @using BlazorWebAssembly.Components
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
@@ -56,7 +57,7 @@
                                         <th>Legajo</th>
                                         <th>Telefono</th>
                                         <th>TipoPersona</th>
-                                        <th>IdPlan</th>
+                                        <th>Plan</th> <!-- CAMBIADO -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,6 +65,7 @@
                                     {
                                         @foreach (var persona in personas)
                                         {
+                                            var planDesc = planes?.FirstOrDefault(p => p.IdPlan == persona.IdPlan)?.Descripcion ?? "Sin plan";
                                             <tr @onclick="() => SelectPersona(persona)"
                                                 class="@(selectedPersona?.IdPersona == persona.IdPersona ? "table-active" : "")"
                                                 style="cursor: pointer;">
@@ -73,7 +75,7 @@
                                                 <td>@persona.Legajo</td>
                                                 <td>@persona.Telefono</td>
                                                 <td>@persona.TipoPersona</td>
-                                                <td>@persona.IdPlan</td>
+                                                <td>@planDesc</td> <!-- CAMBIADO -->
                                             </tr>
                                         }
                                     }
@@ -182,6 +184,8 @@
     private string errorMessage = string.Empty;
     private string successMessage = string.Empty;
 
+    private List<PlanDTO>? planes; // AGREGADO
+
     protected override async Task OnInitializedAsync()
     {
         await LoadPersonas();
@@ -194,6 +198,7 @@
             loading = true;
             errorMessage = string.Empty;
             personas = (await PersonaApiClient.GetAllAsync())?.ToList();
+            planes = (await PlanApiClient.GetAllAsync())?.ToList(); // AGREGADO
             selectedPersona = null;
         }
         catch (Exception ex)

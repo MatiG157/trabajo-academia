@@ -147,7 +147,7 @@
         if (IsEditMode)
         {
             // Cargar el DocenteCurso actual si existe
-            docenteCursoActual = await DocenteCursoApiClient.GetByCursoAsync(Curso.IdCurso);
+            // docenteCursoActual = await DocenteCursoApiClient.GetByCursoAsync(Curso.IdCurso);
             if (docenteCursoActual != null)
             {
                 IdDocente = docenteCursoActual.IdDocente;
@@ -236,7 +236,7 @@
                 {
                     docenteCursoActual.IdDocente = IdDocente;
                     docenteCursoActual.Cargo = Cargo;
-                    await DocenteCursoApiClient.UpdateAsync(docenteCursoActual);
+                    // await DocenteCursoApiClient.UpdateAsync(docenteCursoActual);
                 }
                 else
                 {

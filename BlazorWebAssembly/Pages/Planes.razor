@@ -1,6 +1,7 @@
 ﻿@page "/planes"
 @using DTOs
 @using API.Planes
+@using API.Especialidades
 @inject IJSRuntime JSRuntime
 @using BlazorWebAssembly.Components
 @inject NavigationManager Navigation
@@ -50,7 +51,7 @@
                                     <tr>
                                         <th>IdPlan</th>
                                         <th>Descripción</th>
-                                        <th>IdEspecialidad</th>
+                                        <th>Especialidad</th> <!-- CAMBIADO -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,12 +59,13 @@
                                     {
                                         @foreach (var plan in planes)
                                         {
+                                            var especialidadDesc = especialidades?.FirstOrDefault(e => e.IdEspecialidad == plan.IdEspecialidad)?.Descripcion ?? "Sin especialidad";
                                             <tr @onclick="() => SelectPlan(plan)"
                                                 class="@(selectedPlan?.IdPlan == plan.IdPlan ? "table-active" : "")"
                                                 style="cursor: pointer;">
                                                 <td>@plan.IdPlan</td>
                                                 <td>@plan.Descripcion</td>
-                                                <td>@plan.IdEspecialidad</td>
+                                                <td>@especialidadDesc</td> <!-- CAMBIADO -->
                                             </tr>
                                         }
                                     }
@@ -145,6 +147,7 @@
 
 @code {
     private List<PlanDTO>? planes;
+    private List<EspecialidadDTO>? especialidades; // AGREGADO
     private PlanDTO? selectedPlan;
     private PlanDTO planDetalle = new();
     private bool loading = true;
@@ -163,6 +166,7 @@
         {
             loading = true;
             planes = (await PlanApiClient.GetAllAsync())?.ToList();
+            especialidades = (await EspecialidadApiClient.GetAllAsync())?.ToList(); // AGREGADO
             selectedPlan = null;
         }
         catch (Exception ex)

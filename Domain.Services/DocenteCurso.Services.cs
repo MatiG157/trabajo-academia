@@ -48,7 +48,7 @@ namespace Domain.Services
         {
             var docenteCursoRepository = new DocenteCursoRepository();
 
-            DocenteCurso docenteCurso = new DocenteCurso(dto.IdAsignacion, dto.Cargo);
+            DocenteCurso docenteCurso = new DocenteCurso(dto.Cargo, dto.IdDocente, dto.IdAsignacion); //Que va aca?
             docenteCurso.SetCursoId(dto.IdCurso);
             docenteCurso.SetDocenteId(dto.IdDocente);
             return await docenteCursoRepository.Update(docenteCurso);
