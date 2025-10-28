@@ -40,7 +40,7 @@
             materiaDropDown = new ComboBox();
             label1 = new Label();
             textBoxDescripcion = new TextBox();
-            label2 = new Label();
+            profesorLabel = new Label();
             profesorDropDown = new ComboBox();
             colorDialog1 = new ColorDialog();
             cargosDropDown = new ComboBox();
@@ -94,7 +94,7 @@
             // AnioCalendarioLabel
             // 
             AnioCalendarioLabel.AutoSize = true;
-            AnioCalendarioLabel.Location = new Point(26, 260);
+            AnioCalendarioLabel.Location = new Point(26, 199);
             AnioCalendarioLabel.Margin = new Padding(2, 0, 2, 0);
             AnioCalendarioLabel.Name = "AnioCalendarioLabel";
             AnioCalendarioLabel.Size = new Size(114, 20);
@@ -103,7 +103,7 @@
             // 
             // AnioCalendarioNumericUpDown
             // 
-            AnioCalendarioNumericUpDown.Location = new Point(149, 257);
+            AnioCalendarioNumericUpDown.Location = new Point(150, 192);
             AnioCalendarioNumericUpDown.Margin = new Padding(2, 3, 2, 3);
             AnioCalendarioNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             AnioCalendarioNumericUpDown.Name = "AnioCalendarioNumericUpDown";
@@ -114,7 +114,7 @@
             // cupoLabel
             // 
             cupoLabel.AutoSize = true;
-            cupoLabel.Location = new Point(26, 303);
+            cupoLabel.Location = new Point(26, 246);
             cupoLabel.Margin = new Padding(2, 0, 2, 0);
             cupoLabel.Name = "cupoLabel";
             cupoLabel.Size = new Size(44, 20);
@@ -123,7 +123,7 @@
             // 
             // cupoNumericUpDown
             // 
-            cupoNumericUpDown.Location = new Point(149, 300);
+            cupoNumericUpDown.Location = new Point(150, 246);
             cupoNumericUpDown.Margin = new Padding(2, 3, 2, 3);
             cupoNumericUpDown.Name = "cupoNumericUpDown";
             cupoNumericUpDown.Size = new Size(286, 27);
@@ -165,19 +165,19 @@
             textBoxDescripcion.Size = new Size(285, 27);
             textBoxDescripcion.TabIndex = 13;
             // 
-            // label2
+            // profesorLabel
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(26, 185);
-            label2.Name = "label2";
-            label2.Size = new Size(64, 20);
-            label2.TabIndex = 14;
-            label2.Text = "Profesor";
+            profesorLabel.AutoSize = true;
+            profesorLabel.Location = new Point(22, 339);
+            profesorLabel.Name = "profesorLabel";
+            profesorLabel.Size = new Size(64, 20);
+            profesorLabel.TabIndex = 14;
+            profesorLabel.Text = "Profesor";
             // 
             // profesorDropDown
             // 
             profesorDropDown.FormattingEnabled = true;
-            profesorDropDown.Location = new Point(149, 181);
+            profesorDropDown.Location = new Point(149, 339);
             profesorDropDown.Margin = new Padding(3, 4, 3, 4);
             profesorDropDown.Name = "profesorDropDown";
             profesorDropDown.Size = new Size(285, 28);
@@ -186,7 +186,7 @@
             // cargosDropDown
             // 
             cargosDropDown.FormattingEnabled = true;
-            cargosDropDown.Location = new Point(149, 220);
+            cargosDropDown.Location = new Point(149, 292);
             cargosDropDown.Margin = new Padding(3, 4, 3, 4);
             cargosDropDown.Name = "cargosDropDown";
             cargosDropDown.Size = new Size(285, 28);
@@ -195,11 +195,11 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(26, 224);
+            label3.Location = new Point(26, 300);
             label3.Name = "label3";
-            label3.Size = new Size(49, 20);
+            label3.Size = new Size(108, 20);
             label3.TabIndex = 17;
-            label3.Text = "Cargo";
+            label3.Text = "Cargo Profesor";
             // 
             // CursoDetalle
             // 
@@ -209,7 +209,7 @@
             Controls.Add(label3);
             Controls.Add(cargosDropDown);
             Controls.Add(profesorDropDown);
-            Controls.Add(label2);
+            Controls.Add(profesorLabel);
             Controls.Add(textBoxDescripcion);
             Controls.Add(label1);
             Controls.Add(materiaDropDown);
@@ -251,7 +251,7 @@
         private ComboBox materiaDropDown;
         private Label label1;
         private TextBox textBoxDescripcion;
-        private Label label2;
+        private Label profesorLabel;
         private ComboBox profesorDropDown;
         private ColorDialog colorDialog1;
         private ComboBox cargosDropDown;

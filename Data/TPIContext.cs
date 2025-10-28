@@ -69,11 +69,11 @@ namespace Data
                     .IsRequired()
                     .HasMaxLength(360);
 
-                entity.HasData(new
-                {
-                    Descripcion = "Especialidad básica",
-                    IdEspecialidad = 1
-                });
+                //entity.HasData(new
+                //{
+                //    Descripcion = "Especialidad básica",
+                //    IdEspecialidad = 1
+                //});
 
             });
 
@@ -105,12 +105,12 @@ namespace Data
                     .HasForeignKey(e => e.IdEspecialidad)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasData(new
-                {
-                    IdPlan = 1,
-                    Descripcion = "Plan básico",
-                    IdEspecialidad = 1
-                });
+                //entity.HasData(new
+                //{
+                //    IdPlan = 1,
+                //    Descripcion = "Plan básico",
+                //    IdEspecialidad = 1
+                //});
 
             });
 
@@ -180,20 +180,20 @@ namespace Data
                 );
 
 
-                entity.HasData(new
-                {
-                   
-                    IdPersona = 2,
-                    Apellido = "Profe",
-                    Direccion = "Profe 123",
-                    Email = "profe@gmail.com",
-                    FechaNacimiento = new DateTime(2004, 3, 3),
-                    Legajo = 1234,
-                    Telefono = "3419999999",
-                    TipoPersona = "Docente",
-                    IdPlan = 1
-                }
-             );
+                //   entity.HasData(new
+                //   {
+
+                //       IdPersona = 2,
+                //       Apellido = "Profe",
+                //       Direccion = "Profe 123",
+                //       Email = "profe@gmail.com",
+                //       FechaNacimiento = new DateTime(2004, 3, 3),
+                //       Legajo = 1234,
+                //       Telefono = "3419999999",
+                //       TipoPersona = "Docente",
+                //       IdPlan = 1
+                //   }
+                //);
 
             });
 
@@ -259,18 +259,18 @@ namespace Data
                 }
                 );
 
-                entity.HasData(new Usuario
-                {
-                    IdUsuario = 2,
-                    Apellido = "Profe",
-                    Nombre = "Profe",
-                    Clave = "123",
-                    Email = "profe@gmail.com",
-                    Habilitado = true,
-                    NombreUsuario = "profe",
-                    IdPersona = 2
-                }
-             );
+                //   entity.HasData(new Usuario
+                //   {
+                //       IdUsuario = 2,
+                //       Apellido = "Profe",
+                //       Nombre = "Profe",
+                //       Clave = "123",
+                //       Email = "profe@gmail.com",
+                //       Habilitado = true,
+                //       NombreUsuario = "profe",
+                //       IdPersona = 2
+                //   }
+                //);
 
             });
 

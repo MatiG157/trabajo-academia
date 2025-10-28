@@ -34,7 +34,7 @@ namespace WindowsFormsCurso
         {
             var notas = await AlumnoInscripcionApiClient.GetAllAsync();
 
-            var notasAlumno = notas.Where(n => n.IdAlumno == usuario.IdUsuario).ToList();
+            var notasAlumno = notas.Where(n => n.IdAlumno == usuario.IdPersona).ToList();
 
 
             this.dataGridViewNotas.DataSource = null;

@@ -8,6 +8,7 @@ namespace Domain.Model
 {
     public class DocenteCursoCriteria
     {
+        public int IdCurso { get; set; }
         public int IdDocente { get; set; }
     }
 }

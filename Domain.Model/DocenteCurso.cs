@@ -3,7 +3,6 @@
     public class DocenteCurso
     {
 
-        public int IdAsignacion {  get; set; }
         public string Cargo { get; set; }
 
         // Atributos para la relacion con curso

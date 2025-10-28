@@ -9,7 +9,9 @@ namespace DTOs
     public class AlumnoNotaDTO
     {
         public int IdInscripcion { get; set; }
-        public int IdCurso   { get; set; }
+        public int IdCurso { get; set; }
+        public string Curso {  get; set; }
+
         public string NombreCompleto { get; set; }
         public int? Nota { get; set; }
         public string Condicion { get; set; }

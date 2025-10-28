@@ -31,7 +31,7 @@ namespace ReportePlanes
 
                 page.Header()
                     .AlignCenter()
-                    .Text("Reporte: Planes y sus Materias")
+                    .Text("Reporte: Planes con Materias")
                     .FontSize(16)
                     .Bold();
 

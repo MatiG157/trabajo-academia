@@ -57,7 +57,7 @@
                                         <th>Legajo</th>
                                         <th>Telefono</th>
                                         <th>TipoPersona</th>
-                                        <th>Plan</th> <!-- CAMBIADO -->
+                                        <th>Plan</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +75,7 @@
                                                 <td>@persona.Legajo</td>
                                                 <td>@persona.Telefono</td>
                                                 <td>@persona.TipoPersona</td>
-                                                <td>@planDesc</td> <!-- CAMBIADO -->
+                                                <td>@planDesc</td> 
                                             </tr>
                                         }
                                     }
@@ -184,7 +184,7 @@
     private string errorMessage = string.Empty;
     private string successMessage = string.Empty;
 
-    private List<PlanDTO>? planes; // AGREGADO
+    private List<PlanDTO>? planes; 
 
     protected override async Task OnInitializedAsync()
     {
@@ -198,7 +198,7 @@
             loading = true;
             errorMessage = string.Empty;
             personas = (await PersonaApiClient.GetAllAsync())?.ToList();
-            planes = (await PlanApiClient.GetAllAsync())?.ToList(); // AGREGADO
+            planes = (await PlanApiClient.GetAllAsync())?.ToList(); 
             selectedPersona = null;
         }
         catch (Exception ex)

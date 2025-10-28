@@ -120,7 +120,7 @@
     </div>
 </div>
 
-<!-- Modal de Confirmación -->
+
 @if (mostrarModalConfirmacion && cursoSeleccionado != null)
 {
     <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
@@ -183,7 +183,7 @@
     {
         try
         {
-            // Obtener datos del usuario desde localStorage
+            
             tipoPersona = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "tipoPersona");
             nombreUsuario = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "nombreUsuario");
             var userIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "usuarioId");

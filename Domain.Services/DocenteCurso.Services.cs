@@ -43,7 +43,7 @@ namespace Domain.Services
 
             return dtos;
         }
-
+        /*
         public async Task<bool> Update(DocenteCursoDTO dto)
         {
             var docenteCursoRepository = new DocenteCursoRepository();
@@ -52,6 +52,24 @@ namespace Domain.Services
             docenteCurso.SetCursoId(dto.IdCurso);
             docenteCurso.SetDocenteId(dto.IdDocente);
             return await docenteCursoRepository.Update(docenteCurso);
+        }*/
+        public async Task<bool> UpdateByCursoDocente(DocenteCursoDTO dto)
+        {
+            var docenteCursoRepository = new DocenteCursoRepository();
+
+            // Buscar la asignación existente por IdCurso e IdDocente
+            var criterios = new DocenteCursoCriteria { IdCurso = dto.IdCurso, IdDocente = dto.IdDocente };
+            var existentes = await docenteCursoRepository.FindByCriteria(criterios);
+            var existente = existentes?.FirstOrDefault();
+
+            if (existente == null)
+                return false;
+
+            existente.Cargo = dto.Cargo;
+            // Si quieres permitir cambiar el docente o curso, puedes actualizar los IDs aquí
+
+            return await docenteCursoRepository.Update(existente);
         }
+
     }
 }

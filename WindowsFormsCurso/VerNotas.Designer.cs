@@ -35,18 +35,20 @@
             // 
             // dataGridViewNotas
             // 
-            dataGridViewNotas.BackgroundColor = SystemColors.ControlDarkDark;
             dataGridViewNotas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewNotas.Location = new Point(12, 12);
+            dataGridViewNotas.Location = new Point(14, 16);
+            dataGridViewNotas.Margin = new Padding(3, 4, 3, 4);
             dataGridViewNotas.Name = "dataGridViewNotas";
-            dataGridViewNotas.Size = new Size(776, 293);
+            dataGridViewNotas.RowHeadersWidth = 51;
+            dataGridViewNotas.Size = new Size(887, 391);
             dataGridViewNotas.TabIndex = 0;
             // 
             // buttonCerrar
             // 
-            buttonCerrar.Location = new Point(713, 315);
+            buttonCerrar.Location = new Point(815, 420);
+            buttonCerrar.Margin = new Padding(3, 4, 3, 4);
             buttonCerrar.Name = "buttonCerrar";
-            buttonCerrar.Size = new Size(75, 23);
+            buttonCerrar.Size = new Size(86, 31);
             buttonCerrar.TabIndex = 1;
             buttonCerrar.Text = "Cerrar";
             buttonCerrar.UseVisualStyleBackColor = true;
@@ -54,12 +56,12 @@
             // 
             // VerNotas
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.FondoWinForm;
-            ClientSize = new Size(800, 348);
+            ClientSize = new Size(914, 464);
             Controls.Add(buttonCerrar);
             Controls.Add(dataGridViewNotas);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "VerNotas";
             Text = "Notas";
             Load += Load_Notas;

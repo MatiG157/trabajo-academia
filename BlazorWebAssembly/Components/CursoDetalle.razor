@@ -72,16 +72,19 @@
                             <ValidationMessage For="@(() => Curso.IdComision)" class="text-danger" />
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Docente</label>
-                            <InputSelect class="form-select" @bind-Value="IdDocente">
-                                <option value="0">-- Seleccione un docente --</option>
-                                @foreach (var docente in docentes ?? Enumerable.Empty<DocenteItem>())
-                                {
-                                    <option value="@docente.IdPersona">@docente.NombreCompleto</option>
-                                }
-                            </InputSelect>
-                        </div>
+                        @if (!IsEditMode)
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Docente</label>
+                                <InputSelect class="form-select" @bind-Value="IdDocente">
+                                    <option value="0">-- Seleccione un docente --</option>
+                                    @foreach (var docente in docentes ?? Enumerable.Empty<DocenteItem>())
+                                    {
+                                        <option value="@docente.IdPersona">@docente.NombreCompleto</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                        }
 
                         <div class="mb-3">
                             <label class="form-label">Cargo</label>
@@ -146,8 +149,9 @@
 
         if (IsEditMode)
         {
-            // Cargar el DocenteCurso actual si existe
-            // docenteCursoActual = await DocenteCursoApiClient.GetByCursoAsync(Curso.IdCurso);
+            // Traer el docenteCurso actual para el curso
+            var criterios = await DocenteCursoApiClient.GetDocenteCursoByCriteria(0);
+            docenteCursoActual = criterios?.FirstOrDefault(dc => dc.IdCurso == Curso.IdCurso);
             if (docenteCursoActual != null)
             {
                 IdDocente = docenteCursoActual.IdDocente;
@@ -181,7 +185,7 @@
                         select new DocenteItem
                             {
                                 IdPersona = persona.IdPersona,
-                                NombreCompleto = $"{usuario.NombreUsuario} {usuario.Apellido}"
+                                NombreCompleto = $"{usuario.Nombre} {usuario.Apellido}"
                             }).ToList();
         }
         catch (Exception ex)
@@ -214,7 +218,7 @@
                 IsSaving = false;
                 return;
             }
-            if (IdDocente == 0)
+            if (!IsEditMode && IdDocente == 0)
             {
                 ErrorMessage = "Debe seleccionar un docente";
                 IsSaving = false;
@@ -231,22 +235,11 @@
             {
                 await CursoApiClient.UpdateAsync(Curso);
 
-                // Actualizar o crear DocenteCurso
+                
                 if (docenteCursoActual != null)
                 {
-                    docenteCursoActual.IdDocente = IdDocente;
                     docenteCursoActual.Cargo = Cargo;
-                    // await DocenteCursoApiClient.UpdateAsync(docenteCursoActual);
-                }
-                else
-                {
-                    var nuevoDocenteCurso = new DocenteCursoDTO
-                        {
-                            IdCurso = Curso.IdCurso,
-                            IdDocente = IdDocente,
-                            Cargo = Cargo
-                        };
-                    await DocenteCursoApiClient.AddAsync(nuevoDocenteCurso);
+                    await DocenteCursoApiClient.UpdateByCursoDocenteAsync(docenteCursoActual);
                 }
             }
             else

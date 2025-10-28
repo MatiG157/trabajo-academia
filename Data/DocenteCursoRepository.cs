@@ -29,20 +29,36 @@ namespace Data
                 .ToListAsync();
         }
 
+        //public async Task<bool> Update(DocenteCurso docenteCurso)
+        //{
+        //    await using var context = CreateContext();
+        //    var existingdocenteCurso = await context.DocentesCursos.FindAsync(docenteCurso.IdAsignacion);
+        //    if (existingdocenteCurso != null)
+        //    {
+        //        existingdocenteCurso.SetCursoId(docenteCurso.IdCurso);
+        //        existingdocenteCurso.SetDocenteId(docenteCurso.IdDocente);
+        //        existingdocenteCurso.Cargo = docenteCurso.Cargo;
+
+        //        await context.SaveChangesAsync();
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
         public async Task<bool> Update(DocenteCurso docenteCurso)
         {
             await using var context = CreateContext();
-            var existingdocenteCurso = await context.DocentesCursos.FindAsync(docenteCurso.IdAsignacion);
-            if (existingdocenteCurso != null)
-            {
-                existingdocenteCurso.SetCursoId(docenteCurso.IdCurso);
-                existingdocenteCurso.SetDocenteId(docenteCurso.IdDocente);
-                existingdocenteCurso.Cargo = docenteCurso.Cargo;
+            var existente = await context.DocentesCursos
+                .FirstOrDefaultAsync(dc => dc.IdCurso == docenteCurso.IdCurso && dc.IdDocente == docenteCurso.IdDocente);
 
-                await context.SaveChangesAsync();
-                return true;
-            }
-            return false;
+            if (existente == null)
+                return false;
+
+            existente.Cargo = docenteCurso.Cargo;
+            // Si necesitas actualizar otros campos, hazlo aquí
+
+            await context.SaveChangesAsync();
+            return true;
         }
     }
 }

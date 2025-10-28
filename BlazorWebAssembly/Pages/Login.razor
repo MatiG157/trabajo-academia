@@ -105,7 +105,7 @@
 
                 if (persona != null)
                 {
-                    // Guardar datos en localStorage
+                 
                     await JSRuntime.InvokeVoidAsync("localStorage.setItem", "usuarioId", usuario.IdUsuario.ToString());
                     await JSRuntime.InvokeVoidAsync("localStorage.setItem", "personaId", persona.IdPersona.ToString());
                     await JSRuntime.InvokeVoidAsync("localStorage.setItem", "tipoPersona", persona.TipoPersona);

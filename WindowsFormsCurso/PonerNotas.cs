@@ -104,6 +104,8 @@ namespace WindowsFormsCurso
                            where alumnoInscripcionItem.IdCurso == (int)this.comboBoxCursos.SelectedValue
                            select new AlumnoNotaDTO
                            {
+                               IdCurso = alumnoInscripcionItem.IdCurso,
+                               IdInscripcion = alumnoInscripcionItem.IdInscripcion,
                                Curso = cursoSeleccionado.Descripcion,
                                Legajo = persona.Legajo,
                                NombreCompleto = $"{usuario.Apellido}, {usuario.Nombre}",
@@ -119,6 +121,7 @@ namespace WindowsFormsCurso
                 
 
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar la lista de alumnos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -128,9 +131,16 @@ namespace WindowsFormsCurso
 
         private AlumnoNotaDTO SelectedItem()
         {
-            AlumnoNotaDTO alumnoNota;
+            AlumnoNotaDTO alumnoNota = null;
 
-            alumnoNota = (AlumnoNotaDTO)dataGridViewAlumnos.SelectedRows[0].DataBoundItem;
+            if (dataGridViewAlumnos.SelectedRows.Count > 0)
+            {
+                alumnoNota = (AlumnoNotaDTO)dataGridViewAlumnos.SelectedRows[0].DataBoundItem;
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un alumno de la lista.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
             return alumnoNota;
         }

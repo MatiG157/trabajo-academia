@@ -161,7 +161,7 @@
     private string errorMessage = string.Empty;
     private string successMessage = string.Empty;
 
-    private List<PlanDTO>? planes; // AGREGADO
+    private List<PlanDTO>? planes; 
 
     protected override async Task OnInitializedAsync() => await LoadMaterias();
 
@@ -171,7 +171,7 @@
         {
             loading = true;
             materias = (await MateriaApiClient.GetAllAsync())?.ToList();
-            planes = (await PlanApiClient.GetAllAsync())?.ToList(); // AGREGADO
+            planes = (await PlanApiClient.GetAllAsync())?.ToList(); 
             selectedMateria = null;
         }
         catch (Exception ex)

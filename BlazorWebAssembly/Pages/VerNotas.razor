@@ -1,5 +1,99 @@
-﻿<h3>Component</h3>
+﻿@page "/ver-notas"
+@using API.AlumnosInscripciones
+@using DTOs
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@layout MainLayoutAlumno 
+
+<PageTitle>Ver Notas</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-file-alt me-2"></i>
+                        Mis Notas
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (loading)
+                    {
+                        <div class="text-center p-4">
+                            <div class="spinner-border text-info" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    }
+                    else if (notasAlumno != null && notasAlumno.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th>Materia</th>
+                                        <th>Curso</th>
+                                        <th>Condición</th>
+                                        <th>Nota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var nota in notasAlumno)
+                                    {
+                                        <tr>
+                                            
+                                            <td>@nota.IdCurso</td>
+                                            <td>@nota.Condicion</td>
+                                            <td>@(nota.Nota.HasValue ? nota.Nota.ToString() : "Sin nota")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No hay notas registradas.
+                        </div>
+                    }
+                </div>
+                <div class="card-footer text-end">
+                    <button class="btn btn-secondary" @onclick="Cerrar">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    private int idAlumno;
+    private bool loading = true;
+    private List<AlumnoInscripcionDTO> notasAlumno = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        var personaIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "personaId");
+        if (!int.TryParse(personaIdStr, out idAlumno))
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+        await LoadNotas();
+    }
+
+    private async Task LoadNotas()
+    {
+        loading = true;
+        var notas = await AlumnoInscripcionApiClient.GetAllAsync();
+        notasAlumno = notas.Where(n => n.IdAlumno == idAlumno).ToList();
+        loading = false;
+    }
+
+    private void Cerrar()
+    {
+        Navigation.NavigateTo("/home-alumno");
+    }
 }

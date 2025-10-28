@@ -51,7 +51,7 @@
                                     <tr>
                                         <th>IdPlan</th>
                                         <th>Descripción</th>
-                                        <th>Especialidad</th> <!-- CAMBIADO -->
+                                        <th>Especialidad</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,7 +65,7 @@
                                                 style="cursor: pointer;">
                                                 <td>@plan.IdPlan</td>
                                                 <td>@plan.Descripcion</td>
-                                                <td>@especialidadDesc</td> <!-- CAMBIADO -->
+                                                <td>@especialidadDesc</td> 
                                             </tr>
                                         }
                                     }
@@ -147,7 +147,7 @@
 
 @code {
     private List<PlanDTO>? planes;
-    private List<EspecialidadDTO>? especialidades; // AGREGADO
+    private List<EspecialidadDTO>? especialidades;
     private PlanDTO? selectedPlan;
     private PlanDTO planDetalle = new();
     private bool loading = true;
@@ -166,7 +166,7 @@
         {
             loading = true;
             planes = (await PlanApiClient.GetAllAsync())?.ToList();
-            especialidades = (await EspecialidadApiClient.GetAllAsync())?.ToList(); // AGREGADO
+            especialidades = (await EspecialidadApiClient.GetAllAsync())?.ToList(); 
             selectedPlan = null;
         }
         catch (Exception ex)

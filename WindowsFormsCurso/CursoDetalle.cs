@@ -78,10 +78,10 @@ namespace WindowsForms
                     await CursoApiClient.UpdateAsync(this.Curso);
 
                     var docenteCurso = new DocenteCursoDTO();
-                    //docenteCurso.IdCurso = cursoCreado.IdCurso;
+                    docenteCurso.IdCurso = this.Curso.IdCurso;
                     docenteCurso.IdDocente = (int)this.profesorDropDown.SelectedValue;
                     docenteCurso.Cargo = (string)this.cargosDropDown.SelectedItem;
-                    //await DocenteCursoApiClient.UpdateAsync(docenteCurso);
+                    await DocenteCursoApiClient.UpdateByCursoDocenteAsync(docenteCurso);
 
 
                 }
@@ -128,6 +128,10 @@ namespace WindowsForms
         private void SetFormMode(FormMode value)
         {
             mode = value;
+
+            profesorDropDown.Visible = (mode == FormMode.Add);
+
+            profesorLabel.Visible = (mode == FormMode.Add);
         }
 
         private async void CursoDetalle_Load(object sender, EventArgs e)
@@ -137,9 +141,11 @@ namespace WindowsForms
             comisionesDropDown.DisplayMember = "Display"; // Muestra la descripción
             comisionesDropDown.ValueMember = "IdComision";
 
+            //docenteCurso = await GetDocenteCursoByCriteria(curso.I);
+
             this.cargosDropDown.Items.Add("Teoría");
             this.cargosDropDown.Items.Add("Práctica");
-            this.cargosDropDown.SelectedItem = "Teoría";
+
 
             var materias = await MateriaApiClient.GetAllAsync();
             materiaDropDown.DataSource = materias;

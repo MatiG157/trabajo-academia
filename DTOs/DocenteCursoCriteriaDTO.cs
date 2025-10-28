@@ -8,6 +8,7 @@ namespace DTOs
 {
     public class DocenteCursoCriteriaDTO
     {
+        public int IdCurso { get; set; }
         public int IdDocente { get; set; }
     }
 }

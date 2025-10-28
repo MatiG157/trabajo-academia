@@ -74,6 +74,35 @@ namespace DocenteCursoAPI.Endpoints
             //    .Produces(StatusCodes.Status404NotFound)
             //    .Produces(StatusCodes.Status400BadRequest)
             //    .WithOpenApi();
+
+            app.MapPut("/docentesCursos/{idCurso}/{idDocente}", async (int idCurso, int idDocente, DocenteCursoDTO dto) =>
+            {
+                try
+                {
+                    DocenteCursoService docenteCursoService = new DocenteCursoService();
+
+                    dto.IdCurso = idCurso;
+                    dto.IdDocente = idDocente;
+
+                    var found = await docenteCursoService.UpdateByCursoDocente(dto);
+
+                    if (!found)
+                    {
+                        return Results.NotFound();
+                    }
+
+                    return Results.NoContent();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("UpdateDocenteCursoByCursoDocente")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithOpenApi();
         }
     }
 }

@@ -92,7 +92,7 @@ namespace WindowsFormsCurso
                         Nota = null
                     };
 
-                    inscripcion.IdAlumno = usuario.IdUsuario;
+                    inscripcion.IdAlumno = usuario.IdPersona;
                     inscripcion.IdCurso = (int)this.SelectedItem().IdCurso;
 
 
