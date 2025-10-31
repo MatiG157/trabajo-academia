@@ -8,15 +8,19 @@ using MateriaAPI.Endpoints;
 using EspecialidadAPI.Endpoints;
 using DocenteCursoAPI.Endpoints;
 using QuestPDF.Infrastructure;
-
-QuestPDF.Settings.License = LicenseType.Community;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<TPIContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpLogging(o => { });
-
 
 builder.Services.AddCors(options =>
 {
@@ -35,6 +39,12 @@ builder.WebHost.UseUrls(
 
 var app = builder.Build();
 
+// Inicializa la base de datos si no existe
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<TPIContext>();
+    context.Database.EnsureCreated();
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -43,10 +53,7 @@ if (app.Environment.IsDevelopment())
     app.UseHttpLogging();
 }
 
-
 app.UseCors("AllowBlazorClient");
-
-
 
 app.MapCursoEndpoints();
 app.MapUsuarioEndpoints();
@@ -58,7 +65,5 @@ app.MapEspecialidadEndpoints();
 app.MapAlumnoInscripcionEndpoints();
 app.MapDocenteCursoEndpoints();
 app.MapReporteEndpoints();
-
-
 
 app.Run();

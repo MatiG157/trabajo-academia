@@ -165,19 +165,19 @@ namespace Data
 
                 // Datos iniciales
 
-                entity.HasData(new
-                {
-                    IdPersona = 1,
-                    Apellido = "Admin",
-                    Direccion = "Admin 123",
-                    Email = "admin@gmail.com",
-                    FechaNacimiento = new DateTime(2004, 3, 3),
-                    Legajo = 1234,
-                    Telefono = "3419999999",
-                    TipoPersona = "Administrador",
-                    IdPlan = 1
-                }
-                );
+                //entity.HasData(new
+                //{
+                //    IdPersona = 1,
+                //    Apellido = "Admin",
+                //    Direccion = "Admin 123",
+                //    Email = "admin@gmail.com",
+                //    FechaNacimiento = new DateTime(2004, 3, 3),
+                //    Legajo = 1234,
+                //    Telefono = "3419999999",
+                //    TipoPersona = "Administrador",
+                //    IdPlan = 1
+                //}
+                //);
 
 
                 //   entity.HasData(new
@@ -246,18 +246,18 @@ namespace Data
 
                 // Datos iniciales
 
-                entity.HasData(new Usuario
-                {
-                    IdUsuario = 1,
-                    Apellido = "Admin",
-                    Nombre = "Admin",
-                    Clave = "123",
-                    Email = "admin@gmail.com",
-                    Habilitado = true,
-                    NombreUsuario = "admin",
-                    IdPersona = 1
-                }
-                );
+                //entity.HasData(new Usuario
+                //{
+                //    IdUsuario = 1,
+                //    Apellido = "Admin",
+                //    Nombre = "Admin",
+                //    Clave = "123",
+                //    Email = "admin@gmail.com",
+                //    Habilitado = true,
+                //    NombreUsuario = "admin",
+                //    IdPersona = 1
+                //}
+                //);
 
                 //   entity.HasData(new Usuario
                 //   {
