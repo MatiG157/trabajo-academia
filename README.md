@@ -6,7 +6,7 @@ Solución completa para la gestión académica (API, clientes, frontend Blazor y
 ## Integrantes
 - Ramiro Martinez Castro  
 - Matías García Marianelli  
-- Mateo Spedalliere
+- Mateo Spedaliere
 
 
 # Usuarios de prueba (desde el dump)
