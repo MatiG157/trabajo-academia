@@ -6,35 +6,34 @@ Solución completa para la gestión académica (API, clientes, frontend Blazor y
 ## Integrantes
 - Ramiro Martinez Castro  
 - Matías García Marianelli  
-- Mateo Spedalliere
-
+- Mateo Spedaliere
 
 # Usuarios de prueba (desde el dump)
 
-A continuación se incluyen tres usuarios de prueba (admin, docente y alumno) para usar en entornos locales. Si tu dump (`AcademiaDB.sql`) contiene credenciales distintas, usa las del script. Estas credenciales son ejemplos para testeo: no usarlas en producción.
+A continuación se incluyen los usuarios de prueba que se crean con el dump (AcademiaDB.sql). Estos datos son ejemplos para testeo y no deben usarse en producción.
 
-- Administrador
-  - Email: admin@academia.test
+- *Administrador*
+  - Email: admin@gmail.com
   - Usuario: admin
-  - Contraseña: Admin@123
+  - Contraseña: 123
   - Rol: Administrador
-  - Id (ejemplo): 1
+  - IdPersona: 1
 
-- Docente
-  - Email: docente@academia.test
-  - Usuario: docente1
-  - Contraseña: Docente@123
+- *Docente*
+  - Email: profe@gmail.com
+  - Usuario: profe
+  - Contraseña: 123
   - Rol: Docente
-  - Id (ejemplo): 2
+  - IdPersona: 3
 
-- Alumno
-  - Email: alumno@academia.test
-  - Usuario: alumno1
-  - Contraseña: Alumno@123
+- *Alumno*
+  - Email: alumno@gmail.com
+  - Usuario: alumno
+  - Contraseña: 123
   - Rol: Alumno
-  - Id (ejemplo): 3
+  - IdPersona: 5
 
-> Nota: Para confirmar los valores reales, abrir `AcademiaDB.sql` y buscar los INSERT INTO correspondientes (tablas Usuarios/Alumnos/Profesores). Si prefieres, puedo extraer y listar las líneas INSERT exactas del dump.
+> Nota: Para más usuarios y roles, consultar el dump SQL. Los docentes están asignados a cursos con los cargos "Docente" y "Practica". Los alumnos están inscriptos en cursos con condición "Cursando" y nota NULL.
 
 ## Tecnologías utilizadas
 - .NET 7/8 y C# (proyectos .csproj)
@@ -62,36 +61,25 @@ A continuación se incluyen tres usuarios de prueba (admin, docente y alumno) pa
 - Visual Studio 2022/2023 o Visual Studio Code
 
 ## Instalación y puesta en marcha
+1) Crear la base de datos
+Lo primero que se debe hacer es ejecutar el programa, esto nos creará toda la base de datos con EF. Nosotros nos encargamos de dejar configurada la cadena de conexión con el mismo nombre que la base de datos, pero en caso de ser modificada, se debe también modificar la cadena.
+Importante: Esta primera ejecución es unicamente para crear la base de datos, no se podra iniciar sesion hasta hacer el dump de la base de datos (paso 3)
 
-1) Restaurar la base de datos
-- Con SSMS: abrir y ejecutar `AcademiaDB.sql`.
-- Con sqlcmd (ejemplo usando autenticación integrada y SQL Server Express):
-  - Abrir PowerShell como Administrador y ejecutar:
-    ```
-    sqlcmd -S .\SQLEXPRESS -i AcademiaDB.sql -E
-    ```
-  - Si el script crea una base con nombre, anotar ese nombre para la cadena de conexión.
 
-2) Configurar cadenas de conexión
-- Abrir `AcademiaAPI/appsettings.json` o `AcademiaAPI/appsettings.Development.json` y ajustar la clave `ConnectionStrings:DefaultConnection` al servidor y base de datos restaurada.
+2) Configurar cadena de conexión (importante)
+Abrir el archivo AcademiaAPI/appsettings.json y ajustar la clave ConnectionStrings:DefaultConnection al servidor y base de datos restaurada.
+El nombre del servidor lo podemos ver dentro de SQL Server, y debemos ponerlo en el connection string.
 
-3) Compilar y ejecutar la API
-- Desde la raíz (Windows PowerShell):
-  ```
-  dotnet build Academia.sln
-  dotnet run --project AcademiaAPI/AcademiaAPI.csproj
-  ```
-- Por defecto la API expondrá los endpoints configurados en `AcademiaAPI/Program.cs`.
+3) Ejecutar Dump de la base de datos (AcademiaDB.sql)
 
-4) Ejecutar el frontend Blazor
-- Entrar al directorio `BlazorWebAssembly` y ejecutar:
-  ```
-  dotnet run
-  ```
-  o abrir la solución en Visual Studio y ejecutar el proyecto de Blazor como startup.
+Copiar el código del dump de la base de datos, que se puede encontrar en el repositorio, pegarlo en SQLServer y ejecutarlo para crear los datos de prueba.
 
-5) Ejecutar la aplicación de escritorio (opcional)
-- Abrir `WindowsFormsCurso` en Visual Studio y ejecutar el proyecto como aplicación de Windows Forms.
+4) Compilar y ejecutar proyecto Academia
+Primero debemos configurar los proyectos de inicio, dando click derecho sobre la solución. Debemos configurar como proyecto de inicio a los siguientes 3 proyectos:
+AcademiaAPI
+WindowsFormsCurso
+BlazorWebAssembly
+Luego le vamos a dar al F5, o al botón de compilar en el IDE.
 
 ## Flujo de prueba sugerido
   1. Consultar materias y comisiones.
@@ -100,7 +88,4 @@ A continuación se incluyen tres usuarios de prueba (admin, docente y alumno) pa
 
 ## Buenas prácticas y notas
 - Actualizar las cadenas de conexión antes de correr la API.
-- Revisar `Program.cs` para ver configuración de CORS y puertos.
-
-## Conclusión
-La solución está organizada para facilitar desarrollo y pruebas locales: restaurar el dump, ajustar conexiones, ejecutar la API y consumir con el frontend o los clientes. Para pruebas detalladas de usuarios y datos semilla, consultar directamente `AcademiaDB.sql`.
+- Revisar Program.cs para ver configuración de CORS y puertos.
